@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Mua Pack cầu thủ</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(145deg, #1a472a, #0e2a1a);
+            margin: 0;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.6);
+            border-radius: 48px;
+            padding: 30px;
+            backdrop-filter: blur(6px);
+        }
+        h1 {
+            text-align: center;
+            color: #ffd966;
+        }
+        .money {
+            font-size: 2rem;
+            background: black;
+            display: inline-block;
+            padding: 10px 30px;
+            border-radius: 60px;
+            margin-bottom: 30px;
+        }
+        .packs-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        .pack {
+            background: #2c3e2b;
+            border-radius: 32px;
+            width: 280px;
+            padding: 20px;
+            text-align: center;
+            transition: 0.1s linear;
+            box-shadow: 0 8px 0 #1e2a1a;
+        }
+        .pack-icon {
+            font-size: 5rem;
+        }
+        .pack-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .pack-price {
+            font-size: 1.4rem;
+            color: #ffb347;
+        }
+        .pack-desc {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+        .quantity-control {
+            margin: 10px 0;
+        }
+        .quantity-control input {
+            width: 80px;
+            padding: 8px;
+            border-radius: 20px;
+            border: none;
+            text-align: center;
+            font-size: 1rem;
+        }
+        .total-price {
+            font-weight: bold;
+            margin: 10px 0;
+            background: #000000aa;
+            border-radius: 20px;
+            padding: 5px;
+        }
+        .buy-btn {
+            background: #ffaa33;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        button {
+            background: #ffaa33;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: bold;
+            margin-top: 40px;
+            cursor: pointer;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #ffd966;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🏪 SHOP PACK CẦU THỦ</h1>
+    <div style="text-align:center;">
+        <div class="money"><span id="moneyDisplay">0</span> NC</div>
+    </div>
+    <div class="packs-grid">
+        <!-- Bronze -->
+        <div class="pack" data-pack="bronze" data-price="500">
+            <div class="pack-icon">🥉</div>
+            <div class="pack-name">BRONZE PACK</div>
+            <div class="pack-price">500 NC / thẻ</div>
+            <div class="pack-desc">Cầu thủ phổ thông (OVR 30-59)</div>
+            <div class="quantity-control">
+                <input type="number" class="qty-input" value="1" min="1" max="99">
+            </div>
+            <div class="total-price">Tổng: <span class="total-amount">500</span> NC</div>
+            <button class="buy-btn">MUA NGAY</button>
+        </div>
+        <!-- Silver -->
+        <div class="pack" data-pack="silver" data-price="1500">
+            <div class="pack-icon">🥈</div>
+            <div class="pack-name">SILVER PACK</div>
+            <div class="pack-price">1,500 NC / thẻ</div>
+            <div class="pack-desc">Cầu thủ trung bình (OVR 60-69)</div>
+            <div class="quantity-control">
+                <input type="number" class="qty-input" value="1" min="1" max="99">
+            </div>
+            <div class="total-price">Tổng: <span class="total-amount">1500</span> NC</div>
+            <button class="buy-btn">MUA NGAY</button>
+        </div>
+        <!-- Gold -->
+        <div class="pack" data-pack="common" data-price="4000">
+            <div class="pack-icon">🥇</div>
+            <div class="pack-name">COMMON PACK</div>
+            <div class="pack-price">4,000 NC / thẻ</div>
+            <div class="pack-desc">Cầu thủ xuất sắc (OVR 70-79)</div>
+            <div class="quantity-control">
+                <input type="number" class="qty-input" value="1" min="1" max="99">
+            </div>
+            <div class="total-price">Tổng: <span class="total-amount">4000</span> NC</div>
+            <button class="buy-btn">MUA NGAY</button>
+        </div>
+        <!-- Legend -->
+        <div class="pack" data-pack="legend" data-price="10000">
+            <div class="pack-icon">✨</div>
+            <div class="pack-name">LEGEND PACK</div>
+            <div class="pack-price">10,000 NC / thẻ</div>
+            <div class="pack-desc">Huyền thoại (OVR 80-89)</div>
+            <div class="quantity-control">
+                <input type="number" class="qty-input" value="1" min="1" max="99">
+            </div>
+            <div class="total-price">Tổng: <span class="total-amount">10000</span> NC</div>
+            <button class="buy-btn">MUA NGAY</button>
+        </div>
+        <!-- UEFA -->
+        <div class="pack" data-pack="uefa" data-price="50000">
+            <div class="pack-icon">🏆</div>
+            <div class="pack-name">UEFA CHAMPIONS</div>
+            <div class="pack-price">50,000 NC / thẻ</div>
+            <div class="pack-desc">Cầu thủ UEFA (OVR 90-99)</div>
+            <div class="quantity-control">
+                <input type="number" class="qty-input" value="1" min="1" max="99">
+            </div>
+            <div class="total-price">Tổng: <span class="total-amount">50000</span> NC</div>
+            <button class="buy-btn">MUA NGAY</button>
+        </div>
+        <!-- TOTY -->
+        <div class="pack" data-pack="toty" data-price="1500000">
+            <div class="pack-icon">⭐</div>
+            <div class="pack-name">TOTY</div>
+            <div class="pack-price">1,500,000 NC / thẻ</div>
+            <div class="pack-desc">Đội hình năm (OVR 130-139)</div>
+            <div class="quantity-control">
+                <input type="number" class="qty-input" value="1" min="1" max="99">
+            </div>
+            <div class="total-price">Tổng: <span class="total-amount">367367</span> NC</div>
+            <button class="buy-btn">MUA NGAY</button>
+        </div>
+        <!-- TROPHY TITANS -->
+        <div class="pack" data-pack="titans" data-price="10000000">
+            <div class="pack-icon">👑</div>
+            <div class="pack-name">TROPHY TITANS</div>
+            <div class="pack-price">10,000,000 NC / thẻ</div>
+            <div class="pack-desc">Đội hình năm (OVR 140-149)</div>
+            <div class="quantity-control">
+                <input type="number" class="qty-input" value="1" min="1" max="99">
+            </div>
+            <div class="total-price">Tổng: <span class="total-amount">367367</span> NC</div>
+            <button class="buy-btn">MUA NGAY</button>
+        </div>
+        <!-- ULTIMATE -->
+        <div class="pack" data-pack="ultimate" data-price="300000000">
+            <div class="pack-icon">♾️</div>
+            <div class="pack-name">ULTIMATE</div>
+            <div class="pack-price">300,000,000 NC / thẻ</div>
+            <div class="pack-desc">Đội hình năm (FULL THẺ XỊN NHẤT TRONG CÁC GÓI UEFA, TOTY, TROPHY TITANS 96 - 149)</div>
+            <div class="quantity-control">
+                <input type="number" class="qty-input" value="1" min="1" max="99">
+            </div>
+            <div class="total-price">Tổng: <span class="total-amount">367367</span> NC</div>
+            <button class="buy-btn">MUA NGAY</button>
+        </div>
+    </div>
+    <div style="text-align:center; margin-top: 40px;">
+        <button id="resetMoneyBtn">$$$ get muney</button>
+    </div>
+    <div style="text-align:center; margin-top: 20px;">
+        <a href="pack.html" class="back-link">🎁 Đến trang mở pack →</a> &nbsp;|&nbsp;
+        <a href="index.html" class="back-link">🏠 Menu chính</a>
+    </div>
+</div>
+
+<script>
+    // Hàm quản lý tiền (dùng chung với pack.html)
+    function getMoney() {
+        let money = localStorage.getItem("myMoney");
+        if (money === null) {
+            localStorage.setItem("myMoney", "10000");
+            return 10000;
+        }
+        return parseInt(money);
+    }
+    function setMoney(amount) {
+        localStorage.setItem("myMoney", amount);
+        updateMoneyDisplay();
+    }
+    function updateMoneyDisplay() {
+        const span = document.getElementById("moneyDisplay");
+        if (span) span.innerText = getMoney().toLocaleString();
+    }
+    function subtractMoney(amount) {
+        let current = getMoney();
+        if (current >= amount) {
+            setMoney(current - amount);
+            return true;
+        }
+        return false;
+    }
+
+    // Xử lý cho từng pack
+    document.querySelectorAll('.pack').forEach(packDiv => {
+        const pricePerCard = parseInt(packDiv.dataset.price);
+        const qtyInput = packDiv.querySelector('.qty-input');
+        const totalSpan = packDiv.querySelector('.total-amount');
+        const buyBtn = packDiv.querySelector('.buy-btn');
+
+        // Cập nhật tổng tiền khi thay đổi số lượng
+        function updateTotal() {
+            let qty = parseInt(qtyInput.value);
+            if (isNaN(qty) || qty < 1) qty = 1;
+            if (qty > 99) qty = 99;
+            qtyInput.value = qty;
+            const total = pricePerCard * qty;
+            totalSpan.innerText = total.toLocaleString();
+        }
+        qtyInput.addEventListener('input', updateTotal);
+        updateTotal();
+
+        // Mua pack
+        buyBtn.addEventListener('click', () => {
+            let qty = parseInt(qtyInput.value);
+            if (isNaN(qty) || qty < 1) qty = 1;
+            const totalPrice = pricePerCard * qty;
+            if (!subtractMoney(totalPrice)) {
+                alert(`❌ Không đủ tiền! Cần ${totalPrice.toLocaleString()} NC, bạn có ${getMoney().toLocaleString()} NC.`);
+                return;
+            }
+            // Lưu loại pack và số lượng vào localStorage
+            localStorage.setItem("currentPackType", packDiv.dataset.pack);
+            localStorage.setItem("currentPackQuantity", qty);
+            window.location.href = "pack.html";
+        });
+    });
+
+    // Reset tiền
+    document.getElementById("resetMoneyBtn").addEventListener('click', () => {
+        setMoney(999999999999);
+        alert("Đã reset tiền về 999,999,999,999 NC");
+    });
+
+    updateMoneyDisplay();
+</script>
+</body>
+</html>

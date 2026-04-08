@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đấu với Bot</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(145deg, #1a472a, #0e2a1a);
+            margin: 0;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.6);
+            border-radius: 48px;
+            padding: 30px;
+            backdrop-filter: blur(6px);
+        }
+        h1 {
+            text-align: center;
+            color: #ffd966;
+        }
+        .match-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .team-card {
+            background: #2c3e2b;
+            border-radius: 32px;
+            padding: 20px;
+            text-align: center;
+            flex: 1;
+        }
+        .vs {
+            font-size: 2rem;
+            font-weight: bold;
+            background: #000000aa;
+            padding: 10px 20px;
+            border-radius: 60px;
+        }
+        .team-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .ovr {
+            font-size: 2rem;
+            color: #ffb347;
+        }
+        .players-list {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .player-item {
+            padding: 4px 0;
+            border-bottom: 1px solid #3e5e3a;
+        }
+        .result-area {
+            text-align: center;
+            margin: 30px 0;
+            background: #000000aa;
+            border-radius: 40px;
+            padding: 20px;
+        }
+        .score {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        button {
+            background: #ffaa33;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 60px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #ffd966;
+            text-decoration: none;
+        }
+        .warning {
+            background: #aa3333aa;
+            padding: 15px;
+            border-radius: 28px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>⚔️ TRẬN ĐẤU: ĐỘI CỦA BẠN 🆚 BOT ⚔️</h1>
+
+    <div id="matchContent">
+        <!-- Nội dung sẽ load bằng JS -->
+    </div>
+    <a href="../index.html" class="back-link">← Về menu chính</a>
+</div>
+
+<script src="../js/players.js"></script>
+<script>
+    // Tạo bot ngẫu nhiên (11 cầu thủ)
+    function generateBotTeam() {
+        const botPlayers = [];
+        const positions = ["GK","LB","CB","CB","RB","LM","CM","CM","RM","ST","ST"];
+        for (let i = 0; i < 11; i++) {
+            const ovr = Math.floor(Math.random() * 50) + 55; // 55-104
+            botPlayers.push({
+                id: i + 1000,
+                name: `Bot_${i+1}`,
+                positionName: positions[i],
+                ovr: ovr,
+                avatarUrl: `https://ui-avatars.com/api/?name=BOT&background=555&color=fff&size=80`
+            });
+        }
+        return botPlayers;
+    }
+
+    function calculateAvgOvr(players) {
+        if (!players.length) return 0;
+        const sum = players.reduce((a, b) => a + b.ovr, 0);
+        return (sum / players.length).toFixed(1);
+    }
+
+    // Mô phỏng trận đấu
+    function simulateMatch(myTeam, botTeam) {
+        const myAvg = parseFloat(calculateAvgOvr(myTeam));
+        const botAvg = parseFloat(calculateAvgOvr(botTeam));
+        let diff = myAvg - botAvg;
+        let myScore = Math.floor(Math.max(0, (diff / 15) + 1.2 + Math.random() * 1.8));
+        let botScore = Math.floor(Math.max(0, (-diff / 18) + 1.0 + Math.random() * 1.6));
+        myScore = Math.min(myScore, 7);
+        botScore = Math.min(botScore, 6);
+        if (myAvg > botAvg + 12 && myScore < 2) myScore = 2;
+        if (botAvg > myAvg + 12 && botScore < 2) botScore = 2;
+        return { myScore, botScore };
+    }
+
+    function renderMatch() {
+        const container = document.getElementById("matchContent");
+        const allPlayers = getMyPlayers();
+        const savedSquad = localStorage.getItem("activeSquadIds");
+        let mySquad = [];
+        if (savedSquad) {
+            const squadIds = JSON.parse(savedSquad);
+            mySquad = squadIds.map(id => allPlayers.find(p => p.id == id)).filter(p => p);
+        }
+        if (mySquad.length !== 11) {
+            container.innerHTML = `
+                <div class="warning">
+                    ⚠️ Bạn chưa có đội hình 11 người! Vui lòng vào <strong>CLB</strong> để chọn và lưu đội hình.
+                </div>
+                <div style="text-align:center; margin-top:20px;">
+                    <a href="../club/index.html" style="color:#ffd966;">📋 Đến trang CLB</a>
+                </div>
+            `;
+            return;
+        }
+
+        const botTeam = generateBotTeam();
+        const myAvg = calculateAvgOvr(mySquad);
+        const botAvg = calculateAvgOvr(botTeam);
+
+        // Hiển thị thông tin trước trận
+        container.innerHTML = `
+            <div class="match-info">
+                <div class="team-card">
+                    <div class="team-name">🔥 ĐỘI CỦA BẠN</div>
+                    <div class="ovr">OVR ${myAvg}</div>
+                    <div class="players-list">
+                        ${mySquad.map(p => `<div class="player-item">${p.name} (${p.positionName}) - OVR ${p.ovr}</div>`).join('')}
+                    </div>
+                </div>
+                <div class="vs">VS</div>
+                <div class="team-card">
+                    <div class="team-name">🤖 BOT NGẪU NHIÊN</div>
+                    <div class="ovr">OVR ${botAvg}</div>
+                    <div class="players-list">
+                        ${botTeam.map(p => `<div class="player-item">${p.name} (${p.positionName}) - OVR ${p.ovr}</div>`).join('')}
+                    </div>
+                </div>
+            </div>
+            <div class="result-area" id="resultArea">
+                <div>🔮 Nhấn nút dưới để thi đấu 🔮</div>
+            </div>
+            <button id="fightBtn">⚔️ ĐÁ NGAY ⚔️</button>
+        `;
+
+        // Gắn sự kiện cho nút đấu
+        document.getElementById("fightBtn").addEventListener('click', () => {
+            const { myScore, botScore } = simulateMatch(mySquad, botTeam);
+            let resultText = "";
+            if (myScore > botScore) resultText = "🎉 CHIẾN THẮNG 🎉";
+            else if (myScore < botScore) resultText = "💀 THẤT BẠI 💀";
+            else resultText = "🤝 HÒA 🤝";
+            const resultDiv = document.getElementById("resultArea");
+            resultDiv.innerHTML = `
+                <div style="font-size:1.8rem;">${resultText}</div>
+                <div class="score">${myScore} - ${botScore}</div>
+                <div>OVR TB bạn: ${myAvg} | Bot: ${botAvg}</div>
+            `;
+        });
+    }
+
+    renderMatch();
+</script>
+</body>
+</html>
