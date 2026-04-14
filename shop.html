@@ -3,293 +3,906 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop - Mua Pack cầu thủ</title>
+    <title>Nam FC Online</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(145deg, #1a472a, #0e2a1a);
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: 
+                radial-gradient(circle at 20% 30%, #0b2f1a 0%, #051a0a 100%),
+                repeating-linear-gradient(45deg, rgba(0,255,100,0.03) 0px, rgba(0,255,100,0.03) 2px, transparent 2px, transparent 10px);
+            font-family: 'Segoe UI', 'Exo 2', sans-serif;
             color: white;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            cursor: default;
         }
-        .container {
-            max-width: 1200px;
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 200, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 200, 0.08) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(90vw, 1000px);
+            height: min(70vh, 600px);
+            border: 3px dashed rgba(255, 215, 0, 0.2);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            box-shadow: 0 0 40px rgba(255,215,0,0.1);
+        }
+
+        .grass-dots {
+            position: fixed; inset: 0;
+            background: radial-gradient(circle at 10% 20%, rgba(100,255,100,0.05) 0%, transparent 30%);
+            pointer-events: none; z-index: 1;
+        }
+
+        .universe-container {
+            max-width: 1400px;
             margin: 0 auto;
-            background: rgba(0,0,0,0.6);
-            border-radius: 48px;
-            padding: 30px;
-            backdrop-filter: blur(6px);
+            position: relative;
+            z-index: 20;
+            backdrop-filter: blur(3px);
         }
+
         h1 {
+            font-size: clamp(2.8rem, 10vw, 5rem);
+            font-weight: 900;
+            font-style: italic;
             text-align: center;
-            color: #ffd966;
+            margin: 0 0 10px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FFF8DC, #FFD700);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shine 4s infinite, floatTitle 4s infinite;
+            filter: drop-shadow(0 0 20px #FFD700) drop-shadow(0 4px 4px black);
+            -webkit-text-stroke: 1px #b8860b;
+            letter-spacing: 3px;
         }
-        .money {
-            font-size: 2rem;
-            background: black;
-            display: inline-block;
-            padding: 10px 30px;
-            border-radius: 60px;
-            margin-bottom: 30px;
+
+        @keyframes shine {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
         }
-        .packs-grid {
+        @keyframes floatTitle {
+            0%,100% { transform: translateY(0) rotate(-1deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
+        }
+
+        .sun-money {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0 20px;
+        }
+        .money-orb {
+            background: radial-gradient(circle at 30% 30%, #FFD700, #b8860b);
+            padding: 18px 50px;
+            border-radius: 100px;
+            box-shadow: 0 0 60px gold, 0 10px 0 #6b4e0a, inset 0 2px 10px white;
+            border: 2px solid #fff3b0;
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #0a2f1a;
+            text-shadow: 0 2px 5px rgba(255,255,200,0.8);
+            backdrop-filter: blur(8px);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transform: perspective(400px) rotateX(2deg);
+        }
+
+        .orbit-system {
+            position: relative;
+            width: 100%;
+            min-height: 550px;
+            margin: 40px 0 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .planets-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 30px;
             justify-content: center;
+            align-items: center;
+            gap: 20px 35px;
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
         }
-        .pack {
-            background: #2c3e2b;
-            border-radius: 32px;
-            width: 280px;
-            padding: 20px;
+
+        .planet-card {
+            width: 270px;
+            background: rgba(10, 30, 20, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 120px 120px 40px 40px;
+            padding: 25px 15px 20px;
+            box-shadow: 0 15px 0 #0a1a0a, 0 0 30px rgba(255,215,0,0.3), inset 0 0 20px rgba(0,255,100,0.2);
+            border: 2px solid rgba(255,215,0,0.6);
             text-align: center;
-            transition: 0.1s linear;
-            box-shadow: 0 8px 0 #1e2a1a;
+            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1);
+            position: relative;
+            transform: rotate(0deg) scale(1);
+            animation: orbitFloat 6s infinite alternate ease-in-out;
+            display: flex;
+            flex-direction: column;
         }
-        .pack-icon {
-            font-size: 5rem;
+
+        .planet-card:nth-child(1) { animation-delay: 0s; margin-top: -10px; }
+        .planet-card:nth-child(2) { animation-delay: 0.5s; margin-top: 20px; }
+        .planet-card:nth-child(3) { animation-delay: 1s; margin-top: -15px; }
+        .planet-card:nth-child(4) { animation-delay: 1.5s; margin-top: 30px; }
+        .planet-card:nth-child(5) { animation-delay: 2s; margin-top: -20px; }
+        .planet-card:nth-child(6) { animation-delay: 2.5s; margin-top: 10px; }
+        .planet-card:nth-child(7) { animation-delay: 3s; margin-top: -30px; }
+
+        @keyframes orbitFloat {
+            0% { transform: translateY(0px) rotate(-2deg); }
+            100% { transform: translateY(-15px) rotate(2deg); }
         }
-        .pack-name {
-            font-size: 1.8rem;
+
+        .planet-card:hover {
+            transform: scale(1.05) translateY(-12px) !important;
+            box-shadow: 0 20px 0 #0a1a0a, 0 0 50px #FFD700, inset 0 0 30px cyan;
+            border-color: gold;
+            z-index: 100;
+            animation-play-state: paused;
+        }
+
+        .planet-card::before {
+            content: '';
+            position: absolute;
+            top: -8px; left: 10%; width: 80%; height: 12px;
+            background: radial-gradient(circle, #fff8e0, gold);
+            border-radius: 50%;
+            filter: blur(6px);
+            opacity: 0.7;
+        }
+
+        .info-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            background: radial-gradient(circle at 30% 30%, #FFD700, #b8860b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: #0a2f1a;
+            box-shadow: 0 4px 0 #6b4e0a, 0 2px 10px black, inset 0 1px 3px white;
+            border: 1px solid #fff3b0;
+            cursor: help;
+            transition: 0.1s;
+            z-index: 10;
+            line-height: 1;
+            padding-bottom: 4px;
+        }
+        .info-btn:hover {
+            transform: scale(1.15);
+            box-shadow: 0 2px 0 #6b4e0a, 0 4px 15px gold;
+            background: #FFD700;
+        }
+
+        .planet-icon {
+            font-size: 4.2rem;
+            line-height: 1;
+            filter: drop-shadow(0 8px 8px black);
+            margin-bottom: 5px;
+        }
+
+        .planet-name {
+            font-size: 1.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, #FFD966, #FFA500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px black;
+            letter-spacing: 1px;
+        }
+
+        .planet-price {
+            font-size: 1.3rem;
             font-weight: bold;
-            margin: 10px 0;
+            color: #fff3b0;
+            background: rgba(0,0,0,0.5);
+            border-radius: 30px;
+            padding: 6px 0;
+            margin: 8px 0;
+            border-left: 3px solid gold;
+            border-right: 3px solid gold;
         }
-        .pack-price {
-            font-size: 1.4rem;
-            color: #ffb347;
-        }
-        .pack-desc {
+
+        .planet-desc {
             font-size: 0.8rem;
-            opacity: 0.8;
-            margin-bottom: 15px;
+            opacity: 0.9;
+            margin-bottom: 8px;
         }
+
         .quantity-control {
-            margin: 10px 0;
+            margin: 8px 0;
         }
-        .quantity-control input {
+        .qty-input {
             width: 80px;
-            padding: 8px;
-            border-radius: 20px;
-            border: none;
+            padding: 6px;
+            border-radius: 30px;
+            background: #0e2a1a;
+            border: 2px solid #b8860b;
+            color: white;
+            font-weight: bold;
             text-align: center;
-            font-size: 1rem;
+            box-shadow: inset 0 2px 5px black;
         }
+
         .total-price {
+            background: #00000070;
+            border-radius: 30px;
+            padding: 6px;
+            margin: 5px 0 15px;
             font-weight: bold;
-            margin: 10px 0;
-            background: #000000aa;
-            border-radius: 20px;
-            padding: 5px;
+            border: 1px solid gold;
         }
+
         .buy-btn {
-            background: #ffaa33;
+            background: linear-gradient(145deg, #FFD700, #FF8C00);
             border: none;
-            padding: 10px 20px;
-            border-radius: 40px;
-            font-weight: bold;
+            padding: 14px 10px;
+            border-radius: 60px;
+            font-weight: 900;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            color: #0a2f1a;
+            box-shadow: 0 8px 0 #8B4513, 0 6px 15px black, inset 0 2px 10px #ffffaa;
             cursor: pointer;
-            margin-top: 10px;
+            transition: 0.1s;
+            border: 1px solid #ffe066;
             width: 100%;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
         }
-        button {
-            background: #ffaa33;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 40px;
+
+        .buy-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -60%;
+            width: 30%; height: 200%;
+            background: rgba(255,255,255,0.5);
+            transform: rotate(30deg);
+            transition: left 0.5s;
+        }
+        .buy-btn:hover::after { left: 120%; }
+        .buy-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 0 #8B4513, 0 10px 20px black;
+            filter: brightness(1.2);
+        }
+        .buy-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 #8B4513, 0 5px 10px black;
+        }
+
+        .action-btn {
+            background: #1e4d2e;
+            border: 2px solid gold;
+            color: #FFD966;
+            padding: 14px 35px;
+            border-radius: 60px;
             font-weight: bold;
-            margin-top: 40px;
+            font-size: 1.2rem;
             cursor: pointer;
+            box-shadow: 0 6px 0 #0f2a1a, 0 4px 15px black;
+            margin: 15px 5px;
+            transition: 0.1s;
+            backdrop-filter: blur(5px);
+        }
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 0 #0f2a1a, 0 8px 20px black;
+            background: #2a6e3a;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
         }
         .back-link {
+            color: #FFD966;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 10px 25px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 40px;
+            border: 1px solid gold;
+            backdrop-filter: blur(5px);
+            transition: 0.2s;
+        }
+        .back-link:hover {
+            background: gold;
+            color: #0a2f1a;
+            transform: scale(1.05);
+        }
+
+        .version-box {
+            position: fixed;
+            bottom: 20px; right: 24px;
+            background: rgba(10,20,5,0.8);
+            backdrop-filter: blur(8px);
+            padding: 8px 18px;
+            border-radius: 40px;
+            color: #f5e56b;
+            border: 1px solid gold;
+            z-index: 999;
+            font-family: monospace;
+        }
+
+        /* ---------- MODAL XEM TRƯỚC (CÓ ẢNH) ---------- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.2s;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: linear-gradient(145deg, #0f2e1a, #051a0a);
+            border: 3px solid #FFD700;
+            border-radius: 48px;
+            padding: 25px 25px 20px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 70vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 0 #0a1a0a, 0 0 50px gold;
+            color: white;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.2s;
+        }
+        .active .modal-content {
+            transform: scale(1);
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid gold;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        .modal-header h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            flex: 1;
+        }
+        .modal-close {
+            background: none;
+            border: 2px solid gold;
+            color: gold;
+            font-size: 2rem;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close:hover {
+            background: gold;
+            color: #0a2f1a;
+            transform: scale(1.1);
+        }
+
+        /* Danh sách cầu thủ trong modal */
+        .player-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .player-card {
+            background: rgba(0,0,0,0.25);
+            border-radius: 20px;
+            padding: 12px 10px;
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .player-avatar {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            margin-bottom: 6px;
+        }
+        .player-info {
+            width: 100%;
+        }
+        .player-name {
+            font-weight: bold;
+            font-size: 1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .player-ovr {
+            background: rgb(0, 0, 0, 0.25);
+            color: gold;
+            padding: 2px 8px;
+            border-radius: 20px;
             display: inline-block;
-            margin-top: 20px;
-            color: #ffd966;
+            margin: 4px 0;
+        }
+        .player-meta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 0.8rem;
+        }
+        .player-meta img {
+            width: 20px;
+            height: 15px;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+
+        /* Bóng bay */
+        .ball {
+            position: fixed;
+            font-size: 3rem;
+            pointer-events: auto;
+            z-index: 2000;
+            filter: drop-shadow(0 0 15px cyan) drop-shadow(0 8px 12px black);
+            cursor: grab;
+        }
+        .click-ripple {
+            position: fixed;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #FFD700, #FFA500);
+            pointer-events: none;
+            z-index: 2500;
+            animation: rippleEffect 0.6s forwards;
+        }
+        @keyframes rippleEffect {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(10); opacity: 0; }
+        }
+        .goal-popup {
+            position: fixed;
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: gold;
+            text-shadow: 4px 4px 0 black, 0 0 30px white;
+            pointer-events: none;
+            z-index: 2500;
+            animation: goalFly 1.2s forwards;
+            white-space: nowrap;
+        }
+        @keyframes goalFly {
+            0% { opacity: 0; transform: translate(-50%, 0) scale(0.5); }
+            20% { opacity: 1; transform: translate(-50%, -40px) scale(1.3); }
+            80% { opacity: 1; transform: translate(-50%, -90px) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -130px) scale(0.8); }
+        }
+
+        @media (max-width: 700px) {
+            .planet-card { width: 240px; }
+            .money-orb { font-size: 1.8rem; padding: 12px 25px; }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>🏪 SHOP PACK CẦU THỦ</h1>
-    <div style="text-align:center;">
-        <div class="money"><span id="moneyDisplay">0</span> NC</div>
-    </div>
-    <div class="packs-grid">
-        <!-- Bronze -->
-        <div class="pack" data-pack="bronze" data-price="500">
-            <div class="pack-icon">🥉</div>
-            <div class="pack-name">BRONZE PACK</div>
-            <div class="pack-price">500 NC / thẻ</div>
-            <div class="pack-desc">Cầu thủ phổ thông (OVR 30-59)</div>
-            <div class="quantity-control">
-                <input type="number" class="qty-input" value="1" min="1" max="99">
-            </div>
-            <div class="total-price">Tổng: <span class="total-amount">500</span> NC</div>
-            <button class="buy-btn">MUA NGAY</button>
+
+<div class="grass-dots"></div>
+<div class="ball" id="flyingBall">⚽</div>
+
+<!-- MODAL XEM TRƯỚC CẦU THỦ -->
+<div class="modal-overlay" id="previewModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalPackName">BRONZE PACK</h2>
+            <button class="modal-close" id="closeModalBtn">&times;</button>
         </div>
-        <!-- Silver -->
-        <div class="pack" data-pack="silver" data-price="1500">
-            <div class="pack-icon">🥈</div>
-            <div class="pack-name">SILVER PACK</div>
-            <div class="pack-price">1,500 NC / thẻ</div>
-            <div class="pack-desc">Cầu thủ trung bình (OVR 60-69)</div>
-            <div class="quantity-control">
-                <input type="number" class="qty-input" value="1" min="1" max="99">
-            </div>
-            <div class="total-price">Tổng: <span class="total-amount">1500</span> NC</div>
-            <button class="buy-btn">MUA NGAY</button>
+        <div class="player-list" id="playerListContainer">
+            <!-- JS sẽ render player cards -->
         </div>
-        <!-- Gold -->
-        <div class="pack" data-pack="common" data-price="4000">
-            <div class="pack-icon">🥇</div>
-            <div class="pack-name">COMMON PACK</div>
-            <div class="pack-price">4,000 NC / thẻ</div>
-            <div class="pack-desc">Cầu thủ xuất sắc (OVR 70-79)</div>
-            <div class="quantity-control">
-                <input type="number" class="qty-input" value="1" min="1" max="99">
-            </div>
-            <div class="total-price">Tổng: <span class="total-amount">4000</span> NC</div>
-            <button class="buy-btn">MUA NGAY</button>
-        </div>
-        <!-- Legend -->
-        <div class="pack" data-pack="legend" data-price="10000">
-            <div class="pack-icon">✨</div>
-            <div class="pack-name">LEGEND PACK</div>
-            <div class="pack-price">10,000 NC / thẻ</div>
-            <div class="pack-desc">Huyền thoại (OVR 80-89)</div>
-            <div class="quantity-control">
-                <input type="number" class="qty-input" value="1" min="1" max="99">
-            </div>
-            <div class="total-price">Tổng: <span class="total-amount">10000</span> NC</div>
-            <button class="buy-btn">MUA NGAY</button>
-        </div>
-        <!-- UEFA -->
-        <div class="pack" data-pack="uefa" data-price="50000">
-            <div class="pack-icon">🏆</div>
-            <div class="pack-name">UEFA CHAMPIONS</div>
-            <div class="pack-price">50,000 NC / thẻ</div>
-            <div class="pack-desc">Cầu thủ UEFA (OVR 90-99)</div>
-            <div class="quantity-control">
-                <input type="number" class="qty-input" value="1" min="1" max="99">
-            </div>
-            <div class="total-price">Tổng: <span class="total-amount">50000</span> NC</div>
-            <button class="buy-btn">MUA NGAY</button>
-        </div>
-        <!-- TOTY -->
-        <div class="pack" data-pack="toty" data-price="1500000">
-            <div class="pack-icon">⭐</div>
-            <div class="pack-name">TOTY</div>
-            <div class="pack-price">1,500,000 NC / thẻ</div>
-            <div class="pack-desc">Đội hình năm (OVR 130-139)</div>
-            <div class="quantity-control">
-                <input type="number" class="qty-input" value="1" min="1" max="99">
-            </div>
-            <div class="total-price">Tổng: <span class="total-amount">367367</span> NC</div>
-            <button class="buy-btn">MUA NGAY</button>
-        </div>
-        <!-- TROPHY TITANS -->
-        <div class="pack" data-pack="titans" data-price="10000000">
-            <div class="pack-icon">👑</div>
-            <div class="pack-name">TROPHY TITANS</div>
-            <div class="pack-price">10,000,000 NC / thẻ</div>
-            <div class="pack-desc">Đội hình năm (OVR 140-149)</div>
-            <div class="quantity-control">
-                <input type="number" class="qty-input" value="1" min="1" max="99">
-            </div>
-            <div class="total-price">Tổng: <span class="total-amount">367367</span> NC</div>
-            <button class="buy-btn">MUA NGAY</button>
-        </div>
-        <!-- ULTIMATE -->
-        <div class="pack" data-pack="ultimate" data-price="300000000">
-            <div class="pack-icon">♾️</div>
-            <div class="pack-name">ULTIMATE</div>
-            <div class="pack-price">300,000,000 NC / thẻ</div>
-            <div class="pack-desc">Đội hình năm (FULL THẺ XỊN NHẤT TRONG CÁC GÓI UEFA, TOTY, TROPHY TITANS 96 - 149)</div>
-            <div class="quantity-control">
-                <input type="number" class="qty-input" value="1" min="1" max="99">
-            </div>
-            <div class="total-price">Tổng: <span class="total-amount">367367</span> NC</div>
-            <button class="buy-btn">MUA NGAY</button>
-        </div>
-    </div>
-    <div style="text-align:center; margin-top: 40px;">
-        <button id="resetMoneyBtn">$$$ get muney</button>
-    </div>
-    <div style="text-align:center; margin-top: 20px;">
-        <a href="pack.html" class="back-link">🎁 Đến trang mở pack →</a> &nbsp;|&nbsp;
-        <a href="index.html" class="back-link">🏠 Menu chính</a>
+        <p style="margin-top: 20px; font-style: italic; opacity: 0.8;">Tỉ lệ mở ra của từng cầu thủ sẽ dựa vào chỉ số OVR</p>
     </div>
 </div>
 
+<div class="universe-container">
+    <h1>NAM FC SHOP</h1>
+
+    <div class="sun-money">
+        <div class="money-orb">
+            <span id="moneyDisplay">0</span> <span>NCoins</span>
+        </div>
+    </div>
+
+    <div class="orbit-system">
+        <div class="planets-grid" id="planetsContainer"></div>
+    </div>
+
+    <div style="display: flex; justify-content: center;">
+        <button class="action-btn" id="resetMoneyBtn">🌟 NẠP NĂNG LƯỢNG (999B NC) 🌟</button>
+    </div>
+
+    <div class="nav-links">
+        <a href="index.html" class="back-link">↺ VỀ CÂU LẠC BỘ</a>
+    </div>
+</div>
+
+<div class="version-box" id="versionBox">Version: loading…</div>
+
+<!-- Thư viện dữ liệu cầu thủ -->
+<script src="js/players.js"></script>
+
 <script>
-    // Hàm quản lý tiền (dùng chung với pack.html)
-    function getMoney() {
-        let money = localStorage.getItem("myMoney");
-        if (money === null) {
-            localStorage.setItem("myMoney", "10000");
-            return 10000;
-        }
-        return parseInt(money);
-    }
-    function setMoney(amount) {
-        localStorage.setItem("myMoney", amount);
-        updateMoneyDisplay();
-    }
-    function updateMoneyDisplay() {
-        const span = document.getElementById("moneyDisplay");
-        if (span) span.innerText = getMoney().toLocaleString();
-    }
-    function subtractMoney(amount) {
-        let current = getMoney();
-        if (current >= amount) {
-            setMoney(current - amount);
-            return true;
-        }
-        return false;
-    }
+    (function(){
+        "use strict";
 
-    // Xử lý cho từng pack
-    document.querySelectorAll('.pack').forEach(packDiv => {
-        const pricePerCard = parseInt(packDiv.dataset.price);
-        const qtyInput = packDiv.querySelector('.qty-input');
-        const totalSpan = packDiv.querySelector('.total-amount');
-        const buyBtn = packDiv.querySelector('.buy-btn');
+        // ---------- VERSION ----------
+        const versionEl = document.getElementById('versionBox');
+        fetch('js/version.json')
+            .then(r => r.ok ? r.json() : Promise.reject())
+            .then(d => versionEl.textContent = `Version: ${d.version}`)
+            .catch(() => {
+                versionEl.textContent = 'Version: ⚠️';
+                setTimeout(() => { if(versionEl.textContent === 'Version: ⚠️') versionEl.textContent = 'Version: dev'; }, 2000);
+            });
 
-        // Cập nhật tổng tiền khi thay đổi số lượng
-        function updateTotal() {
-            let qty = parseInt(qtyInput.value);
-            if (isNaN(qty) || qty < 1) qty = 1;
-            if (qty > 99) qty = 99;
-            qtyInput.value = qty;
-            const total = pricePerCard * qty;
-            totalSpan.innerText = total.toLocaleString();
-        }
-        qtyInput.addEventListener('input', updateTotal);
-        updateTotal();
-
-        // Mua pack
-        buyBtn.addEventListener('click', () => {
-            let qty = parseInt(qtyInput.value);
-            if (isNaN(qty) || qty < 1) qty = 1;
-            const totalPrice = pricePerCard * qty;
-            if (!subtractMoney(totalPrice)) {
-                alert(`❌ Không đủ tiền! Cần ${totalPrice.toLocaleString()} NC, bạn có ${getMoney().toLocaleString()} NC.`);
-                return;
+        // ---------- TIỀN ----------
+        function getMoney() {
+            let m = localStorage.getItem("myMoney");
+            if (m === null) {
+                localStorage.setItem("myMoney", "100000");
+                return 100000;
             }
-            // Lưu loại pack và số lượng vào localStorage
-            localStorage.setItem("currentPackType", packDiv.dataset.pack);
-            localStorage.setItem("currentPackQuantity", qty);
-            window.location.href = "pack.html";
+            return parseInt(m) || 0;
+        }
+        function setMoney(amount) {
+            localStorage.setItem("myMoney", amount);
+            updateMoneyDisplay();
+        }
+        function updateMoneyDisplay() {
+            const span = document.getElementById("moneyDisplay");
+            if (span) span.innerText = getMoney().toLocaleString();
+        }
+        function subtractMoney(amount) {
+            let cur = getMoney();
+            if (cur >= amount) {
+                setMoney(cur - amount);
+                return true;
+            }
+            return false;
+        }
+
+        // ---------- DỮ LIỆU HÀNH TINH (PACK) (GIÁ CAO HƠN) ----------
+        const planets = [
+            { pack: 'bronze', name: 'BRONZE', icon: '🥉', price: 2500, desc: 'OVR 40-59' },
+            { pack: 'silver', name: 'SILVER', icon: '🥈', price: 8000, desc: 'OVR 60-69' },
+            { pack: 'rare', name: 'RARE', icon: '🥇', price: 30000, desc: 'OVR 70-79' },
+            { pack: 'legend', name: 'LEGEND', icon: '✨', price: 150000, desc: 'OVR 80-89' },
+            { pack: 'uefa', name: 'UEFA', icon: '🏆', price: 750000, desc: 'OVR 90-95' },
+            { pack: 'toty', name: 'TOTY', icon: '⭐', price: 2500000, desc: 'OVR 93-96' },
+            { pack: 'titans', name: 'TITANS', icon: '👑', price: 15000000, desc: 'OVR 96-99' },
+        ];
+
+        const container = document.getElementById('planetsContainer');
+        function renderPlanets() {
+            container.innerHTML = '';
+            planets.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'planet-card';
+                card.dataset.pack = p.pack;
+                card.dataset.price = p.price;
+
+                card.innerHTML = `
+                    <button class="info-btn" data-pack="${p.pack}" title="Xem cầu thủ có thể mở">ⓘ</button>
+                    <div class="planet-icon">${p.icon}</div>
+                    <div class="planet-name">${p.name}</div>
+                    <div class="planet-price">${p.price.toLocaleString()} NC</div>
+                    <div class="planet-desc">${p.desc}</div>
+                    <div class="quantity-control">
+                        <input type="number" class="qty-input" value="1" min="1" max="99">
+                    </div>
+                    <div class="total-price">Tổng: <span class="total-amount">${p.price.toLocaleString()}</span> NC</div>
+                    <button class="buy-btn">🛸 MUA NGAY</button>
+                `;
+                container.appendChild(card);
+            });
+            bindPlanetEvents();
+        }
+
+        // Modal
+        const modal = document.getElementById('previewModal');
+        const modalPackName = document.getElementById('modalPackName');
+        const playerListContainer = document.getElementById('playerListContainer');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        function showPreview(packType) {
+            const pack = planets.find(p => p.pack === packType);
+            if (!pack) return;
+
+            modalPackName.textContent = 'XEM TRƯỚC GÓI ' + pack.name;
+            
+            // Lấy danh sách cầu thủ từ players.js (hàm getPlayersByPackType đã có)
+            const players = (typeof getPlayersByPackType === 'function') 
+                ? getPlayersByPackType(packType) 
+                : [];
+            
+            if (players.length === 0) {
+                playerListContainer.innerHTML = '<p style="grid-column:1/-1; text-align:center;">✨ Sắp có cầu thủ mới!</p>';
+            } else {
+                let html = '';
+                players.forEach(p => {
+                    // Sử dụng các thuộc tính đã normalize (avatarUrl, flagUrl, clubLogoUrl)
+                    const avatar = p.avatarUrl || 'images/players/default.png';
+                    const flag = p.flagUrl || 'images/flags/default.png';
+                    const clubLogo = p.clubLogoUrl || 'images/clubs/default.png';
+                    
+                    html += `
+                        <div class="player-card">
+                            <img class="player-avatar" src="${avatar}" alt="${p.name}" onerror="this.src='images/players/default.png'">
+                            <div class="player-info">
+                                <div class="player-name" title="${p.name}">${p.name}</div>
+                                <span class="player-ovr">${p.ovr}</span>
+                                <div class="player-meta">
+                                    <img src="${flag}" alt="${p.nation}" onerror="this.style.display='none'">
+                                    <span>${p.position}</span>
+                                    <img src="${clubLogo}" alt="${p.club}" style="width:18px; height:18px;" onerror="this.style.display='none'">
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                playerListContainer.innerHTML = html;
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
         });
-    });
 
-    // Reset tiền
-    document.getElementById("resetMoneyBtn").addEventListener('click', () => {
-        setMoney(999999999999);
-        alert("Đã reset tiền về 999,999,999,999 NC");
-    });
+        function bindPlanetEvents() {
+            document.querySelectorAll('.planet-card').forEach(card => {
+                const pricePer = parseInt(card.dataset.price);
+                const qtyInput = card.querySelector('.qty-input');
+                const totalSpan = card.querySelector('.total-amount');
+                const buyBtn = card.querySelector('.buy-btn');
+                const infoBtn = card.querySelector('.info-btn');
 
-    updateMoneyDisplay();
+                // Info button
+                infoBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const pack = infoBtn.dataset.pack;
+                    showPreview(pack);
+                });
+
+                function updateTotal() {
+                    let qty = parseInt(qtyInput.value);
+                    if (isNaN(qty) || qty < 1) qty = 1;
+                    if (qty > 99) qty = 99;
+                    qtyInput.value = qty;
+                    totalSpan.innerText = (pricePer * qty).toLocaleString();
+                }
+                qtyInput.addEventListener('input', updateTotal);
+                updateTotal();
+
+                buyBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    let qty = parseInt(qtyInput.value);
+                    if (isNaN(qty) || qty < 1) qty = 1;
+                    const total = pricePer * qty;
+
+                    if (!subtractMoney(total)) {
+                        alert(`❌ Thiếu năng lượng! Cần ${total.toLocaleString()} NC.`);
+                        card.style.animation = 'shake 0.3s';
+                        setTimeout(() => card.style.animation = '', 300);
+                        return;
+                    }
+
+                    localStorage.setItem("currentPackType", card.dataset.pack);
+                    localStorage.setItem("currentPackQuantity", qty);
+                    setTimeout(() => window.location.href = "pack.html", 200);
+                });
+            });
+        }
+
+        // Shake animation
+        const style = document.createElement('style');
+        style.innerHTML = `@keyframes shake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-6px);} 75%{transform:translateX(6px);} }`;
+        document.head.appendChild(style);
+
+        // Reset tiền
+        document.getElementById('resetMoneyBtn').addEventListener('click', () => {
+            setMoney(999999999999);
+            showGoalPopup(window.innerWidth/2, window.innerHeight/3, '🌟 NĂNG LƯỢNG TỐI ĐA!');
+        });
+
+        // ---------- BÓNG BAY VÀ HIỆU ỨNG ----------
+        const ball = document.getElementById('flyingBall');
+        let x = 150, y = 150, vx = 2.8, vy = 0;
+        const gravity = 0.4, bounce = 0.65, friction = 0.99;
+        let minX = 20, maxX = window.innerWidth - 80, groundY = window.innerHeight - 70;
+
+        function updateBall() {
+            ball.style.left = x + 'px';
+            ball.style.top = y + 'px';
+            ball.style.transform = `rotate(${Math.atan2(vy, vx) * 12}deg)`;
+        }
+
+        function physics() {
+            vy += gravity;
+            x += vx;
+            y += vy;
+            if (x <= minX) { x = minX; vx = -vx * 0.8; }
+            else if (x >= maxX) { x = maxX; vx = -vx * 0.8; }
+            if (y >= groundY) {
+                y = groundY;
+                vy = -vy * bounce;
+                vx *= 0.97;
+                if (Math.abs(vy) < 0.5) vy = 0;
+                if (Math.abs(vx) < 0.1) vx = 0;
+            }
+            vx *= friction;
+            updateBall();
+            requestAnimationFrame(physics);
+        }
+
+        function resetBoundaries() {
+            maxX = window.innerWidth - 80;
+            groundY = window.innerHeight - 70;
+            x = Math.min(maxX, Math.max(minX, x));
+            y = Math.min(groundY, y);
+            updateBall();
+        }
+        window.addEventListener('resize', resetBoundaries);
+
+        ball.addEventListener('click', (e) => {
+            e.stopPropagation();
+            vy = -12;
+            vx += (Math.random() - 0.5) * 10;
+            vx = Math.min(15, Math.max(-15, vx));
+            showGoalPopup(e.clientX, e.clientY, '⚽ SUPER GOAL!');
+            createRipple(e.clientX, e.clientY);
+        });
+
+        function createRipple(cx, cy) {
+            const r = document.createElement('div');
+            r.className = 'click-ripple';
+            r.style.left = cx + 'px';
+            r.style.top = cy + 'px';
+            document.body.appendChild(r);
+            setTimeout(() => r.remove(), 600);
+        }
+
+        function showGoalPopup(x, y, text = 'GOAL!!!') {
+            const p = document.createElement('div');
+            p.className = 'goal-popup';
+            p.textContent = text;
+            p.style.left = x + 'px';
+            p.style.top = (y - 30) + 'px';
+            p.style.transform = 'translate(-50%, -50%)';
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 1200);
+        }
+
+        document.body.addEventListener('click', (e) => {
+            if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.ball')) return;
+            createRipple(e.clientX, e.clientY);
+            if (Math.random() > 0.5) showGoalPopup(e.clientX, e.clientY);
+            const rect = ball.getBoundingClientRect();
+            const bx = rect.left + rect.width/2, by = rect.top + rect.height/2;
+            if (Math.hypot(e.clientX - bx, e.clientY - by) < 150) {
+                vy = -9;
+                vx += (e.clientX - bx) * 0.1;
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                vy = -15;
+                vx += (Math.random() - 0.5) * 14;
+                showGoalPopup(window.innerWidth/2, window.innerHeight/2, '🌌 VŨ TRỤ SÚT!');
+            }
+            if (e.code === 'KeyG') showGoalPopup(window.innerWidth/2, window.innerHeight/2);
+        });
+
+        // Spotlight nền
+        document.body.addEventListener('mousemove', (e) => {
+            const px = (e.clientX / window.innerWidth) * 100;
+            const py = (e.clientY / window.innerHeight) * 100;
+            document.body.style.background = `
+                radial-gradient(circle at ${px}% ${py}%, #1a4a2a, #0a1f0a 80%, #030f05),
+                repeating-linear-gradient(45deg, rgba(0,255,100,0.05) 0px, rgba(0,255,100,0.05) 2px, transparent 2px, transparent 12px)
+            `;
+        });
+        document.body.addEventListener('mouseleave', () => {
+            document.body.style.background = `
+                radial-gradient(circle at 20% 30%, #0b2f1a 0%, #051a0a 100%),
+                repeating-linear-gradient(45deg, rgba(0,255,100,0.03) 0px, rgba(0,255,100,0.03) 2px, transparent 2px, transparent 10px)
+            `;
+        });
+
+        // Khởi tạo
+        renderPlanets();
+        updateMoneyDisplay();
+        updateBall();
+        requestAnimationFrame(physics);
+
+        setTimeout(() => {
+            const h1 = document.querySelector('h1');
+            if (h1) {
+                const rect = h1.getBoundingClientRect();
+                x = rect.left + rect.width/2 - 30;
+                y = rect.bottom - 20;
+                updateBall();
+            }
+        }, 80);
+
+        console.log('%c🪐 SHOP HÀNH TINH FC (tích hợp players.js) 🪐', 'font-size:18px; color:gold; background:#0a1f0a; padding:5px;');
+    })();
 </script>
 </body>
 </html>

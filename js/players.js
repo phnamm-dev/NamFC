@@ -4,41 +4,38 @@ const BASE_FLAG_PATH = "images/flags/";
 const BASE_CLUB_PATH = "images/clubs/";
 
 const allPlayers = [
-    // Bronze Common
-    { id: 101, name: "Anh Tuan", position: "ST", ovr: 39, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "bronze-anh-tuan.png", pack: "bronze" },
-    { id: 102, name: "Hong Long", position: "GK", ovr: 33, nation: "argentina", club: "Manchester City", clubLogo: "man-city.png", flag: "ar.png", playerImg: "bronze-hong-long.png", pack: "bronze" },
-    { id: 103, name: "Gia Phuc", position: "ST", ovr: 41, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "bronze-gia-phuc.png", pack: "bronze" },
-    { id: 104, name: "Cong Khoi", position: "ST", ovr: 43, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "bronze-cong-khoi.png", pack: "bronze" },
-    
-    // Silver Rare
-    { id: 201, name: "Van Thang", position: "ST", ovr: 67, nation: "india", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "in.png", playerImg: "silver-van-thang.png", pack: "silver" },
-    { id: 202, name: "Doraemon", position: "GK", ovr: 66, nation: "japan", club: "Paris Saint-Germain", clubLogo: "psg.png", flag: "jp.png", playerImg: "silver-doraemon.png", pack: "silver" }, 
-    { id: 203, name: "Bao Khang", position: "ST", ovr: 63, nation: "portugal", club: "VES School Football Club", clubLogo: "ves-sfc.png", flag: "pt.png", playerImg: "silver-bao-khang.png", pack: "silver" }, 
+    // Bronze
+    { id: 101, name: "Anh Tuan", position: "ST", ovr: 45, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "bronze-anh-tuan.png", pack: "bronze" },
+    { id: 102, name: "Hong Long", position: "GK", ovr: 54, nation: "argentina", club: "Manchester City", clubLogo: "man-city.png", flag: "ar.png", playerImg: "bronze-hong-long.png", pack: "bronze" },
+    { id: 103, name: "Gia Phuc", position: "ST", ovr: 52, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "bronze-gia-phuc.png", pack: "bronze" },
+    { id: 104, name: "Cong Khoi", position: "ST", ovr: 48, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "bronze-cong-khoi.png", pack: "bronze" },
+    { id: 105, name: "Gia Bao", position: "CB", ovr: 56, nation: "india", club: "Le Quang Cuong", clubLogo: "thcs-lqc.png", flag: "in.png", playerImg: "bronze-gia-bao.png", pack: "bronze" },
 
-    // Common
-    { id: 301, name: "Minh Long", position: "ST", ovr: 72, nation: "portugal", club: "THCS Le Quang Cuong", clubLogo: "thcs-lqc.png", flag: "pt.png", playerImg: "common-minh-long.png", pack: "common" }, 
+    // Silver
+    { id: 201, name: "Van Thang", position: "ST", ovr: 65, nation: "england", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "gb-eng.png", playerImg: "silver-van-thang.png", pack: "silver" },
+    { id: 202, name: "Pipilabu", position: "CDM", ovr: 63, nation: "china", club: "Manchester United", clubLogo: "man-utd.png", flag: "cn.png", playerImg: "silver-pipilabu.png", pack: "silver" }, 
+    { id: 203, name: "Bao Khang", position: "ST", ovr: 69, nation: "portugal", club: "VES School Football Club", clubLogo: "ves-sfc.png", flag: "pt.png", playerImg: "silver-bao-khang.png", pack: "silver" }, 
+
+    // Rare
+    { id: 301, name: "Hong Hai", position: "CAM", ovr: 79, nation: "england", club: "Arsenal", clubLogo: "arsenal.png", flag: "gb-eng.png", playerImg: "rare-hong-hai.png", pack: "rare" },
+    { id: 302, name: "Masha", position: "GK", ovr: 74, nation: "russia", club: "Masha and The Bear", clubLogo: "masha&thebear.png", flag: "ru.png", playerImg: "rare-masha.png", pack: "rare" },
 
     // Legend
-    { id: 401, name: "Pipilabu", position: "CDM", ovr: 89, nation: "china", club: "Manchester United", clubLogo: "man-utd.png", flag: "cn.png", playerImg: "legend-pipilabu.png", pack: "legend" }, 
+    { id: 401, name: "The Bear", position: "CAM", ovr: 89, nation: "russia", club: "Masha and The Bear", clubLogo: "masha&thebear.png", flag: "ru.png", playerImg: "legend-the-bear.png", pack: "legend" }, 
 
     // UEFA Champions League
-    { id: 501, name: "Anh Tuan", position: "ST", ovr: 96, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "uefa-anh-tuan.png", pack: "uefa" },
-    { id: 502, name: "Cong Khoi", position: "ST", ovr: 91, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "uefa-cong-khoi.png", pack: "uefa" },
+    { id: 501, name: "Peppa Beach", position: "CM", ovr: 94, nation: "england", club: "Peppa Pig", clubLogo: "peppa-pig.png", flag: "gb-eng.png", playerImg: "uefa-peppa-beach.png", pack: "uefa" },
+    { id: 502, name: "Cong Khoi", position: "ST", ovr: 93, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "uefa-cong-khoi.png", pack: "uefa" },
     { id: 503, name: "Hong Long", position: "GK", ovr: 90, nation: "argentina", club: "Manchester City", clubLogo: "man-city.png", flag: "ar.png", playerImg: "uefa-hong-long.png", pack: "uefa" },
     
     // TOTY
-    { id: 601, name: "Van Thang", position: "ST", ovr: 136, nation: "india", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "in.png", playerImg: "toty-van-thang.png", pack: "toty" },
-    { id: 602, name: "Anh Tuan", position: "ST", ovr: 136, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "toty-anh-tuan.png", pack: "toty" },
-    { id: 603, name: "Doraemon", position: "GK", ovr: 130, nation: "japan", club: "Paris Saint-Germain", clubLogo: "psg.png", flag: "jp.png", playerImg: "toty-doraemon.png", pack: "toty" }, 
-    { id: 604, name: "Bao Khang", position: "ST", ovr: 139, nation: "portugal", club: "VES School Football Club", clubLogo: "ves-sfc.png", flag: "pt.png", playerImg: "toty-bao-khang.png", pack: "toty" }, 
+    { id: 601, name: "Anh Tuan", position: "ST", ovr: 96, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "toty-anh-tuan.png", pack: "toty" },
+    { id: 602, name: "Van Thang", position: "ST", ovr: 95, nation: "england", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "gb-eng.png", playerImg: "toty-van-thang.png", pack: "toty" },
 
     // TITANS
-    { id: 701, name: "Anh Tuan", position: "ST", ovr: 149, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "titans-anh-tuan.png", pack: "titans" },
-    { id: 702, name: "Hong Long", position: "GK", ovr: 140, nation: "argentina", club: "Manchester City", clubLogo: "man-city.png", flag: "ar.png", playerImg: "titans-hong-long.png", pack: "titans" },
-    { id: 703, name: "Peter Griffin", position: "CB", ovr: 141, nation: "mexico", club: "Mexico", clubLogo: "mexico.png", flag: "mx.png", playerImg: "titans-peter-griffin.png", pack: "titans" },
-    { id: 704, name: "Glenn Quagmire", position: "LM", ovr: 142, nation: "usa", club: "Emblem of the United States Navy", clubLogo: "us-navy.png", flag: "us.png", playerImg: "titans-glenn-quagmire.png", pack: "titans" },
-    { id: 705, name: "Joe Swanson", position: "GK", ovr: 143, nation: "usa", club: "Chelsea", clubLogo: "chelsea.png", flag: "us.png", playerImg: "titans-joe-swanson.png", pack: "titans" },
-    { id: 706, name: "Cong Khoi", position: "ST", ovr: 148, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "titans-cong-khoi.png", pack: "titans" },
+    { id: 701, name: "Cong Khoi", position: "ST", ovr: 98, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "titans-cong-khoi.png", pack: "titans" },
+    { id: 702, name: "Truc Lam", position: "RW", ovr: 97, nation: "vietnam", club: "Le Quang Cuong", clubLogo: "thcs-lqc.png", flag: "vi.png", playerImg: "titans-truc-lam.png", pack: "titans" },
+    { id: 703, name: "Thanh Do", position: "GK", ovr: 96, nation: "vietnam", club: "Vietnam Football Federation", clubLogo: "vff.png", flag: "vi.png", playerImg: "titans-thanh-do.png", pack: "titans" },
 
     // ULTIMATE
     { id: 801, name: "Anh Tuan", position: "ST", ovr: 149, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "titans-anh-tuan.png", pack: "ultimate" },
@@ -57,60 +54,56 @@ function getPositionName(posCode) {
     return map[posCode] || posCode;
 }
 
-// Chuẩn hóa tất cả cầu thủ
+// Chuẩn hóa cầu thủ trước khi lưu hoặc hiển thị
 function normalizePlayer(p) {
     return {
-        ...p,
+        id: p.id,
+        name: p.name,
+        position: p.position,           // giữ code gốc (ST, GK...)
         positionName: getPositionName(p.position),
-        positionCode: p.position,
+        ovr: p.ovr,
+        nation: p.nation,
+        club: p.club,
+        clubLogo: p.clubLogo,
+        flag: p.flag,
+        playerImg: p.playerImg,
+        pack: p.pack,
+        // Đường dẫn đầy đủ
         avatarUrl: BASE_IMG_PATH + p.playerImg,
         flagUrl: BASE_FLAG_PATH + p.flag,
         clubLogoUrl: BASE_CLUB_PATH + p.clubLogo
     };
 }
-const normalizedPlayers = allPlayers.map(p => normalizePlayer(p));
 
-// Lọc cầu thủ theo loại pack (so sánh chính xác)
+// Lọc theo pack
 function getPlayersByPackType(packType) {
-    return normalizedPlayers.filter(p => p.pack.toLowerCase() === packType.toLowerCase());
+    return allPlayers
+        .filter(p => p.pack.toLowerCase() === packType.toLowerCase())
+        .map(normalizePlayer);
 }
 
-/**
- * Random cầu thủ với xác suất tỉ lệ nghịch với OVR.
- * Công thức: weight = max(1, 200 - ovr)
- * - OVR thấp (33) -> weight ~167 (rất dễ ra)
- * - OVR cao (139) -> weight ~61 (khó ra hơn)
- * Đảm bảo ngay cả OVR > 100 cũng có sự phân biệt rõ ràng.
- */
+// Random cầu thủ theo trọng số (đã tối ưu)
 function getRandomPlayerByPack(packType) {
     const pool = getPlayersByPackType(packType);
     if (pool.length === 0) return null;
 
-    // Tìm min/max OVR trong pack này
     const ovrs = pool.map(p => p.ovr);
     const minOVR = Math.min(...ovrs);
     const maxOVR = Math.max(...ovrs);
-    const range = maxOVR - minOVR || 1; // tránh chia 0 khi tất cả OVR bằng nhau
+    const range = maxOVR - minOVR || 1;
 
-    // Phân biệt pack phế hay pack xịn
-    const lowTierPacks = ["bronze", "silver", "common", "legend"];
-    const isLowTier = lowTierPacks.includes(packType.toLowerCase());
-
-    // Cài đặt độ "nhả" khác nhau
-    const baseMaxWeight = isLowTier ? 80 : 120;   // pack phế = 80, pack xịn = 120
-    const minWeight      = isLowTier ? 25 : 1;    // pack phế minWeight cao hơn → nhả hơn
+    const isLowTier = ["bronze", "silver", "common", "legend"].includes(packType.toLowerCase());
+    const baseMaxWeight = isLowTier ? 80 : 120;
+    const minWeight = isLowTier ? 25 : 1;
 
     let totalWeight = 0;
     const weights = pool.map(p => {
-        const relative = (p.ovr - minOVR) / range;           // 0 = OVR thấp nhất, 1 = OVR cao nhất
-        const w = Math.max(minWeight, 
-                  Math.floor(baseMaxWeight * (1 - relative)));
-        
+        const relative = (p.ovr - minOVR) / range;
+        const w = Math.max(minWeight, Math.floor(baseMaxWeight * (1 - relative)));
         totalWeight += w;
         return w;
     });
 
-    // Random theo weight
     let rand = Math.random() * totalWeight;
     let current = 0;
     for (let i = 0; i < pool.length; i++) {
@@ -119,38 +112,93 @@ function getRandomPlayerByPack(packType) {
             return { ...pool[i] };
         }
     }
-    return { ...pool[0] }; // fallback
+    return { ...pool[0] };
 }
 
-// ========== QUẢN LÝ BỘ SƯU TẬP ==========
+// ==================== QUẢN LÝ BỘ SƯU TẬP ====================
+
 function getMyPlayers() {
     const data = localStorage.getItem("myPlayers");
-    return data ? JSON.parse(data) : [];
+    if (!data) return [];
+    
+    try {
+        const players = JSON.parse(data);
+        // Normalize lại khi load để đảm bảo có positionName, avatarUrl...
+        return players.map(p => normalizePlayer(p));
+    } catch (e) {
+        console.error("Lỗi parse myPlayers:", e);
+        return [];
+    }
 }
 
 function saveMyPlayers(players) {
-    localStorage.setItem("myPlayers", JSON.stringify(players));
+    // Chỉ lưu dữ liệu cần thiết, không lưu đường dẫn đầy đủ (tiết kiệm dung lượng)
+    const cleanPlayers = players.map(p => ({
+        id: p.id,
+        name: p.name,
+        position: p.position,
+        ovr: p.ovr,
+        nation: p.nation,
+        club: p.club,
+        clubLogo: p.clubLogo,
+        flag: p.flag,
+        playerImg: p.playerImg,
+        pack: p.pack
+    }));
+    localStorage.setItem("myPlayers", JSON.stringify(cleanPlayers));
 }
 
 function addPlayerToCollection(player) {
+    if (!player || !player.id) return false;
+
     const players = getMyPlayers();
-    if (!players.some(p => p.id === player.id)) {
-        players.push(player);
+    
+    // Cho phép lưu nhiều phiên bản của cùng một cầu thủ nếu pack khác nhau
+    // (ví dụ: Anh Tuan bronze vs Anh Tuan TOTY)
+    const exists = players.some(p => 
+        p.id === player.id && 
+        p.pack === player.pack && 
+        p.ovr === player.ovr
+    );
+
+    if (!exists) {
+        const normalized = normalizePlayer(player);
+        players.push(normalized);
         saveMyPlayers(players);
+        console.log(`✅ Đã thêm cầu thủ: ${player.name} (${player.ovr}) - ${player.pack}`);
         return true;
     }
+    
+    console.log(`⚠️ Cầu thủ đã tồn tại: ${player.name} (${player.ovr})`);
     return false;
 }
 
 function addMultiplePlayersToCollection(newPlayers) {
     const players = getMyPlayers();
     let added = 0;
+
     for (let p of newPlayers) {
-        if (!players.some(ex => ex.id === p.id)) {
-            players.push(p);
+        const exists = players.some(ex => 
+            ex.id === p.id && 
+            ex.pack === p.pack && 
+            ex.ovr === p.ovr
+        );
+
+        if (!exists) {
+            const normalized = normalizePlayer(p);
+            players.push(normalized);
             added++;
         }
     }
-    if (added > 0) saveMyPlayers(players);
+
+    if (added > 0) {
+        saveMyPlayers(players);
+        console.log(`✅ Đã thêm ${added} cầu thủ mới từ pack`);
+    }
     return added;
 }
+
+// Export các hàm cần thiết (dùng cho debug)
+window.getMyPlayers = getMyPlayers;
+window.addPlayerToCollection = addPlayerToCollection;
+window.addMultiplePlayersToCollection = addMultiplePlayersToCollection;

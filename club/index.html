@@ -5,55 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLB - Đội hình của tôi</title>
     <style>
-        /* Giữ nguyên style cũ */
+        /* style giữ nguyên như cũ của bạn, mình chỉ thêm comment */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(145deg, #1a472a, #0e2a1a);
-            padding: 20px;
-            color: white;
-        }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: rgba(0,0,0,0.6);
-            border-radius: 48px;
-            padding: 30px;
-            backdrop-filter: blur(6px);
-        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(145deg, #1a472a, #0e2a1a); padding: 20px; color: white; }
+        .container { max-width: 1400px; margin: 0 auto; background: rgba(0,0,0,0.6); border-radius: 48px; padding: 30px; backdrop-filter: blur(6px); }
         h1 { text-align: center; color: #ffd966; margin-bottom: 30px; }
         .two-columns { display: flex; flex-wrap: wrap; gap: 30px; }
-        .players-pool {
-            flex: 1.5; background: #1a2a1a; border-radius: 32px; padding: 20px;
-            max-height: 70vh; overflow-y: auto;
-        }
-        .squad-area {
-            flex: 1; background: #1a2a1a; border-radius: 32px; padding: 20px;
-            max-height: 70vh; overflow-y: auto;
-        }
-        .player-card {
-            background: #2c3e2b; border-radius: 20px; padding: 12px; margin-bottom: 12px;
-            display: flex; align-items: center; gap: 15px; cursor: pointer;
-            transition: 0.1s; border-left: 4px solid #ffaa33;
-        }
+        .players-pool { flex: 1.5; background: #1a2a1a; border-radius: 32px; padding: 20px; max-height: 70vh; overflow-y: auto; }
+        .squad-area { flex: 1; background: #1a2a1a; border-radius: 32px; padding: 20px; max-height: 70vh; overflow-y: auto; }
+        .player-card { background: #2c3e2b; border-radius: 20px; padding: 12px; margin-bottom: 12px; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.1s; border-left: 4px solid #ffaa33; }
         .player-card.selected { background: #3e5e3a; border-left-color: #ff5500; transform: scale(1.01); }
         .player-avatar { width: 60px; height: 60px; border-radius: 50%; overflow: hidden; background: #111; }
         .player-avatar img { width: 100%; height: 100%; object-fit: cover; }
         .player-info { flex: 1; }
         .player-name { font-weight: bold; font-size: 1.1rem; }
         .player-detail { font-size: 0.8rem; opacity: 0.8; }
-        .squad-slot {
-            background: #2c3e2b; border-radius: 16px; padding: 10px; margin-bottom: 10px;
-            display: flex; align-items: center; gap: 15px;
-        }
-        .squad-slot .remove-btn {
-            background: #aa3333; border: none; color: white; border-radius: 50%;
-            width: 30px; height: 30px; cursor: pointer; font-weight: bold;
-        }
-        .btn {
-            background: #ffaa33; border: none; padding: 12px 24px; border-radius: 40px;
-            font-weight: bold; cursor: pointer; margin-top: 20px; width: 100%;
-        }
+        .squad-slot { background: #2c3e2b; border-radius: 16px; padding: 10px; margin-bottom: 10px; display: flex; align-items: center; gap: 15px; }
+        .squad-slot .remove-btn { background: #aa3333; border: none; color: white; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-weight: bold; }
+        .btn { background: #ffaa33; border: none; padding: 12px 24px; border-radius: 40px; font-weight: bold; cursor: pointer; margin-top: 20px; width: 100%; }
         .back-link { display: inline-block; margin-top: 20px; color: #ffd966; text-decoration: none; }
         .empty-msg { text-align: center; padding: 40px; opacity: 0.7; }
         .squad-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
@@ -85,12 +54,12 @@
     let selectedIds = [];
 
     function loadData() {
-        allPlayers = getMyPlayers();  // lấy từ localStorage
-        console.log("Loaded players:", allPlayers); // debug
+        allPlayers = getMyPlayers() || [];
+        console.log("%c[Club] Loaded players:", "color:#ffaa33", allPlayers.length, allPlayers);
+
         const savedSquad = localStorage.getItem("activeSquadIds");
         if (savedSquad) {
-            selectedIds = JSON.parse(savedSquad);
-            selectedIds = selectedIds.filter(id => allPlayers.some(p => p.id == id));
+            selectedIds = JSON.parse(savedSquad).filter(id => allPlayers.some(p => p.id == id));
             if (selectedIds.length > 11) selectedIds = selectedIds.slice(0, 11);
         } else {
             selectedIds = [];
@@ -111,18 +80,24 @@
             container.innerHTML = '<div class="empty-msg">Chưa có cầu thủ nào. Hãy mở pack ở shop!</div>';
             return;
         }
-        container.innerHTML = allPlayers.map(p => `
+
+        // Sắp xếp OVR cao → thấp cho đẹp
+        const sortedPlayers = [...allPlayers].sort((a, b) => b.ovr - a.ovr);
+
+        container.innerHTML = sortedPlayers.map(p => `
             <div class="player-card ${selectedIds.includes(p.id) ? 'selected' : ''}" data-id="${p.id}">
                 <div class="player-avatar">
-                    <img src="${p.avatarUrl || 'images/players/' + p.playerImg}" 
-                         onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(p.name)}&background=ffaa33&color=fff'">
+                    <img src="${p.avatarUrl || '../images/players/' + (p.playerImg || '')}" 
+                         onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(p.name)}&background=ffaa33&color=fff&size=80'">
                 </div>
                 <div class="player-info">
                     <div class="player-name">${p.name}</div>
-                    <div class="player-detail">${p.positionName || p.position} - OVR ${p.ovr}</div>
+                    <div class="player-detail">${p.positionName || p.position || '??'} - OVR ${p.ovr}</div>
                 </div>
             </div>
         `).join('');
+
+        // event click
         document.querySelectorAll('#playersList .player-card').forEach(card => {
             card.addEventListener('click', () => {
                 const id = parseInt(card.dataset.id);
@@ -140,27 +115,31 @@
         });
     }
 
+    // renderSquadList giữ nguyên logic của bạn, chỉ sửa nhỏ position
     function renderSquadList() {
         const container = document.getElementById("squadList");
-        const squadPlayers = selectedIds.map(id => allPlayers.find(p => p.id == id)).filter(p => p);
+        const squadPlayers = selectedIds.map(id => allPlayers.find(p => p.id == id)).filter(Boolean);
+
         if (squadPlayers.length === 0) {
             container.innerHTML = '<div class="empty-msg">Chưa chọn cầu thủ nào. Click vào cầu thủ bên trái để thêm.</div>';
             return;
         }
+
         container.innerHTML = squadPlayers.map((p, idx) => `
             <div class="squad-slot">
                 <div style="width: 30px; font-weight: bold;">${idx+1}</div>
                 <div class="player-avatar" style="width: 45px; height: 45px;">
-                    <img src="${p.avatarUrl || 'images/players/' + p.playerImg}" 
+                    <img src="${p.avatarUrl || '../images/players/' + (p.playerImg || '')}" 
                          onerror="this.src='https://ui-avatars.com/api/?name=${p.name[0]}&background=ffaa33'">
                 </div>
                 <div style="flex:1">
                     <div>${p.name}</div>
-                    <div style="font-size:0.7rem;">${p.positionName || p.position} - OVR ${p.ovr}</div>
+                    <div style="font-size:0.7rem;">${p.positionName || p.position || '??'} - OVR ${p.ovr}</div>
                 </div>
                 <button class="remove-btn" data-id="${p.id}">✖</button>
             </div>
         `).join('');
+
         document.querySelectorAll('.remove-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -171,6 +150,7 @@
         });
     }
 
+    // các event listener giữ nguyên
     document.getElementById("clearSquadBtn").addEventListener('click', () => {
         if (confirm("Xóa toàn bộ đội hình?")) {
             selectedIds = [];
@@ -184,7 +164,7 @@
             return;
         }
         localStorage.setItem("activeSquadIds", JSON.stringify(selectedIds));
-        alert("Đã lưu đội hình 11 người!");
+        alert("✅ Đã lưu đội hình 11 người thành công!");
     });
 
     loadData();
