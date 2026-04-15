@@ -10,6 +10,7 @@ const allPlayers = [
     { id: 103, name: "Gia Phuc", position: "ST", ovr: 52, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "bronze-gia-phuc.png", pack: "bronze" },
     { id: 104, name: "Cong Khoi", position: "ST", ovr: 48, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "bronze-cong-khoi.png", pack: "bronze" },
     { id: 105, name: "Gia Bao", position: "CB", ovr: 56, nation: "india", club: "Le Quang Cuong", clubLogo: "thcs-lqc.png", flag: "in.png", playerImg: "bronze-gia-bao.png", pack: "bronze" },
+    { id: 106, name: "Hong Hai", position: "CB", ovr: 53, nation: "vietnam", club: "Juventus", clubLogo: "juventus.png", flag: "vi.png", playerImg: "bronze-hong-hai.png", pack: "bronze" },
 
     // Silver
     { id: 201, name: "Van Thang", position: "ST", ovr: 65, nation: "england", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "gb-eng.png", playerImg: "silver-van-thang.png", pack: "silver" },
@@ -31,6 +32,7 @@ const allPlayers = [
     // TOTY
     { id: 601, name: "Anh Tuan", position: "ST", ovr: 96, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "toty-anh-tuan.png", pack: "toty" },
     { id: 602, name: "Van Thang", position: "ST", ovr: 95, nation: "england", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "gb-eng.png", playerImg: "toty-van-thang.png", pack: "toty" },
+    { id: 603, name: "Hong Hai", position: "CB", ovr: 94, nation: "vietnam", club: "Juventus", clubLogo: "juventus.png", flag: "vi.png", playerImg: "toty-hong-hai.png", pack: "toty" },
 
     // TITANS
     { id: 701, name: "Cong Khoi", position: "ST", ovr: 98, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "titans-cong-khoi.png", pack: "titans" },

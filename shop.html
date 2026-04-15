@@ -446,12 +446,10 @@
         /* Danh sách cầu thủ trong modal */
         .player-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 10px;
         }
         .player-card {
-            background: rgba(0,0,0,0.25);
-            border-radius: 20px;
             padding: 12px 10px;
             backdrop-filter: blur(4px);
             display: flex;
@@ -460,13 +458,10 @@
             text-align: center;
         }
         .player-avatar {
-            width: 70px;
-            height: 70px;
+            width: 140px;
+            height: 180px;
             object-fit: cover;
             margin-bottom: 6px;
-        }
-        .player-info {
-            width: 100%;
         }
         .player-name {
             font-weight: bold;
@@ -475,28 +470,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .player-ovr {
-            background: rgb(0, 0, 0, 0.25);
-            color: gold;
-            padding: 2px 8px;
-            border-radius: 20px;
-            display: inline-block;
-            margin: 4px 0;
-        }
-        .player-meta {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            font-size: 0.8rem;
-        }
-        .player-meta img {
-            width: 20px;
-            height: 15px;
-            object-fit: cover;
-            border-radius: 3px;
-        }
-
         /* Bóng bay */
         .ball {
             position: fixed;
@@ -650,7 +623,7 @@
                 card.dataset.price = p.price;
 
                 card.innerHTML = `
-                    <button class="info-btn" data-pack="${p.pack}" title="Xem cầu thủ có thể mở">ⓘ</button>
+                    <button class="info-btn" data-pack="${p.pack}" title="Xem cầu thủ có thể mở">ℹ</button>
                     <div class="planet-icon">${p.icon}</div>
                     <div class="planet-name">${p.name}</div>
                     <div class="planet-price">${p.price.toLocaleString()} NC</div>
@@ -659,7 +632,7 @@
                         <input type="number" class="qty-input" value="1" min="1" max="99">
                     </div>
                     <div class="total-price">Tổng: <span class="total-amount">${p.price.toLocaleString()}</span> NC</div>
-                    <button class="buy-btn">🛸 MUA NGAY</button>
+                    <button class="buy-btn">MUA NGAY</button>
                 `;
                 container.appendChild(card);
             });
@@ -697,13 +670,7 @@
                         <div class="player-card">
                             <img class="player-avatar" src="${avatar}" alt="${p.name}" onerror="this.src='images/players/default.png'">
                             <div class="player-info">
-                                <div class="player-name" title="${p.name}">${p.name}</div>
-                                <span class="player-ovr">${p.ovr}</span>
-                                <div class="player-meta">
-                                    <img src="${flag}" alt="${p.nation}" onerror="this.style.display='none'">
-                                    <span>${p.position}</span>
-                                    <img src="${clubLogo}" alt="${p.club}" style="width:18px; height:18px;" onerror="this.style.display='none'">
-                                </div>
+                                <div class="player-name" title="${p.name}">${p.position} ${p.name}</div>
                             </div>
                         </div>
                     `;
@@ -864,7 +831,7 @@
                 e.preventDefault();
                 vy = -15;
                 vx += (Math.random() - 0.5) * 14;
-                showGoalPopup(window.innerWidth/2, window.innerHeight/2, '🌌 VŨ TRỤ SÚT!');
+                showGoalPopup(window.innerWidth/2, window.innerHeight/2, 'SUPER GOAL!!!');
             }
             if (e.code === 'KeyG') showGoalPopup(window.innerWidth/2, window.innerHeight/2);
         });
