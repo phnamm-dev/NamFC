@@ -5,17 +5,17 @@ const BASE_CLUB_PATH = "images/clubs/";
 
 const allPlayers = [
     // Bronze
-    { id: 101, name: "Anh Tuan", position: "ST", ovr: 45, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "bronze-anh-tuan.png", pack: "bronze" },
+    { id: 101, name: "Gia Bao", position: "CB", ovr: 56, nation: "india", club: "THCS Lê Quang Cường", clubLogo: "thcs-lqc.png", flag: "in.png", playerImg: "bronze-gia-bao.png", pack: "bronze" },
     { id: 102, name: "Hong Long", position: "GK", ovr: 54, nation: "argentina", club: "Manchester City", clubLogo: "man-city.png", flag: "ar.png", playerImg: "bronze-hong-long.png", pack: "bronze" },
-    { id: 103, name: "Gia Phuc", position: "ST", ovr: 52, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "bronze-gia-phuc.png", pack: "bronze" },
-    { id: 104, name: "Cong Khoi", position: "ST", ovr: 48, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "bronze-cong-khoi.png", pack: "bronze" },
-    { id: 105, name: "Gia Bao", position: "CB", ovr: 56, nation: "india", club: "THCS Lê Quang Cường", clubLogo: "thcs-lqc.png", flag: "in.png", playerImg: "bronze-gia-bao.png", pack: "bronze" },
-    { id: 106, name: "Hong Hai", position: "CB", ovr: 53, nation: "vietnam", club: "Juventus", clubLogo: "juventus.png", flag: "vi.png", playerImg: "bronze-hong-hai.png", pack: "bronze" },
+    { id: 103, name: "Hong Hai", position: "CB", ovr: 53, nation: "vietnam", club: "Juventus", clubLogo: "juventus.png", flag: "vi.png", playerImg: "bronze-hong-hai.png", pack: "bronze" },
+    { id: 104, name: "Gia Phuc", position: "ST", ovr: 52, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "bronze-gia-phuc.png", pack: "bronze" },
+    { id: 105, name: "Cong Khoi", position: "ST", ovr: 48, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "bronze-cong-khoi.png", pack: "bronze" },
+    { id: 106, name: "Anh Tuan", position: "ST", ovr: 45, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "bronze-anh-tuan.png", pack: "bronze" },
 
     // Silver
-    { id: 201, name: "Van Thang", position: "ST", ovr: 65, nation: "england", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "gb-eng.png", playerImg: "silver-van-thang.png", pack: "silver" },
-    { id: 202, name: "Pipilabu", position: "CDM", ovr: 63, nation: "china", club: "Manchester United", clubLogo: "man-utd.png", flag: "cn.png", playerImg: "silver-pipilabu.png", pack: "silver" }, 
-    { id: 203, name: "Bao Khang", position: "ST", ovr: 69, nation: "portugal", club: "VES School Football Club", clubLogo: "ves-sfc.png", flag: "pt.png", playerImg: "silver-bao-khang.png", pack: "silver" }, 
+    { id: 201, name: "Bao Khang", position: "ST", ovr: 69, nation: "portugal", club: "VES School Football Club", clubLogo: "ves-sfc.png", flag: "pt.png", playerImg: "silver-bao-khang.png", pack: "silver" }, 
+    { id: 202, name: "Van Thang", position: "ST", ovr: 65, nation: "england", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "gb-eng.png", playerImg: "silver-van-thang.png", pack: "silver" },
+    { id: 203, name: "Pipilabu", position: "CDM", ovr: 63, nation: "china", club: "Manchester United", clubLogo: "man-utd.png", flag: "cn.png", playerImg: "silver-pipilabu.png", pack: "silver" }, 
 
     // Rare
     { id: 301, name: "Hong Hai", position: "CAM", ovr: 79, nation: "england", club: "Arsenal", clubLogo: "arsenal.png", flag: "gb-eng.png", playerImg: "rare-hong-hai.png", pack: "rare" },
