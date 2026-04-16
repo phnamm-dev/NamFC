@@ -455,9 +455,56 @@
             transform: scale(1.08);
             transition: transform 0.2s ease;
         }
+        /* ========== LOADING OVERLAY ========== */
+        #loading-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+            pointer-events: all;
+        }
+        #loading-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(255,215,0,0.2);
+            border-top-color: gold;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 30px gold;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .loading-text {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: gold;
+            text-shadow: 0 0 20px orange;
+            letter-spacing: 4px;
+        }
     </style>
 </head>
 <body>
+<!-- LOADING OVERLAY -->
+<div id="loading-overlay">
+    <div style="text-align: center;">
+        <div class="loader"></div>
+        <div class="loading-text">Đang tải...</div>
+    </div>
+</div>
 <div class="pack-screen">
     <div class="info-bar"><span id="moneyAmount">0</span> NC</div>
     <div class="pack-type-badge" id="packTypeBadge">CHƯA CHỌN PACK</div>
@@ -488,6 +535,7 @@
 </div>
 
 <script src="js/players.js"></script>
+<script src="js/players.js"></script>
 <script>
     // ========== CẤU HÌNH ==========
     const basePath = {
@@ -501,22 +549,24 @@
     const LEGEND_PACK_MP3_URL = "audio/legends-never-die.mp3";
     const CROWD_CHEER_URL = "audio/crowd-cheer.mp3";
 
-    // ========== NHẠC RIÊNG CHO TỪNG LOẠI PACK XỊN ==========
     const PACK_MUSIC_MAP = {
         "toty": "audio/toty_open.mp3",
         "uefa": "audio/uefa_open.mp3",
         "legend": "audio/legend_open.mp3",
         "titans": "audio/titans_open.mp3",
-        "ultimate": "audio/titans_open.mp3",
+        "knockout_royalty": "audio/knockout_royalty_open.mp3",
+
+        "developers_test": "audio/knockout_royalty_open.mp3"
     };
 
-    // ========== CẤU HÌNH ANIMATION & NHẠC CHO TỪNG PACK VIP ==========
     const EPIC_ANIMATION_CONFIG = {
         legend: { audio: "audio/crowd-cheer.mp3", duration: 8000 },
+        knockout_royalty: { audio: "audio/knockout_royalty_begin.mp3", duration: 13100 },
         uefa:   { audio: "audio/uefa_begin.mp3", duration: 7500 },
         toty:   { audio: "audio/toty_begin.mp3", duration: 9700 },
         titans: { audio: "audio/titans_begin.mp3", duration: 8500 },
-        ultimate:{ audio: "audio/ultimate_animation.mp3", duration: 9500 }
+
+        developers_test: { audio: "audio/knockout_royalty_begin.mp3", duration: 13100 },
     };
 
     const packImageMap = {  
@@ -527,10 +577,11 @@
         "premium": "premium.png",
         "toty": "toty.png",
         "uefa": "uefa.png",
+        "knockout_royalty": "knockout_royalty.png",
         "titans": "titans.png",
     };
 
-    const EPIC_PACKS = ["legend", "uefa", "toty", "titans", "ultimate"];
+    const EPIC_PACKS = ["legend", "uefa", "knockout_royalty", "toty", "titans", "ultimate", "developers_test"];
 
     function isEpicPack(packType) {
         return EPIC_PACKS.includes(packType.toLowerCase());
@@ -561,13 +612,44 @@
     let totalPacks = 0;
     let isOpening = false;
 
+    function formatPackName(packType) {
+        if (!packType) return '';
+        
+        // Map tên đặc biệt
+        const nameMap = {
+            'knockout_royalty': 'KNOCKOUT ROYALTY',
+            'uefa': 'UEFA CHAMPIONS',
+            'toty': 'TOTY',
+            'titans': 'TROPHY TITANS',
+            'legend': 'LEGENDARY',
+            'rare': 'RARE',
+            'silver': 'SILVER',
+            'bronze': 'BRONZE',
+            'ultimate': 'ULTIMATE',
+
+            'developers_test': 'GÓI THỬ NGHIỆM'
+        };
+        
+        // Nếu có trong map thì dùng, không thì tự format
+        if (nameMap[packType.toLowerCase()]) {
+            return nameMap[packType.toLowerCase()];
+        }
+        
+        // Format mặc định: thay _ bằng space và viết hoa
+        return packType.replace(/_/g, ' ').toUpperCase();
+    }
+
     function loadPackData() {
         const packType = localStorage.getItem("currentPackType");
         const quantity = localStorage.getItem("currentPackQuantity");
         if (packType && quantity) {
             currentPackType = packType;
             totalPacks = parseInt(quantity);
-            document.getElementById("packTypeBadge").innerHTML = `${currentPackType.toUpperCase()} x${totalPacks}`;
+            
+            // Format tên đẹp
+            const displayName = formatPackName(packType);
+            document.getElementById("packTypeBadge").innerHTML = `${displayName} x${totalPacks}`;
+            
             updatePackImage(currentPackType);
             localStorage.removeItem("currentPackType");
             localStorage.removeItem("currentPackQuantity");
@@ -578,9 +660,9 @@
         }
     }
 
-    // ========== AUDIO MANAGEMENT - ĐÃ SỬA TRIỆT ĐỂ ==========
-    let currentAudio = null;     // Nhạc nền chính (loop)
-    let animationAudio = null;   // Nhạc animation ngắn (crowd, phonk...)
+    // ========== AUDIO MANAGEMENT ==========
+    let currentAudio = null;
+    let animationAudio = null;
 
     function stopAllMusic() {
         if (currentAudio) {
@@ -594,42 +676,34 @@
     }
 
     async function playAudio(url, volume = 0.75, loop = false) {
-        stopAllMusic();   // Dừng hết trước khi chơi cái mới
-
+        stopAllMusic();
         const audio = new Audio(url);
         audio.volume = volume;
         audio.loop = loop;
-
         try {
             await audio.play();
             if (loop) {
-                currentAudio = audio;      // Nhạc nền dài
+                currentAudio = audio;
             } else {
-                animationAudio = audio;    // Nhạc ngắn (animation)
+                animationAudio = audio;
             }
             return audio;
         } catch (err) {
             if (err.name !== "AbortError") {
                 console.warn("Audio play failed:", err.message);
             }
-            // Bỏ qua AbortError vì đây là lỗi bình thường khi chuyển nhạc nhanh
         }
     }
 
-    // Phát nhạc nền khi hiện thẻ cầu thủ
     function playPackMusicByType(packType) {
         const musicUrl = PACK_MUSIC_MAP[packType.toLowerCase()] || LEGEND_PACK_MP3_URL;
-        playAudio(musicUrl, 0.78, true);   // loop = true
+        playAudio(musicUrl, 0.78, false);
     }
 
-    // Phát nhạc animation (cờ, vị trí, CLB)
     function playEpicAnimationAudio(packType) {
         const config = EPIC_ANIMATION_CONFIG[packType.toLowerCase()];
         if (!config) return;
-
-        const url = config.audio;
-        // Không cần sửa tên file nữa vì trong config đã dùng đúng "audio/phonk.mp3"
-        playAudio(url, 0.8, false);   // không loop
+        playAudio(config.audio, 0.8, false);
     }
 
     function playCrowdCheer() {
@@ -675,7 +749,7 @@
         noise.start();
     }
 
-    // ========== HIỆU ỨNG VISUAL ==========
+    // ========== HIỆU ỨNG VISUAL (giữ nguyên) ==========
     function shakePack() {
         const pack = document.getElementById('pack-image');
         pack.classList.add('shake');
@@ -717,8 +791,10 @@
             uefa: ['#ffffff', '#aee2ff', '#00f2fe', '#4facfe', '#0052d4'],
             toty: ['#ffffff', '#d4f1f9', '#00e5ff', '#1a237e', '#ffd700'],
             titans: ['#ffffff', '#fdfcf0', '#dec54d', '#a67c00', '#594300'],
-            ultimate: ['#ffffff', '#d4f1f9', '#00f2fe', '#ffaa33', '#594300'],
-            default: ['#ffffff', '#ffedbc', '#ffd700', '#ffaa33', '#ff8800']
+            knockout_royalty: ['#F5E6D3', '#F5B041', '#D4AF37', '#4A0E4E', '#1A1A1A'],
+            default: ['#ffffff', '#ffedbc', '#ffd700', '#ffaa33', '#ff8800'],
+
+            developers_test: ['#F5E6D3', '#F5B041', '#D4AF37', '#4A0E4E', '#1A1A1A'],
         };
         const colors = palettes[packType.toLowerCase()] || palettes.default;
 
@@ -819,7 +895,7 @@
 
     function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-    // ========== MỞ 1 PACK CÓ HỖ TRỢ SKIP & THỜI GIAN CUSTOM ==========
+    // ========== MỞ 1 PACK (CÓ SKIP) ==========
     async function openOnePackWithAnimation() {
         const player = getRandomPlayerByPack(currentPackType);
         if (!player) throw new Error("Không tìm thấy cầu thủ");
@@ -833,8 +909,7 @@
         revealDiv.style.display = 'none';
         revealDiv.innerHTML = '';
 
-        // Lấy cấu hình thời gian & nhạc cho pack VIP
-        let stepDuration = 2000;   // mặc định cho pack thường
+        let stepDuration = 2000;
         if (isEpicPack(currentPackType)) {
             const config = EPIC_ANIMATION_CONFIG[currentPackType.toLowerCase()];
             if (config) {
@@ -846,7 +921,6 @@
             }
         }
 
-        // Biến điều khiển skip
         let skipRequested = false;
         const skipHandler = () => { skipRequested = true; };
         stage.addEventListener('click', skipHandler);
@@ -868,7 +942,6 @@
             });
         };
 
-        // Hiệu ứng ban đầu
         if (isEpicPack(currentPackType)) {
             stage.style.background = 'radial-gradient(circle at center, #1a0f00, #000000)';
             epicShakePack();
@@ -880,7 +953,7 @@
 
         document.querySelectorAll('.reveal-item').forEach(item => item.classList.remove('show'));
 
-        // BƯỚC 1: CỜ
+        // Bước 1: Cờ
         document.getElementById('flag-img').src = basePath.flags + player.flag;
         document.getElementById('item-flag').classList.add('show');
         playWhoosh();
@@ -899,7 +972,7 @@
             return player;
         }
 
-        // BƯỚC 2: VỊ TRÍ + OVR
+        // Bước 2: Vị trí + OVR
         document.getElementById('pos-text').innerHTML = player.position;
         document.getElementById('item-pos').classList.add('show');
         playWhoosh();
@@ -918,7 +991,7 @@
             return player;
         }
 
-        // BƯỚC 3: CLB
+        // Bước 3: CLB
         document.getElementById('club-logo-img').src = basePath.clubs + player.clubLogo;
         document.getElementById('club-name-text').innerText = player.club;
         document.getElementById('item-club').classList.add('show');
@@ -941,23 +1014,18 @@
     async function finalizeReveal(player, stage, revealDiv, packImg) {
         stage.style.display = 'none';
         
-        // Dừng animation audio nếu còn
         if (animationAudio) {
             animationAudio.pause();
             animationAudio = null;
         }
 
         if (isEpicPack(currentPackType)) {
-            // Phát nhạc nền pack (Legend Never Die, TOTY music...)
             playPackMusicByType(currentPackType);
-
-            // Tạo particle
             createPackAtmosphere(currentPackType);
         }
         
-        playEpicReveal();   // hiệu ứng whoosh khi hiện thẻ
+        playEpicReveal();
 
-        // Tạo thẻ cầu thủ
         const cardDiv = document.createElement('div');
         cardDiv.className = 'player-card';
         cardDiv.innerHTML = `<img src="${basePath.players + player.playerImg}" 
@@ -997,9 +1065,9 @@
         playWhoosh();
 
         if (isEpicPack(currentPackType)) {
-            playCrowdCheer();   // reo hò ngắn
+            playCrowdCheer();
             setTimeout(() => {
-                playPackMusicByType(currentPackType);   // chuyển sang nhạc nền pack
+                playPackMusicByType(currentPackType);
                 createPackAtmosphere(currentPackType);
             }, 1800);
             epicShakePack();
@@ -1034,23 +1102,24 @@
         });
     }
 
-    // ========== YÊU CẦU FULLSCREEN (TƯƠNG THÍCH MOBILE & PC) ==========
+    // ========== FULLSCREEN ==========
     function requestFullscreen() {
         const elem = document.documentElement;
         if (elem.requestFullscreen) {
             return elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) { /* Safari */
+        } else if (elem.webkitRequestFullscreen) {
             return elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        } else if (elem.msRequestFullscreen) {
             return elem.msRequestFullscreen();
         }
         return Promise.reject("Fullscreen not supported");
     }
 
-    // ========== KHỞI ĐỘNG MỞ PACK ==========
+    // ========== KHỞI ĐỘNG MỞ PACK (ĐÃ THÊM LOADING & KHÓA) ==========
     async function startPackOpening() {
+        // Kiểm tra khóa chống spam
         if (isOpening) {
-            alert("Đang mở pack, vui lòng chờ!");
+            alert("Đang mở pack, vui lòng chờ...");
             return;
         }
         if (!currentPackType || totalPacks <= 0) {
@@ -1058,19 +1127,28 @@
             return;
         }
 
+        // Hiển thị loading overlay (đã có sẵn trong HTML)
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) loadingOverlay.classList.add('active');
+
+        // Khóa ngay lập tức
+        isOpening = true;
+        const packImg = document.getElementById('pack-image');
+        packImg.style.pointerEvents = 'none';
+        window.addEventListener('beforeunload', beforeUnloadHandler);
+
         try {
+            // Yêu cầu fullscreen (có thể mất thời gian)
             await requestFullscreen();
             if (screen.orientation && screen.orientation.lock) {
                 screen.orientation.lock('landscape').catch(() => {});
             }
         } catch (e) {
-            console.log("Fullscreen không khả dụng hoặc bị từ chối:", e);
+            console.log("Fullscreen không khả dụng:", e);
         }
 
-        isOpening = true;
-        const packImg = document.getElementById('pack-image');
-        packImg.style.pointerEvents = 'none';
-        window.addEventListener('beforeunload', beforeUnloadHandler);
+        // Sau khi fullscreen hoặc không, tắt loading
+        if (loadingOverlay) loadingOverlay.classList.remove('active');
 
         try {
             if (totalPacks === 1) {
@@ -1086,15 +1164,18 @@
         } catch (err) {
             console.error(err);
             alert("Lỗi: " + err.message);
+        } finally {
+            // Mở khóa sau khi hoàn tất (kể cả lỗi)
+            isOpening = false;
+            packImg.style.pointerEvents = 'auto';
+            window.removeEventListener('beforeunload', beforeUnloadHandler);
+            stopAllMusic();
+
+            currentPackType = null;
+            totalPacks = 0;
+            // Ẩn loading nếu chưa ẩn
+            if (loadingOverlay) loadingOverlay.classList.remove('active');
         }
-
-        isOpening = false;
-        packImg.style.pointerEvents = 'auto';
-        window.removeEventListener('beforeunload', beforeUnloadHandler);
-        stopAllMusic();
-
-        currentPackType = null;
-        totalPacks = 0;
     }
 
     function beforeUnloadHandler(e) {
@@ -1105,6 +1186,7 @@
         }
     }
 
+    // ========== KHỞI ĐỘNG TRANG ==========
     loadPackData();
     updateMoneyUI();
 
