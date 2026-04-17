@@ -126,9 +126,8 @@
             backdrop-filter: blur(10px);
         }
         .player-card {
-            width: 320px;
-            height: 460px;
-            border-radius: 28px;
+            width: 380px;
+            height: 480px;
             overflow: hidden;
             transform: rotateY(90deg) scale(0.7);
             transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
@@ -555,6 +554,7 @@
         "legend": "audio/legend_open.mp3",
         "titans": "audio/titans_open.mp3",
         "knockout_royalty": "audio/knockout_royalty_open.mp3",
+        "future_stars": "audio/future_stars_open.mp3",
 
         "developers_test": "audio/knockout_royalty_open.mp3"
     };
@@ -562,6 +562,7 @@
     const EPIC_ANIMATION_CONFIG = {
         legend: { audio: "audio/crowd-cheer.mp3", duration: 8000 },
         knockout_royalty: { audio: "audio/knockout_royalty_begin.mp3", duration: 13100 },
+        future_stars: { audio: "audio/future_stars_begin.mp3", duration: 6700 },
         uefa:   { audio: "audio/uefa_begin.mp3", duration: 7500 },
         toty:   { audio: "audio/toty_begin.mp3", duration: 9700 },
         titans: { audio: "audio/titans_begin.mp3", duration: 8500 },
@@ -578,10 +579,11 @@
         "toty": "toty.png",
         "uefa": "uefa.png",
         "knockout_royalty": "knockout_royalty.png",
+        "future_stars": "future_stars.png",
         "titans": "titans.png",
     };
 
-    const EPIC_PACKS = ["legend", "uefa", "knockout_royalty", "toty", "titans", "ultimate", "developers_test"];
+    const EPIC_PACKS = ["legend", "uefa", "knockout_royalty", "toty", "titans", "ultimate", "future_stars", "developers_test"];
 
     function isEpicPack(packType) {
         return EPIC_PACKS.includes(packType.toLowerCase());
@@ -625,7 +627,7 @@
             'rare': 'RARE',
             'silver': 'SILVER',
             'bronze': 'BRONZE',
-            'ultimate': 'ULTIMATE',
+            'future_stars': 'FUTURE STARS',
 
             'developers_test': 'GÓI THỬ NGHIỆM'
         };
@@ -792,6 +794,8 @@
             toty: ['#ffffff', '#d4f1f9', '#00e5ff', '#1a237e', '#ffd700'],
             titans: ['#ffffff', '#fdfcf0', '#dec54d', '#a67c00', '#594300'],
             knockout_royalty: ['#F5E6D3', '#F5B041', '#D4AF37', '#4A0E4E', '#1A1A1A'],
+            future_stars: ['#ffffff', '#aee2ff', '#00f2fe', '#4facfe', '#0052d4'],
+
             default: ['#ffffff', '#ffedbc', '#ffd700', '#ffaa33', '#ff8800'],
 
             developers_test: ['#F5E6D3', '#F5B041', '#D4AF37', '#4A0E4E', '#1A1A1A'],

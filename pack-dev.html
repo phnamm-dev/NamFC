@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Nam FC • Mở Pack Siêu Cấp</title>
+    <style>
+        /* ===== GIỮ NGUYÊN STYLE CŨ + THÊM HIỆU ỨNG MỚI ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;700;900&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: radial-gradient(circle at 20% 30%, #0a0f1e, #03060c);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: white;
+        }
+        @keyframes pulseLight {
+            0% { text-shadow: 0 0 5px gold; }
+            100% { text-shadow: 0 0 30px #ffaa33, 0 0 10px orange; }
+        }
+        .pack-screen {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .pack-container {
+            text-align: center;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        #pack-image {
+            width: 250px;
+            cursor: pointer;
+            filter: drop-shadow(0 20px 25px rgba(0,0,0,0.7));
+            transition: transform 0.2s, filter 0.2s;
+        }
+        #pack-image:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 20px rgb(255, 255, 255, 0.3));
+        }
+        .pack-title {
+            font-size: 2rem;
+            letter-spacing: 6px;
+            font-family: 'Anton', sans-serif;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #ffd966, #ffaa33);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: pulseLight 1.2s infinite alternate;
+        }
+        #animation-stage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #0b0e1a, #000000);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+        }
+        .reveal-item {
+            opacity: 0;
+            transform: scale(0.6) translateY(70px);
+            transition: all 1s cubic-bezier(0.34, 1.2, 0.64, 1);
+            text-align: center;
+            position: absolute;
+        }
+        .reveal-item.show {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        .flag {
+            width: 500px;
+            height: 300px;
+            border-radius: 12px;
+            object-fit: cover;
+            transform: perspective(1000px) rotateX(5deg);
+            transition: transform 0.5s ease;
+        }
+        .pos-ovr {
+            font-size: 120px;
+            font-weight: 900;
+            font-family: 'Anton', sans-serif;
+            background: linear-gradient(135deg, #ffe6b3, #ffaa33);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(255,200,0,0.5);
+            letter-spacing: 4px;
+        }
+        .club-info {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #ffd966);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .club-logo {
+            width: 250px;
+            margin-bottom: 20px;
+        }
+        #player-reveal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #0e1a1a, #010101);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            backdrop-filter: blur(10px);
+            /* QUAN TRỌNG: Để particle định vị đúng */
+            position: fixed;
+            overflow: hidden;
+        }
+        .player-card {
+            width: 320px;
+            height: 460px;
+            border-radius: 28px;
+            overflow: hidden;
+            transform: rotateY(90deg) scale(0.7);
+            transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            opacity: 0;
+            position: relative;
+            z-index: 300;
+        }
+        .player-card.show {
+            transform: rotateY(0deg) scale(1);
+            opacity: 1;
+        }
+        .player-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        @keyframes shakePack {
+            0% { transform: translate(0,0) rotate(0deg); }
+            25% { transform: translate(5px, -5px) rotate(2deg); }
+            50% { transform: translate(-5px, 3px) rotate(-2deg); }
+            75% { transform: translate(3px, 2px) rotate(1deg); }
+            100% { transform: translate(0,0) rotate(0); }
+        }
+        @keyframes epicShake {
+            0%, 100% { transform: translate(0,0) rotate(0deg) scale(1); }
+            10% { transform: translate(-12px, -8px) rotate(-6deg) scale(1.08); }
+            20% { transform: translate(10px, 6px) rotate(5deg) scale(1.12); }
+            30% { transform: translate(-8px, -10px) rotate(-4deg) scale(1.08); }
+            40% { transform: translate(6px, 8px) rotate(3deg) scale(1.1); }
+        }
+        .shake { animation: shakePack 0.3s ease-in-out 3; }
+        .epic-shake { animation: epicShake 0.4s ease-in-out 4; }
+        .info-bar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.2);
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            backdrop-filter: blur(8px);
+            z-index: 400;
+            font-size: 1.1rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .pack-type-badge {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 170, 51, 0.2);
+            padding: 8px 18px;
+            border-radius: 40px;
+            color: black;
+            font-weight: bold;
+            z-index: 400;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .progress-info {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            z-index: 400;
+        }
+        .result-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(8px);
+            z-index: 500;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            overflow-y: auto;
+        }
+        .result-grid h2 {
+            font-size: 2.1rem;
+            letter-spacing: 8px;
+            font-family: 'Anton', sans-serif;
+            margin: 30px 0 40px 0;
+            background: linear-gradient(135deg, 
+                #ffd700 0%, 
+                #ffea80 25%, 
+                #ffaa33 50%, 
+                #ff8800 75%, 
+                #ffd700 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 
+                0 0 20px rgba(255, 215, 0, 0.6),
+                0 0 40px rgba(255, 170, 51, 0.4);
+            animation: titlePulse 2s ease-in-out infinite alternate;
+            position: relative;
+        }
+
+        .result-grid h2::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #ffaa33, transparent);
+            border-radius: 2px;
+            box-shadow: 0 0 15px #ffaa33;
+        }
+
+        @keyframes titlePulse {
+            0% {
+                text-shadow: 
+                    0 0 20px rgba(255, 215, 0, 0.6),
+                    0 0 40px rgba(255, 170, 51, 0.3);
+                transform: scale(1);
+            }
+            100% {
+                text-shadow: 
+                    0 0 35px rgba(255, 215, 0, 0.9),
+                    0 0 60px rgba(255, 170, 51, 0.6),
+                    0 0 80px rgba(255, 200, 0, 0.4);
+                transform: scale(1.03);
+            }
+        }
+        #animation-stage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, 
+                rgba(20, 15, 40, 0.95) 0%, 
+                rgba(5, 5, 15, 0.98) 70%, 
+                #000000 100%);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            cursor: pointer;
+            overflow: hidden;
+        }
+        #animation-stage::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, 
+                rgba(255, 215, 0, 0.12) 0%, 
+                rgba(255, 170, 51, 0.06) 40%, 
+                transparent 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            animation: stageGlow 8s ease-in-out infinite alternate;
+            z-index: 1;
+        }
+
+        @keyframes stageGlow {
+            0%   { opacity: 0.6; transform: translate(-50%, -50%) scale(0.95); }
+            100% { opacity: 1;   transform: translate(-50%, -50%) scale(1.08); }
+        }
+        .players-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        .mini-player-card {
+            text-align: center;
+            width: 110px;
+            transition: transform 0.1s;
+        }
+        .mini-player-card img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+        }
+        .mini-player-card .player-name {
+            font-size: 12px;
+            margin-top: 6px;
+            color: white;
+            font-weight: 500;
+        }
+        .mini-player-card .player-detail {
+            font-size: 10px;
+            color: #ffd966;
+        }
+        .close-result-btn {
+            background: #ffaa33;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px auto;
+            font-size: 1rem;
+        }
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            box-shadow: 0 0 6px gold;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 150;
+        }
+        @keyframes starFall {
+            0% { transform: translate(0,0) rotate(45deg); opacity: 1; }
+            100% { transform: translate(300px, 300px) rotate(45deg); opacity: 0; }
+        }
+        /* PARTICLE STYLES MỚI */
+        .pack-particle {
+            position: absolute;
+            pointer-events: none;
+            z-index: 250;
+            mix-blend-mode: screen;
+            will-change: transform, opacity;
+            border-radius: 50%;
+        }
+        .shockwave {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 3px solid rgba(255,215,0,0.8);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 255;
+            animation: shockwaveExpand 1.2s ease-out forwards;
+        }
+        @keyframes shockwaveExpand {
+            0% { width: 20px; height: 20px; opacity: 1; border-width: 8px; }
+            100% { width: 800px; height: 800px; opacity: 0; border-width: 1px; }
+        }
+        .light-ray {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 240;
+            opacity: 0;
+            animation: rayPulse 2s ease-out;
+        }
+        @keyframes rayPulse {
+            0% { opacity: 0.8; transform: translate(-50%, -50%) scale(0.5); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+        }
+        .explosion-flash {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 260;
+            pointer-events: none;
+            background: white;
+            animation: flashOut 0.6s ease-out forwards;
+        }
+        @keyframes flashOut {
+            0% { background: rgba(255, 255, 255, 1); }
+            30% { background: rgba(255, 255, 255, 0.8); }
+            100% { background: rgba(255, 255, 255, 0); }
+        }
+        .skip-hint, .pack-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255, 170, 51, 1);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0 auto;
+            pointer-events: none;
+            z-index: 105;
+            font-weight: 400;
+            animation: fadePulse 3s infinite ease-in-out;
+        }
+        @keyframes fadePulse {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.6; }
+        }
+        .player-card.store-card {
+            animation: slideDownAndStore 1.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+            pointer-events: none;
+        }
+        @keyframes slideDownAndStore {
+            0% {
+                transform: rotateY(0deg) scale(1) translateY(0);
+                opacity: 1;
+            }
+            60% {
+                transform: rotateY(0deg) scale(1.05) translateY(80px);
+            }
+            100% {
+                transform: rotateY(0deg) scale(0.75) translateY(1100px);
+                opacity: 0;
+            }
+        }
+        .players-grid {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding-right: 15px;
+            max-height: 68vh;
+        }
+        .players-grid::-webkit-scrollbar {
+            display: none;
+        }
+        .mini-player-card:hover {
+            transform: scale(1.08);
+            transition: transform 0.2s ease;
+        }
+        /* LOADING OVERLAY */
+        #loading-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+            pointer-events: all;
+        }
+        #loading-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(255,215,0,0.2);
+            border-top-color: gold;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 30px gold;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .loading-text {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: gold;
+            text-shadow: 0 0 20px orange;
+            letter-spacing: 4px;
+        }
+    </style>
+</head>
+<body>
+<!-- LOADING OVERLAY -->
+<div id="loading-overlay">
+    <div style="text-align: center;">
+        <div class="loader"></div>
+        <div class="loading-text">Đang tải vũ trụ...</div>
+    </div>
+</div>
+<div class="pack-screen">
+    <div class="info-bar"><span id="moneyAmount">0</span> NC</div>
+    <div class="pack-type-badge" id="packTypeBadge">CHƯA CHỌN PACK</div>
+    <div class="progress-info" id="progressInfo"></div>
+
+    <div class="pack-container">
+        <img id="pack-image" src="images/packs/default_pack.png" alt="FIFA Pack" onclick="startPackOpening()">
+        <div class="pack-title">ẤN ĐỂ MỞ</div>
+    </div>
+
+    <div id="animation-stage">
+        <div id="item-flag" class="reveal-item"><img id="flag-img" class="flag" src="" alt=""></div>
+        <div id="item-pos" class="reveal-item"><div id="pos-text" class="pos-ovr"></div></div>
+        <div id="item-club" class="reveal-item">
+            <img id="club-logo-img" class="club-logo" src="" alt="">
+            <div id="club-name-text" class="club-info"></div>
+        </div>
+        <div class="skip-hint">NHẤP BẤT KỲ ĐÂU ĐỂ SKIP</div>
+    </div>
+
+    <div id="player-reveal"></div>
+
+    <div id="resultGrid" class="result-grid">
+        <h2>BẠN ĐÃ NHẬN ĐƯỢC</h2>
+        <div id="resultPlayersGrid" class="players-grid"></div>
+        <button id="closeResultBtn" class="close-result-btn">NHẬN TẤT CẢ</button>
+    </div>
+</div>
+
+<script src="js/players.js"></script>
+<script>
+    // ========== CẤU HÌNH (GIỮ NGUYÊN) ==========
+    const basePath = {
+        players: "images/players/",
+        flags: "images/flags/",
+        clubs: "images/clubs/",
+        packs: "images/packs/"
+    };
+
+    const PACK_MP3_URL = "audio/pack_open.mp3";
+    const LEGEND_PACK_MP3_URL = "audio/legends-never-die.mp3";
+    const CROWD_CHEER_URL = "audio/crowd-cheer.mp3";
+
+    const PACK_MUSIC_MAP = {
+        "toty": "audio/toty_open.mp3",
+        "uefa": "audio/uefa_open.mp3",
+        "legend": "audio/legend_open.mp3",
+        "titans": "audio/titans_open.mp3",
+        "knockout_royalty": "audio/knockout_royalty_open.mp3",
+        "developers_test": "audio/knockout_royalty_open.mp3"
+    };
+
+    const EPIC_ANIMATION_CONFIG = {
+        legend: { audio: "audio/crowd-cheer.mp3", duration: 8000 },
+        knockout_royalty: { audio: "audio/knockout_royalty_begin.mp3", duration: 13100 },
+        uefa:   { audio: "audio/uefa_begin.mp3", duration: 7500 },
+        toty:   { audio: "audio/toty_begin.mp3", duration: 9700 },
+        titans: { audio: "audio/titans_begin.mp3", duration: 8500 },
+        developers_test: { audio: "audio/knockout_royalty_begin.mp3", duration: 13100 },
+    };
+
+    const packImageMap = {  
+        "bronze": "bronze.png",
+        "silver": "silver.png",
+        "rare": "rare.png",
+        "legend": "legend.png",
+        "premium": "premium.png",
+        "toty": "toty.png",
+        "uefa": "uefa.png",
+        "knockout_royalty": "knockout_royalty.png",
+        "titans": "titans.png",
+    };
+
+    const EPIC_PACKS = ["legend", "uefa", "knockout_royalty", "toty", "titans", "ultimate", "developers_test"];
+
+    function isEpicPack(packType) {
+        return EPIC_PACKS.includes(packType.toLowerCase());
+    }
+
+    function updatePackImage(packType) {
+        const packImg = document.getElementById('pack-image');
+        if (!packImg) return;
+        let imageFile = packImageMap[packType] || "default_pack.png";
+        packImg.src = basePath.packs + imageFile;
+    }
+
+    // ========== TIỀN ==========
+    function getMoney() {
+        let money = localStorage.getItem("myMoney");
+        if (money === null) {
+            localStorage.setItem("myMoney", "10000");
+            return 10000;
+        }
+        return parseInt(money);
+    }
+    function updateMoneyUI() {
+        document.getElementById("moneyAmount").innerText = getMoney().toLocaleString();
+    }
+
+    // ========== DỮ LIỆU PACK ==========
+    let currentPackType = null;
+    let totalPacks = 0;
+    let isOpening = false;
+
+    function formatPackName(packType) {
+        if (!packType) return '';
+        const nameMap = {
+            'knockout_royalty': 'KNOCKOUT ROYALTY',
+            'uefa': 'UEFA CHAMPIONS',
+            'toty': 'TOTY',
+            'titans': 'TROPHY TITANS',
+            'legend': 'LEGENDARY',
+            'rare': 'RARE',
+            'silver': 'SILVER',
+            'bronze': 'BRONZE',
+            'ultimate': 'ULTIMATE',
+            'developers_test': 'GÓI THỬ NGHIỆM'
+        };
+        if (nameMap[packType.toLowerCase()]) return nameMap[packType.toLowerCase()];
+        return packType.replace(/_/g, ' ').toUpperCase();
+    }
+
+    function loadPackData() {
+        const packType = localStorage.getItem("currentPackType");
+        const quantity = localStorage.getItem("currentPackQuantity");
+        if (packType && quantity) {
+            currentPackType = packType;
+            totalPacks = parseInt(quantity);
+            const displayName = formatPackName(packType);
+            document.getElementById("packTypeBadge").innerHTML = `${displayName} x${totalPacks}`;
+            updatePackImage(currentPackType);
+            localStorage.removeItem("currentPackType");
+            localStorage.removeItem("currentPackQuantity");
+            document.getElementById("progressInfo").innerHTML = `Sẵn sàng mở ${totalPacks} thẻ`;
+        } else {
+            alert("Bạn chưa mua pack nào! Hãy vào shop để mua.");
+            window.location.href = "shop.html";
+        }
+    }
+
+    // ========== AUDIO (GIỮ NGUYÊN) ==========
+    let currentAudio = null;
+    let animationAudio = null;
+
+    function stopAllMusic() {
+        if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+        if (animationAudio) { animationAudio.pause(); animationAudio = null; }
+    }
+
+    async function playAudio(url, volume = 0.75, loop = false) {
+        stopAllMusic();
+        const audio = new Audio(url);
+        audio.volume = volume;
+        audio.loop = loop;
+        try {
+            await audio.play();
+            if (loop) currentAudio = audio; else animationAudio = audio;
+            return audio;
+        } catch (err) {
+            if (err.name !== "AbortError") console.warn("Audio play failed:", err.message);
+        }
+    }
+
+    function playPackMusicByType(packType) {
+        const musicUrl = PACK_MUSIC_MAP[packType.toLowerCase()] || LEGEND_PACK_MP3_URL;
+        playAudio(musicUrl, 0.78, false);
+    }
+
+    function playEpicAnimationAudio(packType) {
+        const config = EPIC_ANIMATION_CONFIG[packType.toLowerCase()];
+        if (!config) return;
+        playAudio(config.audio, 0.8, false);
+    }
+
+    function playCrowdCheer() {
+        playAudio(CROWD_CHEER_URL, 0.85, false);
+    }
+
+    let audioCtx = null;
+    function initAudio() {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    function playWhoosh() {
+        if (!audioCtx) initAudio();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.frequency.value = 300;
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.6);
+        osc.start();
+        osc.stop(now + 0.6);
+    }
+
+    function playEpicReveal() {
+        if (!audioCtx) initAudio();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+        const noise = audioCtx.createBufferSource();
+        const buffer = audioCtx.createBuffer(1, audioCtx.sampleRate * 1.2, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < buffer.length; i++) data[i] = Math.random() * 2 - 1;
+        noise.buffer = buffer;
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 1200;
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.6, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+        noise.connect(filter).connect(gain).connect(audioCtx.destination);
+        noise.start();
+    }
+
+    // ========== HIỆU ỨNG MỚI (ẢO LÒI) ==========
+    function shakePack() {
+        const pack = document.getElementById('pack-image');
+        pack.classList.add('shake');
+        setTimeout(() => pack.classList.remove('shake'), 300);
+    }
+
+    function epicShakePack() {
+        const pack = document.getElementById('pack-image');
+        pack.classList.add('epic-shake');
+        setTimeout(() => pack.classList.remove('epic-shake'), 400);
+    }
+
+    function createShootingStars() {
+        const stage = document.getElementById('animation-stage');
+        for (let i = 0; i < 300; i++) {
+            const star = document.createElement('div');
+            star.className = 'shooting-star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.width = Math.random() * 5 + 1 + 'px';
+            star.style.height = star.style.width;
+            star.style.animation = `starFall ${Math.random() * 1.5 + 1.5}s linear forwards`;
+            stage.appendChild(star);
+            setTimeout(() => star.remove(), 8000);
+        }
+    }
+
+    // HÀM TẠO BẦU KHÔNG KHÍ SIÊU CẤP (FIX LỖI VỊ TRÍ VÀ THÊM HIỆU ỨNG)
+    function createPackAtmosphere(packType = 'default') {
+        const container = document.getElementById('player-reveal');
+        if (!container) return;
+
+        // Đảm bảo container có position relative cho particle absolute
+        container.style.position = 'fixed';
+        container.style.overflow = 'hidden';
+
+        const screenW = window.innerWidth;
+        const screenH = window.innerHeight;
+        const centerX = screenW / 2;
+        const centerY = screenH / 2;
+
+        const palettes = {
+            legend: ['#ffffff', '#ffedbc', '#ffd700', '#ffaa33', '#ff8800'],
+            uefa: ['#ffffff', '#aee2ff', '#00f2fe', '#4facfe', '#0052d4'],
+            toty: ['#ffffff', '#d4f1f9', '#00e5ff', '#1a237e', '#ffd700'],
+            titans: ['#ffffff', '#fdfcf0', '#dec54d', '#a67c00', '#594300'],
+            knockout_royalty: ['#F5E6D3', '#F5B041', '#0080FF', '#4A0E4E', '#FA5858'],
+            default: ['#ffffff', '#ffedbc', '#ffd700', '#ffaa33', '#ff8800'],
+            developers_test: ['#F5E6D3', '#F5B041', '#D4AF37', '#4A0E4E', '#1A1A1A'],
+        };
+        const colors = palettes[packType.toLowerCase()] || palettes.default;
+
+        // Flash trắng
+        const flash = document.createElement('div');
+        flash.className = 'explosion-flash';
+        container.appendChild(flash);
+        setTimeout(() => flash.remove(), 800);
+
+        // Sóng xung kích (shockwave)
+        const shockwave = document.createElement('div');
+        shockwave.className = 'shockwave';
+        shockwave.style.left = centerX + 'px';
+        shockwave.style.top = centerY + 'px';
+        container.appendChild(shockwave);
+        setTimeout(() => shockwave.remove(), 1200);
+
+        // Tia sáng lan tỏa (light ray)
+        const ray = document.createElement('div');
+        ray.className = 'light-ray';
+        container.appendChild(ray);
+        setTimeout(() => ray.remove(), 2000);
+
+        // Hàm spawn particle đa dạng
+        function spawnParticle(x, y, type = 'burst') {
+            const particle = document.createElement('div');
+            particle.className = 'pack-particle';
+            
+            const isBurst = type === 'burst';
+            const size = isBurst ? (Math.random() * 18 + 8) : (Math.random() * 12 + 5);
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Đa dạng hình dạng: tròn, ngôi sao nhỏ (dùng clip-path hoặc border-radius)
+            let shapeStyle = '';
+            const rand = Math.random();
+            if (rand < 0.6) {
+                shapeStyle = `border-radius: 50%;`;
+            } else if (rand < 0.8) {
+                shapeStyle = `clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);`; // ngôi sao
+            } else {
+                shapeStyle = `border-radius: 2px; transform: rotate(45deg);`;
+            }
+
+            Object.assign(particle.style, {
+                width: size + 'px',
+                height: size + 'px',
+                background: color,
+                boxShadow: `0 0 ${size*2}px ${color}`,
+                left: '0px',
+                top: '0px',
+                position: 'absolute',
+                opacity: '1'
+            });
+            particle.style.cssText += shapeStyle;
+
+            container.appendChild(particle);
+
+            let posX = x;
+            let posY = y;
+            let vx, vy;
+            let rotation = Math.random() * 360;
+            const rotSpeed = (Math.random() - 0.5) * 25;
+            const lifespan = isBurst ? (Math.random() * 2.0 + 1.8) : (Math.random() * 3 + 4);
+            
+            if (isBurst) {
+                const angle = Math.random() * Math.PI * 2;
+                const force = Math.random() * 50 + 20;
+                vx = Math.cos(angle) * force;
+                vy = Math.sin(angle) * force - 8;
+            } else {
+                vx = (Math.random() - 0.5) * 8;
+                vy = Math.random() * 5 + 3;
+            }
+
+            const gravity = 0.3;
+            const friction = 0.94;
+            const startTime = performance.now();
+
+            function update(now) {
+                const dt = (now - startTime) / 1000;
+                const progress = dt / lifespan;
+
+                if (progress >= 1) {
+                    particle.remove();
+                    return;
+                }
+
+                vx *= friction;
+                vy *= friction;
+                vy += gravity;
+                
+                posX += vx;
+                posY += vy;
+                rotation += rotSpeed;
+
+                const scale = isBurst ? (1 - progress * 0.7) : 1;
+                const opacity = 1 - progress;
+
+                particle.style.transform = `translate3d(${posX}px, ${posY}px, 0) rotate(${rotation}deg) scale(${scale})`;
+                particle.style.opacity = opacity;
+
+                if (posY < screenH + 100) {
+                    requestAnimationFrame(update);
+                } else {
+                    particle.remove();
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        // Burst particles (từ tâm)
+        for (let i = 0; i < 350; i++) {
+            setTimeout(() => {
+                spawnParticle(centerX, centerY, 'burst');
+            }, Math.random() * 120);
+        }
+
+        // Ambient particles (bay từ dưới lên)
+        const ambientInterval = setInterval(() => {
+            const rx = Math.random() * screenW;
+            const ry = Math.random() * (screenH * 0.9);
+            spawnParticle(rx, ry, 'ambient');
+        }, 20);
+
+        // Thêm hiệu ứng "vàng rơi" đặc biệt
+        const goldInterval = setInterval(() => {
+            for (let i=0; i<3; i++) {
+                const rx = centerX + (Math.random() - 0.5) * 400;
+                const ry = centerY + (Math.random() - 0.5) * 300;
+                spawnParticle(rx, ry, 'burst');
+            }
+        }, 80);
+
+        setTimeout(() => {
+            clearInterval(ambientInterval);
+            clearInterval(goldInterval);
+        }, 14000);
+    }
+
+    function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    // ========== MỞ PACK (GIỮ NGUYÊN LOGIC, CHỈ TĂNG CƯỜNG HIỆU ỨNG) ==========
+    async function openOnePackWithAnimation() {
+        const player = getRandomPlayerByPack(currentPackType);
+        if (!player) throw new Error("Không tìm thấy cầu thủ");
+
+        const stage = document.getElementById('animation-stage');
+        const revealDiv = document.getElementById('player-reveal');
+        const packImg = document.getElementById('pack-image');
+
+        packImg.style.display = 'none';
+        stage.style.display = 'flex';
+        revealDiv.style.display = 'none';
+        revealDiv.innerHTML = '';
+
+        let stepDuration = 2000;
+        if (isEpicPack(currentPackType)) {
+            const config = EPIC_ANIMATION_CONFIG[currentPackType.toLowerCase()];
+            if (config) {
+                const total = config.duration;
+                stepDuration = Math.floor((total - 600) / 3);
+                playEpicAnimationAudio(currentPackType);
+            } else {
+                playCrowdCheer();
+            }
+        }
+
+        let skipRequested = false;
+        const skipHandler = () => { skipRequested = true; };
+        stage.addEventListener('click', skipHandler);
+        
+        const waitWithSkip = (ms) => {
+            return new Promise((resolve) => {
+                if (skipRequested) return resolve('skip');
+                let interval = setInterval(() => {
+                    if (skipRequested) {
+                        clearInterval(interval);
+                        clearTimeout(timeout);
+                        resolve('skip');
+                    }
+                }, 50);
+                let timeout = setTimeout(() => {
+                    clearInterval(interval);
+                    resolve('timeout');
+                }, ms);
+            });
+        };
+
+        if (isEpicPack(currentPackType)) {
+            stage.style.background = 'radial-gradient(circle at center, #1a0f00, #000000)';
+            epicShakePack();
+            createShootingStars();
+        } else {
+            stage.style.background = 'radial-gradient(circle at center, #0b0e1a, #000000)';
+            shakePack();
+        }
+
+        document.querySelectorAll('.reveal-item').forEach(item => item.classList.remove('show'));
+
+        // Bước 1: Cờ
+        document.getElementById('flag-img').src = basePath.flags + player.flag;
+        document.getElementById('item-flag').classList.add('show');
+        playWhoosh();
+        let waitResult = await waitWithSkip(stepDuration);
+        if (waitResult === 'skip') {
+            stage.removeEventListener('click', skipHandler);
+            await finalizeReveal(player, stage, revealDiv, packImg);
+            return player;
+        }
+        
+        document.getElementById('item-flag').classList.remove('show');
+        await delay(200);
+        if (skipRequested) {
+            stage.removeEventListener('click', skipHandler);
+            await finalizeReveal(player, stage, revealDiv, packImg);
+            return player;
+        }
+
+        // Bước 2: Vị trí + OVR
+        document.getElementById('pos-text').innerHTML = player.position;
+        document.getElementById('item-pos').classList.add('show');
+        playWhoosh();
+        waitResult = await waitWithSkip(stepDuration);
+        if (waitResult === 'skip') {
+            stage.removeEventListener('click', skipHandler);
+            await finalizeReveal(player, stage, revealDiv, packImg);
+            return player;
+        }
+        
+        document.getElementById('item-pos').classList.remove('show');
+        await delay(200);
+        if (skipRequested) {
+            stage.removeEventListener('click', skipHandler);
+            await finalizeReveal(player, stage, revealDiv, packImg);
+            return player;
+        }
+
+        // Bước 3: CLB
+        document.getElementById('club-logo-img').src = basePath.clubs + player.clubLogo;
+        document.getElementById('club-name-text').innerText = player.club;
+        document.getElementById('item-club').classList.add('show');
+        playWhoosh();
+        waitResult = await waitWithSkip(stepDuration);
+        if (waitResult === 'skip') {
+            stage.removeEventListener('click', skipHandler);
+            await finalizeReveal(player, stage, revealDiv, packImg);
+            return player;
+        }
+        
+        document.getElementById('item-club').classList.remove('show');
+        await delay(200);
+        
+        stage.removeEventListener('click', skipHandler);
+        await finalizeReveal(player, stage, revealDiv, packImg);
+        return player;
+    }
+
+    async function finalizeReveal(player, stage, revealDiv, packImg) {
+        stage.style.display = 'none';
+        
+        if (animationAudio) {
+            animationAudio.pause();
+            animationAudio = null;
+        }
+
+        if (isEpicPack(currentPackType)) {
+            playPackMusicByType(currentPackType);
+            createPackAtmosphere(currentPackType);
+        }
+        
+        playEpicReveal();
+
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'player-card';
+        cardDiv.innerHTML = `<img src="${basePath.players + player.playerImg}" 
+            onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(player.name)}&background=ffaa33&color=fff&size=400';">`;
+        
+        revealDiv.innerHTML = '';
+        revealDiv.appendChild(cardDiv);
+        revealDiv.style.display = 'flex';
+        
+        setTimeout(() => cardDiv.classList.add('show'), 80);
+
+        const hint = document.createElement('div');
+        hint.className = 'pack-hint';
+        hint.innerHTML = 'Nhấp vào thẻ để lưu vào kho';
+        revealDiv.appendChild(hint);
+
+        cardDiv.addEventListener('click', () => {
+            cardDiv.classList.add('store-card');
+            cardDiv.addEventListener('animationend', () => {
+                stopAllMusic();
+                revealDiv.style.display = 'none';
+                window.location.href = "shop.html";
+            }, { once: true });
+        }, { once: true });
+    }
+
+    // ========== MỞ NHIỀU PACK (GIỮ NGUYÊN) ==========
+    async function openMultiplePacksFast(quantity) {
+        const players = [];
+        for (let i = 0; i < quantity; i++) {
+            const p = getRandomPlayerByPack(currentPackType);
+            if (p) players.push(p);
+        }
+
+        players.sort((a, b) => b.ovr - a.ovr);
+        addMultiplePlayersToCollection(players);
+        playWhoosh();
+
+        if (isEpicPack(currentPackType)) {
+            playCrowdCheer();
+            setTimeout(() => {
+                playPackMusicByType(currentPackType);
+                createPackAtmosphere(currentPackType);
+            }, 1800);
+            epicShakePack();
+        } else {
+            shakePack();
+        }
+
+        const resultGrid = document.getElementById('resultGrid');
+        const gridContainer = document.getElementById('resultPlayersGrid');
+        
+        gridContainer.innerHTML = players.map(p => `
+            <div class="mini-player-card">
+                <img src="${basePath.players + p.playerImg}" 
+                    onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(p.name)}&background=ffaa33&color=fff&size=100'">
+                <div class="player-name">${p.name}</div>
+                <div class="player-detail">${p.position} • OVR ${p.ovr}</div>
+            </div>
+        `).join('');
+
+        resultGrid.style.display = 'flex';
+
+        return new Promise(resolve => {
+            const closeBtn = document.getElementById('closeResultBtn');
+            const onClose = () => {
+                closeBtn.removeEventListener('click', onClose);
+                resultGrid.style.display = 'none';
+                stopAllMusic();
+                window.location.href = "shop.html";
+                resolve(players);
+            };
+            closeBtn.addEventListener('click', onClose);
+        });
+    }
+
+    // ========== FULLSCREEN ==========
+    function requestFullscreen() {
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            return elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+            return elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            return elem.msRequestFullscreen();
+        }
+        return Promise.reject("Fullscreen not supported");
+    }
+
+    // ========== KHỞI ĐỘNG MỞ PACK ==========
+    async function startPackOpening() {
+        if (isOpening) {
+            alert("Đang mở pack, vui lòng chờ...");
+            return;
+        }
+        if (!currentPackType || totalPacks <= 0) {
+            alert("Không có pack nào để mở!");
+            return;
+        }
+
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) loadingOverlay.classList.add('active');
+
+        isOpening = true;
+        const packImg = document.getElementById('pack-image');
+        packImg.style.pointerEvents = 'none';
+        window.addEventListener('beforeunload', beforeUnloadHandler);
+
+        try {
+            await requestFullscreen();
+            if (screen.orientation && screen.orientation.lock) {
+                screen.orientation.lock('landscape').catch(() => {});
+            }
+        } catch (e) {
+            console.log("Fullscreen không khả dụng:", e);
+        }
+
+        if (loadingOverlay) loadingOverlay.classList.remove('active');
+
+        try {
+            if (totalPacks === 1) {
+                document.getElementById("progressInfo").innerHTML = `Đang mở thẻ...`;
+                const player = await openOnePackWithAnimation();
+                addPlayerToCollection(player);
+                document.getElementById("progressInfo").innerHTML = `Đã mở xong 1 thẻ!`;
+            } else {
+                document.getElementById("progressInfo").innerHTML = `Đang mở ${totalPacks} thẻ...`;
+                await openMultiplePacksFast(totalPacks);
+                document.getElementById("progressInfo").innerHTML = `Đã mở xong ${totalPacks} thẻ!`;
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Lỗi: " + err.message);
+        } finally {
+            isOpening = false;
+            packImg.style.pointerEvents = 'auto';
+            window.removeEventListener('beforeunload', beforeUnloadHandler);
+            stopAllMusic();
+            currentPackType = null;
+            totalPacks = 0;
+            if (loadingOverlay) loadingOverlay.classList.remove('active');
+        }
+    }
+
+    function beforeUnloadHandler(e) {
+        if (isOpening) {
+            e.preventDefault();
+            e.returnValue = "Bạn đang mở pack chưa xong! Thoát sẽ mất dữ liệu. Bạn chắc chắn?";
+            return e.returnValue;
+        }
+    }
+
+    // ========== KHỞI ĐỘNG TRANG ==========
+    loadPackData();
+    updateMoneyUI();
+
+    document.body.addEventListener('click', () => {
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    }, { once: true });
+</script>
+</body>
+</html>

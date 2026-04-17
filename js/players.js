@@ -26,7 +26,7 @@ const allPlayers = [
 
     // UEFA Champions League
     { id: 501, name: "Peppa Beach", position: "CM", ovr: 94, nation: "england", club: "Peppa Pig", clubLogo: "peppa-pig.png", flag: "gb-eng.png", playerImg: "uefa-peppa-beach.png", pack: "uefa" },
-    { id: 502, name: "Cong Khoi", position: "ST", ovr: 93, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "uefa-cong-khoi.png", pack: "uefa" },
+    { id: 502, name: "Cong Khoi", position: "CDM", ovr: 93, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "uefa-cong-khoi.png", pack: "uefa" },
     { id: 503, name: "Hong Long", position: "GK", ovr: 90, nation: "argentina", club: "Manchester City", clubLogo: "man-city.png", flag: "ar.png", playerImg: "uefa-hong-long.png", pack: "uefa" },
     
     // TOTY
@@ -35,7 +35,7 @@ const allPlayers = [
     { id: 603, name: "Hong Hai", position: "CB", ovr: 94, nation: "vietnam", club: "Juventus", clubLogo: "juventus.png", flag: "vi.png", playerImg: "toty-hong-hai.png", pack: "toty" },
 
     // TITANS
-    { id: 701, name: "Cong Khoi", position: "ST", ovr: 98, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "titans-cong-khoi.png", pack: "titans" },
+    { id: 701, name: "Cong Khoi", position: "CDM", ovr: 98, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "titans-cong-khoi.png", pack: "titans" },
     { id: 702, name: "Truc Lam", position: "RW", ovr: 97, nation: "vietnam", club: "THCS Lê Quang Cường", clubLogo: "thcs-lqc.png", flag: "vi.png", playerImg: "titans-truc-lam.png", pack: "titans" },
     { id: 703, name: "Thanh Do", position: "GK", ovr: 96, nation: "vietnam", club: "Vietnam Football Federation", clubLogo: "vff.png", flag: "vi.png", playerImg: "titans-thanh-do.png", pack: "titans" },
 
@@ -43,15 +43,20 @@ const allPlayers = [
     { id: 901, name: "Nhu Y", position: "ST", ovr: 99, nation: "vietnam", club: "Trường Tươi Đồng Nai", clubLogo: "ttđn.png", flag: "vi.png", playerImg: "knockout-royalty-nhu-y.png", pack: "knockout_royalty" },
     { id: 902, name: "Shinichi Kudo", position: "ST", ovr: 98, nation: "Japan", club: "Detective Conan", clubLogo: "dec-conan.png", flag: "jp.png", playerImg: "knockout-royalty-shinichi-kudo.png", pack: "knockout_royalty" },
 
+    // FUTURE STARS
+    { id: 1000, name: "Nhu Y", position: "ST", ovr: 117, nation: "vietnam", club: "Arsenal", clubLogo: "arsenal.png", flag: "vi.png", playerImg: "future-stars-nhu-y.gif", pack: "future_stars" },
+    { id: 1001, name: "Xuan Phuc", position: "GK", ovr: 116, nation: "gb-eng", club: "Barcelona", clubLogo: "Barcelona.png", flag: "gb-eng.png", playerImg: "future-stars-xuan-phuc.gif", pack: "future_stars" },
+
     // DEVELOPERS TEST
+    /*
     { id: 0, name: "Nhu Y", position: "ST", ovr: 1, nation: "vietnam", club: "Trường Tươi Đồng Nai", clubLogo: "ttđn.png", flag: "vi.png", playerImg: "knockout-royalty-nhu-y.png", pack: "developers_test" },
-    { id: 0, name: "Cong Khoi", position: "ST", ovr: 1, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "titans-cong-khoi.png", pack: "developers_test" },
+    { id: 0, name: "Cong Khoi", position: "CDM", ovr: 1, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "titans-cong-khoi.png", pack: "developers_test" },
     { id: 0, name: "Peppa Beach", position: "CM", ovr: 1, nation: "england", club: "Peppa Pig", clubLogo: "peppa-pig.png", flag: "gb-eng.png", playerImg: "uefa-peppa-beach.png", pack: "developers_test" },
     { id: 0, name: "The Bear", position: "CAM", ovr: 1, nation: "russia", club: "Masha and The Bear", clubLogo: "masha&thebear.png", flag: "ru.png", playerImg: "legend-the-bear.png", pack: "developers_test" }, 
     { id: 0, name: "Hong Hai", position: "CAM", ovr: 1, nation: "england", club: "Arsenal", clubLogo: "arsenal.png", flag: "gb-eng.png", playerImg: "rare-hong-hai.png", pack: "developers_test" },
     { id: 0, name: "Bao Khang", position: "ST", ovr: 1, nation: "portugal", club: "VES School Football Club", clubLogo: "ves-sfc.png", flag: "pt.png", playerImg: "silver-bao-khang.png", pack: "developers_test" }, 
     { id: 0, name: "Gia Bao", position: "CB", ovr: 1, nation: "india", club: "THCS Lê Quang Cường", clubLogo: "thcs-lqc.png", flag: "in.png", playerImg: "bronze-gia-bao.png", pack: "developers_test" },
-
+    */
 ];
 
 // Hàm ánh xạ vị trí
