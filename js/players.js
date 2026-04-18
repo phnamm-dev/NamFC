@@ -30,22 +30,18 @@ const allPlayers = [
     { id: 503, name: "Hong Long", position: "GK", ovr: 90, nation: "argentina", club: "Manchester City", clubLogo: "man-city.png", flag: "ar.png", playerImg: "uefa-hong-long.png", pack: "uefa" },
     
     // TOTY
-    { id: 601, name: "Anh Tuan", position: "ST", ovr: 96, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "toty-anh-tuan.png", pack: "toty" },
-    { id: 602, name: "Van Thang", position: "ST", ovr: 95, nation: "england", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "gb-eng.png", playerImg: "toty-van-thang.png", pack: "toty" },
-    { id: 603, name: "Hong Hai", position: "CB", ovr: 94, nation: "vietnam", club: "Juventus", clubLogo: "juventus.png", flag: "vi.png", playerImg: "toty-hong-hai.png", pack: "toty" },
+    { id: 601, name: "Anh Tuan", position: "ST", ovr: 117, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "toty-anh-tuan.gif", pack: "toty" },
+    { id: 602, name: "Van Thang", position: "ST", ovr: 116, nation: "vietnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vi.png", playerImg: "toty-van-thang.gif", pack: "toty" },
+    { id: 603, name: "Hong Hai", position: "CB", ovr: 115, nation: "vietnam", club: "Juventus", clubLogo: "juventus.png", flag: "vi.png", playerImg: "toty-hong-hai.gif", pack: "toty" },
 
-    // TITANS
-    { id: 701, name: "Cong Khoi", position: "CDM", ovr: 98, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "titans-cong-khoi.png", pack: "titans" },
-    { id: 702, name: "Truc Lam", position: "RW", ovr: 97, nation: "vietnam", club: "THCS Lê Quang Cường", clubLogo: "thcs-lqc.png", flag: "vi.png", playerImg: "titans-truc-lam.png", pack: "titans" },
-    { id: 703, name: "Thanh Do", position: "GK", ovr: 96, nation: "vietnam", club: "Vietnam Football Federation", clubLogo: "vff.png", flag: "vi.png", playerImg: "titans-thanh-do.png", pack: "titans" },
-
-    // KNOCKOUT ROYALTY
-    { id: 901, name: "Nhu Y", position: "ST", ovr: 99, nation: "vietnam", club: "Trường Tươi Đồng Nai", clubLogo: "ttđn.png", flag: "vi.png", playerImg: "knockout-royalty-nhu-y.png", pack: "knockout_royalty" },
-    { id: 902, name: "Shinichi Kudo", position: "ST", ovr: 98, nation: "Japan", club: "Detective Conan", clubLogo: "dec-conan.png", flag: "jp.png", playerImg: "knockout-royalty-shinichi-kudo.png", pack: "knockout_royalty" },
+    // CAPPED LEGENDS
+    { id: 701, name: "Cong Khoi", position: "CDM", ovr: 117, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "capped-legends-cong-khoi.gif", pack: "capped_legends" },
 
     // FUTURE STARS
-    { id: 1000, name: "Nhu Y", position: "ST", ovr: 117, nation: "vietnam", club: "Arsenal", clubLogo: "arsenal.png", flag: "vi.png", playerImg: "future-stars-nhu-y.gif", pack: "future_stars" },
-    { id: 1001, name: "Xuan Phuc", position: "GK", ovr: 116, nation: "gb-eng", club: "Barcelona", clubLogo: "Barcelona.png", flag: "gb-eng.png", playerImg: "future-stars-xuan-phuc.gif", pack: "future_stars" },
+    { id: 801, name: "Xuan Phuc", position: "GK", ovr: 117, nation: "gb-eng", club: "Barcelona", clubLogo: "Barcelona.png", flag: "gb-eng.png", playerImg: "future-stars-xuan-phuc.gif", pack: "future_stars" },
+
+    // UCL DREAMCHASERS
+    { id: 901, name: "Nhu Y", position: "ST", ovr: 117, nation: "vietnam", club: "Arsenal", clubLogo: "arsenal.png", flag: "vi.png", playerImg: "ucl-nhu-y.gif", pack: "ucl" },
 
     // DEVELOPERS TEST
     /*

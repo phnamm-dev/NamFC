@@ -345,6 +345,33 @@
             font-weight: 400;
             animation: fadePulse 3s infinite ease-in-out;
         }
+        .copyright {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            color: rgba(255, 215, 0, 0.5);
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 4px 16px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            z-index: 999;
+            font-family: 'Montserrat', sans-serif;
+            pointer-events: none;  /* để không cản click */
+            transition: opacity 0.3s;
+        }
+        @media (max-width: 600px) {
+            .copyright {
+                bottom: 10px;
+                left: 10px;
+                font-size: 10px;
+                padding: 3px 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -365,6 +392,10 @@
 
     <!-- TRÁI BÓNG BAY -->
     <div class="ball" id="flyingBall">⚽</div>
+
+    <div class="copyright">
+        &copy; Pham Hoang Nam
+    </div>
 
     <script>
         (function(){

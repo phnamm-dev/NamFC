@@ -82,15 +82,16 @@
             transform: scale(1) translateY(0);
         }
         .flag {
-            width: 500px;
-            height: 300px;
+            width: clamp(200px, 60vw, 500px);
+            height: auto;
+            aspect-ratio: 16 / 9;
             border-radius: 12px;
             object-fit: cover;
             transform: perspective(1000px) rotateX(5deg);
-            transition: transform 0.5s ease;
+            box-shadow: 0 0 30px rgba(0,0,0,0.7);
         }
         .pos-ovr {
-            font-size: 120px;
+            font-size: clamp(3rem, 15vw, 120px);
             font-weight: 900;
             font-family: 'Anton', sans-serif;
             background: linear-gradient(135deg, #ffe6b3, #ffaa33);
@@ -101,15 +102,16 @@
             letter-spacing: 4px;
         }
         .club-info {
-            font-size: 42px;
+            font-size: clamp(1.5rem, 8vw, 42px);
             font-weight: 800;
             background: linear-gradient(135deg, #fff, #ffd966);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            text-shadow: 0 0 20px orange;
         }
         .club-logo {
-            width: 250px;
+            width: clamp(120px, 35vw, 250px);
             margin-bottom: 20px;
         }
         #player-reveal {
@@ -177,40 +179,52 @@
         .epic-shake { animation: epicShake 0.4s ease-in-out 4; }
         .info-bar {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.2);
-            padding: 10px 20px;
-            border-radius: 40px;
-            font-weight: bold;
-            backdrop-filter: blur(8px);
-            z-index: 400;
-            font-size: 1.1rem;
+            top: 16px;
+            right: 16px;
+            background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-weight: bold;
+            font-size: clamp(0.9rem, 4.5vw, 1.3rem);
+            color: #FFD966;
+            z-index: 400;
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .pack-type-badge {
             position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 170, 51, 0.2);
-            padding: 8px 18px;
-            border-radius: 40px;
-            color: black;
-            font-weight: bold;
-            z-index: 400;
+            top: 16px;
+            left: 16px;
+            background: rgba(255, 170, 51, 0.25);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            padding: 6px 16px;
+            border-radius: 60px;
+            color: #FFD966;
+            font-weight: 800;
+            font-size: clamp(0.8rem, 4vw, 1.2rem);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            z-index: 400;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .progress-info {
             position: fixed;
             top: 70px;
-            right: 20px;
-            background: rgba(0,0,0,0.7);
-            padding: 8px 16px;
+            right: 16px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 5px 15px;
             border-radius: 40px;
-            font-size: 0.9rem;
+            font-size: clamp(0.7rem, 3.5vw, 1rem);
+            font-weight: 500;
+            color: #f5e56b;
             z-index: 400;
+            border: 1px solid rgba(255, 215, 0, 0.3);
         }
         .result-grid {
             position: fixed;
@@ -511,6 +525,33 @@
             text-shadow: 0 0 20px orange;
             letter-spacing: 4px;
         }
+        .copyright {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            color: rgba(255, 215, 0, 0.5);
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 4px 16px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            z-index: 999;
+            font-family: 'Montserrat', sans-serif;
+            pointer-events: none;  /* để không cản click */
+            transition: opacity 0.3s;
+        }
+        @media (max-width: 600px) {
+            .copyright {
+                bottom: 10px;
+                left: 10px;
+                font-size: 10px;
+                padding: 3px 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -548,6 +589,10 @@
         <div id="resultPlayersGrid" class="players-grid"></div>
         <button id="closeResultBtn" class="close-result-btn">NHẬN TẤT CẢ</button>
     </div>
+    
+    <div class="copyright">
+        &copy; Pham Hoang Nam
+    </div>
 </div>
 
 <script src="js/players.js"></script>
@@ -569,8 +614,8 @@
         "toty": "audio/toty_open.mp3",
         "uefa": "audio/uefa_open.mp3",
         "legend": "audio/legend_open.mp3",
-        "titans": "audio/titans_open.mp3",
-        "knockout_royalty": "audio/knockout_royalty_open.mp3",
+        "capped_legends": "audio/capped_legends_open.mp3",
+        "ucl": "audio/ucl_open.mp3",
         "future_stars": "audio/future_stars_open.mp3",
 
         "developers_test": "audio/knockout_royalty_open.mp3"
@@ -578,11 +623,11 @@
 
     const EPIC_ANIMATION_CONFIG = {
         legend: { audio: "audio/crowd-cheer.mp3", duration: 8000 },
-        knockout_royalty: { audio: "audio/knockout_royalty_begin.mp3", duration: 13100 },
+        ucl: { audio: "audio/ucl_begin.mp3", duration: 13100 },
         future_stars: { audio: "audio/future_stars_begin.mp3", duration: 6700 },
         uefa:   { audio: "audio/uefa_begin.mp3", duration: 7500 },
         toty:   { audio: "audio/toty_begin.mp3", duration: 9700 },
-        titans: { audio: "audio/titans_begin.mp3", duration: 8500 },
+        capped_legends: { audio: "audio/capped_legends_begin.mp3", duration: 8500 },
 
         developers_test: { audio: "audio/knockout_royalty_begin.mp3", duration: 13100 },
     };
@@ -600,7 +645,7 @@
         "titans": "titans.png",
     };
 
-    const EPIC_PACKS = ["legend", "uefa", "knockout_royalty", "toty", "titans", "ultimate", "future_stars", "developers_test"];
+    const EPIC_PACKS = ["legend", "uefa", "toty", "capped_legends", "ucl", "future_stars", "developers_test"];
 
     function isEpicPack(packType) {
         return EPIC_PACKS.includes(packType.toLowerCase());
@@ -636,7 +681,7 @@
         
         // Map tên đặc biệt
         const nameMap = {
-            'knockout_royalty': 'KNOCKOUT ROYALTY',
+            'ucl': 'UCL DREAMCHASERS',
             'uefa': 'UEFA CHAMPIONS',
             'toty': 'TOTY',
             'titans': 'TROPHY TITANS',
@@ -810,8 +855,9 @@
             uefa: ['#ffffff', '#aee2ff', '#00f2fe', '#4facfe', '#0052d4'],
             toty: ['#ffffff', '#d4f1f9', '#00e5ff', '#1a237e', '#ffd700'],
             titans: ['#ffffff', '#fdfcf0', '#dec54d', '#a67c00', '#594300'],
-            knockout_royalty: ['#F5E6D3', '#F5B041', '#D4AF37', '#4A0E4E', '#1A1A1A'],
+            //knockout_royalty: ['#F5E6D3', '#F5B041', '#D4AF37', '#4A0E4E', '#1A1A1A'],
             future_stars: ['#ffffff', '#aee2ff', '#00f2fe', '#4facfe', '#0052d4'],
+            ucl: ['#ffffff', '#aee2ff', '#00f2fe', '#4facfe', '#0052d4'],
 
             default: ['#ffffff', '#ffedbc', '#ffd700', '#ffaa33', '#ff8800'],
 

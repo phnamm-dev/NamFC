@@ -514,6 +514,33 @@
             .planet-card { width: 240px; }
             .money-orb { font-size: 1.8rem; padding: 12px 25px; }
         }
+        .copyright {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            color: rgba(255, 215, 0, 0.5);
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 4px 16px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            z-index: 999;
+            font-family: 'Montserrat', sans-serif;
+            pointer-events: none;  /* để không cản click */
+            transition: opacity 0.3s;
+        }
+        @media (max-width: 600px) {
+            .copyright {
+                bottom: 10px;
+                left: 10px;
+                font-size: 10px;
+                padding: 3px 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -554,6 +581,10 @@
 
     <div class="nav-links">
         <a href="index.html" class="back-link">↺ VỀ CÂU LẠC BỘ</a>
+    </div>
+
+    <div class="copyright">
+        &copy; Pham Hoang Nam
     </div>
 </div>
 
@@ -609,11 +640,10 @@
             { pack: 'rare', name: 'RARE', icon: '🥇', price: 30000, desc: 'OVR 70-79' },
             { pack: 'legend', name: 'LEGEND', icon: '✨', price: 150000, desc: 'OVR 80-89' },
             { pack: 'uefa', name: 'UEFA', icon: '🏆', price: 750000, desc: 'OVR 90-95' },
-            { pack: 'toty', name: 'TOTY', icon: '⭐', price: 2500000, desc: 'OVR 93-96' },
-            { pack: 'titans', name: 'TITANS', icon: '👑', price: 15000000, desc: 'OVR 96-98' },
-            { pack: 'knockout_royalty', name: 'Knockout Royalty', icon: '🏅', price: 25000000, desc: 'OVR 96-99' },
-            { pack: 'future_stars', name: 'Future Stars', icon: '🏅', price: 50000000, desc: 'OVR 115-117' },
-            
+            { pack: 'toty', name: 'TOTY', icon: '⭐', price: 5000000, desc: 'OVR 115-117' },
+            { pack: 'future_stars', name: 'Future Stars', icon: '🏅', price: 10000000, desc: 'OVR 115-117' },
+            { pack: 'capped_legends', name: 'Capped Legends', icon: '⚽', price: 20000000, desc: 'OVR 115-117' },
+            { pack: 'ucl', name: 'UCL Dreamchasers', icon: '🪄', price: 30000000, desc: 'OVR 115-117' },            
             
             //{ pack: 'developers_test', name: 'Developers Test', icon: '🥹', price: 1, desc: 'Full thẻ xịn nhất OVR 40-99. Pack thử nghiệm' },
         ];
