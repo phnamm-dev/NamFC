@@ -38,7 +38,7 @@ const allPlayers = [
     { id: 701, name: "Cong Khoi", position: "CDM", ovr: 117, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "capped-legends-cong-khoi.gif", pack: "capped_legends" },
 
     // FUTURE STARS
-    { id: 801, name: "Xuan Phuc", position: "GK", ovr: 117, nation: "gb-eng", club: "Barcelona", clubLogo: "Barcelona.png", flag: "gb-eng.png", playerImg: "future-stars-xuan-phuc.gif", pack: "future_stars" },
+    { id: 801, name: "Xuan Phuc", position: "GK", ovr: 117, nation: "gb-eng", club: "Barcelona", clubLogo: "barcelona.png", flag: "gb-eng.png", playerImg: "future-stars-xuan-phuc.gif", pack: "future_stars" },
 
     // UCL DREAMCHASERS
     { id: 901, name: "Nhu Y", position: "ST", ovr: 117, nation: "vietnam", club: "Arsenal", clubLogo: "arsenal.png", flag: "vi.png", playerImg: "ucl-nhu-y.gif", pack: "ucl" },
