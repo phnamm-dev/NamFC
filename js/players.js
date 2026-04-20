@@ -43,6 +43,11 @@ const allPlayers = [
     // UCL DREAMCHASERS
     { id: 901, name: "Nhu Y", position: "ST", ovr: 117, nation: "vietnam", club: "Arsenal", clubLogo: "arsenal.png", flag: "vi.png", playerImg: "ucl-nhu-y.gif", pack: "ucl" },
 
+
+    // A NATION'S STORY PT
+    { id: 1001, name: "Ronaldo", position: "ST", ovr: 117, nation: "portugal", club: "Al Nassr", clubLogo: "al-nassr.png", flag: "pt.png", playerImg: "and-pt-ronaldo.gif", pack: "and_pt" },
+    { id: 1002, name: "Cong Khoi", position: "CDM", ovr: 116, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "and-pt-cong-khoi.gif", pack: "and_pt" },
+
     // DEVELOPERS TEST
     /*
     { id: 0, name: "Nhu Y", position: "ST", ovr: 1, nation: "vietnam", club: "Trường Tươi Đồng Nai", clubLogo: "ttđn.png", flag: "vi.png", playerImg: "knockout-royalty-nhu-y.png", pack: "developers_test" },
