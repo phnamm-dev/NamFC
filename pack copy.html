@@ -35,7 +35,7 @@
             transition: all 0.3s ease;
         }
         #pack-image {
-            width: clamp(150px, 40vw, 280px);
+            width: 250px;
             cursor: pointer;
             filter: drop-shadow(0 20px 25px rgba(0,0,0,0.7));
             transition: transform 0.2s, filter 0.2s;
@@ -82,7 +82,7 @@
             transform: scale(1) translateY(0);
         }
         .flag {
-            width: clamp(140px, 50vw, 350px);
+            width: clamp(200px, 60vw, 500px);
             height: auto;
             aspect-ratio: 16 / 9;
             border-radius: 12px;
@@ -91,7 +91,7 @@
             box-shadow: 0 0 30px rgba(0,0,0,0.7);
         }
         .pos-ovr {
-            font-size: clamp(2.5rem, 12vw, 80px);
+            font-size: clamp(3rem, 15vw, 120px);
             font-weight: 900;
             font-family: 'Anton', sans-serif;
             background: linear-gradient(135deg, #ffe6b3, #ffaa33);
@@ -102,7 +102,7 @@
             letter-spacing: 4px;
         }
         .club-info {
-            font-size: clamp(1.2rem, 6vw, 36px);
+            font-size: clamp(1.5rem, 8vw, 42px);
             font-weight: 800;
             background: linear-gradient(135deg, #fff, #ffd966);
             -webkit-background-clip: text;
@@ -110,14 +110,9 @@
             color: transparent;
             text-shadow: 0 0 20px orange;
         }
-        .club-info {
-            font-size: clamp(1.2rem, 6vw, 36px);
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff, #ffd966);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 20px orange;
+        .club-logo {
+            width: clamp(120px, 35vw, 250px);
+            margin-bottom: 20px;
         }
         #player-reveal {
             position: fixed;
@@ -143,7 +138,7 @@
             transition: transform 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             opacity: 0;
             background: transparent;
-            cursor: pointer;
+                cursor: pointer;
         }
         .player-card.show {
             transform: rotateY(0deg) scale(1);
@@ -184,15 +179,15 @@
         .epic-shake { animation: epicShake 0.4s ease-in-out 4; }
         .info-bar {
             position: fixed;
-            top: 12px;
-            right: 12px;
+            top: 16px;
+            right: 16px;
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            padding: 4px 12px;
+            padding: 6px 18px;
             border-radius: 60px;
             font-weight: bold;
-            font-size: clamp(0.7rem, 3.5vw, 1.1rem);
+            font-size: clamp(0.9rem, 4.5vw, 1.3rem);
             color: #FFD966;
             z-index: 400;
             border: 1px solid rgba(255, 215, 0, 0.4);
@@ -218,14 +213,14 @@
         }
         .progress-info {
             position: fixed;
-            top: 55px;
-            right: 12px;
+            top: 70px;
+            right: 16px;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            padding: 3px 12px;
+            padding: 5px 15px;
             border-radius: 40px;
-            font-size: clamp(0.6rem, 3vw, 0.9rem);
+            font-size: clamp(0.7rem, 3.5vw, 1rem);
             font-weight: 500;
             color: #f5e56b;
             z-index: 400;
@@ -456,48 +451,7 @@
             animation: slideDownAndStore 1.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
             pointer-events: none;
         }
-        @media (max-width: 600px) {
-            .info-bar {
-                padding: 3px 10px;
-                font-size: 0.7rem;
-                top: 8px;
-                right: 8px;
-            }
-            .pack-type-badge {
-                padding: 3px 10px;
-                font-size: 0.65rem;
-                top: 8px;
-                left: 8px;
-            }
-            .progress-info {
-                top: 42px;
-                right: 8px;
-                padding: 2px 10px;
-                font-size: 0.6rem;
-            }
-            #pack-image {
-                width: 150px;
-            }
-            .pack-title {
-                font-size: 1.2rem;
-            }
-            .flag {
-                width: 150px;
-            }
-            .pos-ovr {
-                font-size: 2.5rem;
-            }
-            .club-info {
-                font-size: 1.2rem;
-            }
-            .club-logo {
-                width: 90px;
-            }
-            .skip-hint, .pack-hint {
-                bottom: 15px;
-                font-size: 9px;
-            }
-        }
+
         @keyframes slideDownAndStore {
             0% {
                 transform: rotateY(0deg) scale(1) translateY(0);
