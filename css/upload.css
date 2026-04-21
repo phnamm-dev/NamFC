@@ -328,4 +328,11 @@ input[type="file"]::file-selector-button:hover {
 .image-usage-notice {
     animation: notice-pulse 2s infinite ease-in-out;
 }
-    
+
+.honeypot-wrap {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    opacity: 0;
+    pointer-events: none;
+}
