@@ -4,7 +4,9 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 		<title>Nam FC Online · Nhật ký phiên bản</title>
+		<!-- Font Awesome -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<!-- Google Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,12 +14,10 @@
 	</head>
 	<body>
 		<div class="changelog-master">
-			<!-- Header -->
+			<!-- Header giữ nguyên -->
 			<div class="log-header">
 				<div class="brand">
-					<div class="brand-icon">
-						<i class="fas fa-futbol"></i>
-					</div>
+					<div class="brand-icon"><i class="fas fa-futbol"></i></div>
 					<div class="brand-text">
 						<h1>Nam FC Online</h1>
 						<div class="subhead">
@@ -34,107 +34,12 @@
 			</div>
 			<!-- Tiêu đề danh sách -->
 			<div class="section-title">
-				<h2>
-					<i class="fas fa-clock-rotate-left"></i> 
-					Danh sách các bản cập nhật
-				</h2>
-				<span class="version-count">Tháng 4 năm 2026</span>
+				<h2><i class="fas fa-clock-rotate-left"></i> Danh sách các bản cập nhật</h2>
+				<span class="version-count" id="monthDisplay">Tháng 4 năm 2026</span>
 			</div>
-			<!-- v2026.04.20 -->
-			<div class="update-card">
-				<div class="card-header">
-					<div class="version-badge">
-						<span class="version-number">v2026.04.20</span>
-						<span class="snapshot-tag"><i class="fas fa-camera"></i> SNAPSHOT 1</span>
-					</div>
-					<div class="date-chip">
-						<i class="far fa-calendar-alt"></i> 20 Tháng 4, 2026
-						<i class="fas fa-circle" style="font-size: 6px; color: #22c55e; margin-left: 6px;"></i>
-					</div>
-				</div>
-				<ul class="changes-list">
-					<li>
-						<i class="fas fa-plus-circle list-icon" style="color: #7c3aed;"></i>
-						<span class="change-desc"><strong>Thêm thẻ A Nation's Story</strong> Bồ Đào Nha giá 5.000.000 NCoins.</span>
-						<span class="mock-label">mới</span>
-					</li>
-					<li>
-						<i class="fas fa-circle-check list-icon"></i>
-						<span class="change-desc"><strong>C. Ronaldo</strong> — ST 117, Al Nassr.</span>
-                    </li>
-					<li>
-						<i class="fas fa-circle-check list-icon"></i>
-						<span class="change-desc"><strong>Cong Khoi</strong> — CDM 116, Manchester United.</span>
-                    </li>
-				</ul>
-				<div style="margin-top: 12px; font-size: 0.8rem; color: #64748b; display: flex; gap: 16px;">
-					<span><i class="far fa-check-circle" style="color: #059669;"></i> Đăng bởi Nam</span>
-					<span><i class="far fa-clock"></i> Lúc 22:07</span>
-				</div>
-			</div>
-			<!-- v2026.04.20 -->
-			<div class="update-card">
-				<div class="card-header">
-					<div class="version-badge">
-						<span class="version-number">v2026.04.20</span>
-						<span class="snapshot-tag"><i class="fas fa-camera"></i> SNAPSHOT 0</span>
-					</div>
-					<div class="date-chip">
-						<i class="far fa-calendar-alt"></i> 20 Tháng 4, 2026
-						<i class="fas fa-circle" style="font-size: 6px; color: #22c55e; margin-left: 6px;"></i>
-					</div>
-				</div>
-				<ul class="changes-list">
-					<li>
-						<i class="fas fa-circle-check list-icon"></i>
-						<span class="change-desc"><strong>Fix lỗi logo đội bóng</strong> — đã sửa hiển thị logo đội bóng trên tất cả thiết bị, tối ưu cho mobile.</span>
-						<span class="mock-label">mới</span>
-                    </li>
-					<li>
-						<i class="fas fa-circle-check list-icon"></i>
-						<span class="change-desc"><strong>Tối ưu thông tin phiên bản</strong> — phiên bản sẽ được đánh số bằng ngày, tháng cập nhật.</span>
-						<span class="mock-label">mới</span>
-                    </li>
-					<li>
-						<i class="fas fa-arrow-down list-icon" style="color: #ff0000;"></i>
-						<span class="change-desc">
-                        <strong>Thẻ UCL Dreamchasers ST Nhu Y</strong> dự kiến sẽ gỡ bỏ vào bản cập nhật sau
-                        vì chưa có sự đồng ý từ người trong thẻ.
-                        </span>
-					</li>
-				</ul>
-				<div style="margin-top: 12px; font-size: 0.8rem; color: #64748b; display: flex; gap: 16px;">
-					<span><i class="far fa-check-circle" style="color: #059669;"></i> Đăng bởi Nam</span>
-					<span><i class="far fa-clock"></i> Lúc 19:47</span>
-				</div>
-			</div>
-			<!-- LOGS UPD -->
-			<div class="update-card">
-				<div class="card-header">
-					<div class="version-badge">
-						<span class="version-number">v2026.04.20</span>
-						<span class="snapshot-tag"><i class="fas fa-camera-retro"></i> RA MẮT TÍNH NĂNG LOGS</span>
-					</div>
-					<div class="date-chip">
-						<i class="far fa-calendar-alt"></i> 20 Tháng 4, 2026
-					</div>
-				</div>
-				<ul class="changes-list">
-					<li>
-						<i class="fas fa-plus-circle list-icon" style="color: #7c3aed;"></i>
-						<span class="change-desc"><strong>Khởi tạo hệ thống log</strong> — nền tảng ghi nhận cập nhật theo thời gian thực.</span>
-					</li>
-					<li>
-						<i class="fas fa-paint-brush list-icon" style="color: #d946ef;"></i>
-						<span class="change-desc">Làm mới giao diện — áp dụng ngôn ngữ thiết kế hiện đại, tối ưu trải nghiệm.</span>
-					</li>
-					<li>
-						<i class="fas fa-shield list-icon" style="color: #f97316;"></i>
-						<span class="change-desc">Cải thiện bảo mật & hiệu năng tải trang.</span>
-					</li>
-				</ul>
-			</div>
-			<!-- Một dòng nhấn mạnh "đại ca biến hình" — tinh tế như Framer -->
+			<!-- KHU VỰC LOG ĐỘNG – SẼ ĐƯỢC JAVASCRIPT RENDER -->
+			<div id="dynamicLogContainer"></div>
+			<!-- Dòng nhấn mạnh -->
 			<div style="margin: 1.2rem 0 0.2rem; display: flex; justify-content: flex-end;">
 				<div style="display: flex; align-items: center; gap: 8px; background: #f8fafc; padding: 0.5rem 1.2rem; border-radius: 60px; border: 0.5px solid #e2e8f0;">
 					<i class="fas fa-robot" style="color: #2563eb;"></i>
@@ -142,19 +47,19 @@
 					<i class="fas fa-sparkles" style="color: #fbbf24;"></i>
 				</div>
 			</div>
-			<!-- Footer chuyên nghiệp -->
+			<!-- Footer -->
 			<div class="log-footer">
 				<div style="display: flex; align-items: center; gap: 12px;">
 					<i class="far fa-copyright"></i>
-					<span>Nam FC Online &copy; Pham Hoang Nam 2026 x DeepSeek — Nhật ký cập nhật</span>
+					<span>Nam FC Online © Pham Hoang Nam 2026 x DeepSeek — Nhật ký cập nhật</span>
 					<span style="width: 4px; height: 4px; background: #cbd5e1; border-radius: 50%;"></span>
 					<span>cập nhật tự động</span>
 				</div>
 				<div class="footer-links">
-                    <!--<i class="fab fa-tiktok"></i>-->
-                    LOGS v26w01a DeepSeek
+					LOGS v26w01a DeepSeek
 				</div>
 			</div>
 		</div>
+		<script src="phamhoangnam.logs.js"></script>
 	</body>
 </html>

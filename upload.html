@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nam FC Online – Đăng Ký Cầu Thủ</title>
+    
+    <!-- Style chung -->
+    <link rel="stylesheet" href="css/upload.css">
+    
+    <!-- Supabase & Turnstile -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+    <!-- Lớp nền sân cỏ (giống index) -->
+    <div class="grass-dots"></div>
+
+    <!-- Khối form chính -->
+    <main class="upload-container">
+        <h1>THAM GIA NAM FC</h1>
+        <p class="subtitle">Gửi ảnh & thông tin để trở thành huyền thoại</p>
+
+        <form id="uploadForm" class="upload-form">
+            <!-- Ảnh đại diện -->
+            <div class="form-group">
+                <label>Ảnh Chân Dung Thật Đẹp Của Bạn</label>
+                <input type="file" id="imageInput" accept="image/*" required>
+                <img id="preview" src="#" alt="Preview" style="display: none;">
+            </div>
+
+            <div class="image-usage-notice">
+                <div class="notice-content">
+                    <span class="notice-icon">⚠️</span>
+                    <div class="notice-text">
+                        <strong>Lưu ý về hình ảnh:</strong> 
+                        Bằng việc tải ảnh lên hoặc nhấn "SEND!!!", bạn đồng ý cho phép hệ thống sử dụng ảnh này để tạo thẻ cầu thủ công khai trên server <strong>Nam FC Online</strong>.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thông tin cầu thủ -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>👤 Tên Cầu Thủ</label>
+                    <input type="text" id="playerName" placeholder="Ví dụ: Phạm Hoàng Nam, v.v" required>
+                </div>
+                <div class="form-group">
+                    <label>🧤 Vị Trí</label>
+                    <select id="position" required>
+                        <option value="">Chọn vị trí</option>
+                            <option value="ST">ST - Tiền Đạo</option>
+                            <option value="LW">LW - Tiền Đạo Trái</option>
+                            <option value="RW">RW - Tiền Đạo Phải</option>
+                            <option value="CAM">CAM - Tiền Vệ Công</option>
+                            <option value="CM">CM - Tiền Vệ Trung Tâm</option>
+                            <option value="CDM">CDM - Tiền Vệ Phòng Ngự</option>
+                            <option value="LM">LM - Tiền Vệ Trái</option>
+                            <option value="RM">RM - Tiền Vệ Phải</option>
+                            <option value="LB">LB - Hậu Vệ Trái</option>
+                            <option value="RB">RB - Hậu Vệ Phải</option>
+                            <option value="CB">CB - Trung Vệ</option>
+                            <option value="GK">GK - Thủ Môn</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>🌍 Quốc Tịch</label>
+                    <input type="text" id="nationality" placeholder="Ví dụ: Việt Nam" required>
+                </div>
+                <div class="form-group">
+                    <label>🏟️ Câu Lạc Bộ</label>
+                    <input type="text" id="club" placeholder="Ví dụ: VFF" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>📅 Mùa Thẻ</label>
+                    <select id="season" required>
+                        <option value="">Chọn mùa</option>
+                        <option>Bronze</option>
+                        <option>Silver</option>
+                        <option>Rare</option>
+                        <option>Legend</option>
+                        <option>A Nation's Story (Quốc gia bạn đăng kí)</option>
+                        <option>UEFA</option>
+                        <option>TOTY</option>
+                        <option>Future Stars</option>
+                        <option>Capped Legends</option>
+                        <option>UCL Dreamchasers</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Turnstile Captcha -->
+            <div class="captcha-container">
+                <div class="cf-turnstile" data-sitekey="0x4AAAAAADAl3vRcfobYvjBg" data-theme="dark"></div>
+            </div>
+
+            <!-- Nút Submit -->
+            <button type="submit" id="submitBtn" class="submit-btn">
+                SEND!!!
+            </button>
+
+            <div id="status" class="status-message"></div>
+        </form>
+
+        <a href="index.html" class="back-link">← Quay lại sân chính</a>
+    </main>
+
+    <!-- Version box (giữ style index) -->
+    <div class="version-box" id="versionBox">Version: 1.0.0</div>
+    <div class="copyright">&copy; Pham Hoang Nam</div>
+
+    <!-- Logic chính -->
+    <script src="js/upload.js"></script>
+</body>
+</html>
