@@ -640,9 +640,9 @@
             { pack: 'rare', name: 'RARE', icon: '🥇', price: 30000, desc: 'OVR 70-79' },
             { pack: 'legend', name: 'LEGEND', icon: '✨', price: 150000, desc: 'OVR 80-89' },
             { pack: 'uefa', name: 'UEFA', icon: '🏆', price: 750000, desc: 'OVR 90-95' },
-            { pack: 'toty', name: 'TOTY', icon: '⭐', price: 5000000, desc: 'OVR 115-117' },
             { pack: 'and_pt', name: 'A Nation\'s Story', icon: '🇵🇹', price: 5000000, desc: 'OVR 115-117' },
             { pack: 'future_stars', name: 'Future Stars', icon: '🏅', price: 10000000, desc: 'OVR 115-117' },
+            { pack: 'toty', name: 'TOTY', icon: '⭐', price: 15000000, desc: 'OVR 115-117' },
             { pack: 'capped_legends', name: 'Capped Legends', icon: '⚽', price: 20000000, desc: 'OVR 115-117' },
             { pack: 'ucl', name: 'UCL Dreamchasers', icon: '🪄', price: 30000000, desc: 'OVR 115-117' },            
             
@@ -758,7 +758,7 @@
                     const total = pricePer * qty;
 
                     if (!subtractMoney(total)) {
-                        alert(`❌ Thiếu năng lượng! Cần ${total.toLocaleString()} NC.`);
+                        alert(`Bạn không đủ NCoins! Cần ${total.toLocaleString()} NC để mở gói này.`);
                         card.style.animation = 'shake 0.3s';
                         setTimeout(() => card.style.animation = '', 300);
                         return;

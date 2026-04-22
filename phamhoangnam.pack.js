@@ -28,7 +28,7 @@ const EPIC_ANIMATION_CONFIG = {
     future_stars: { audio: "audio/future_stars_begin.mp3", duration: 6700 },
     uefa: { audio: "audio/uefa_begin.mp3", duration: 7500 },
     and_pt: { audio: "audio/and_pt_begin.mp3", duration: 6720 },
-    toty: { audio: "audio/toty_begin.mp3", duration: 9700 },
+    toty: { audio: "audio/toty_begin.mp3", duration: 8675 },
     capped_legends: { audio: "audio/capped_legends_begin.mp3", duration: 8500 },
 
     developers_test: {
