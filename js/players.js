@@ -50,9 +50,13 @@ const allPlayers = [
     { id: 1001, name: "Ronaldo", position: "ST", ovr: 117, nation: "portugal", club: "Al Nassr", clubLogo: "al-nassr.png", flag: "pt.png", playerImg: "and-pt-ronaldo.gif", pack: "and_pt" },
     { id: 1002, name: "Cong Khoi", position: "CDM", ovr: 116, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "and-pt-cong-khoi.gif", pack: "and_pt" },
 
+    // SONGKRAN
+    { id: 1101, name: "Thanh Nhan", position: "CM", ovr: 117, nation: "vietnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vi.png", playerImg: "songkran-thanh-nhan.gif", pack: "songkran" },
+
     // TOTS
-    { id: 1101, name: "Anh Tuan", position: "ST", ovr: 120, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "tots-anh-tuan.gif", pack: "tots" },
-    { id: 1102, name: "Xuan Phuc", position: "GK", ovr: 119, nation: "gb-eng", club: "Barcelona", clubLogo: "barcelona.png", flag: "gb-eng.png", playerImg: "tots-xuan-phuc.gif", pack: "tots" },
+    { id: 1201, name: "Anh Tuan", position: "ST", ovr: 12, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "tots-anh-tuan.gif", pack: "tots" },
+    { id: 1202, name: "Xuan Phuc", position: "GK", ovr: 119, nation: "gb-eng", club: "Barcelona", clubLogo: "barcelona.png", flag: "gb-eng.png", playerImg: "tots-xuan-phuc.gif", pack: "tots" },
+    { id: 1203, name: "Thanh Nhan", position: "CM", ovr: 118, nation: "vietnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vi.png", playerImg: "tots-thanh-nhan.gif", pack: "tots" },
 
     // DEVELOPERS TEST
     { id: -1, name: "Nam FC Online", position: "DEV", ovr: 115, nation: "vietnam", club: "Nam FC Online", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "dev-115.gif", pack: "null" },

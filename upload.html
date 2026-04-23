@@ -5,15 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nam FC Online – Đăng Ký Cầu Thủ</title>
     
-    <!-- Style chung -->
     <link rel="stylesheet" href="css/upload.css">
     
-    <!-- Supabase & Turnstile -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
-    <!-- Lớp nền sân cỏ (giống index) -->
     <div class="grass-dots"></div>
 
     <!-- Khối form chính -->
@@ -42,11 +39,11 @@
             <!-- Thông tin cầu thủ -->
             <div class="form-row">
                 <div class="form-group">
-                    <label>👤 Tên Cầu Thủ</label>
-                    <input type="text" id="playerName" placeholder="Ví dụ: Phạm Hoàng Nam, v.v" required>
+                    <label>Tên Cầu Thủ</label>
+                    <input type="text" id="playerName" placeholder="Ví dụ: Phạm Hoàng Nam" required>
                 </div>
                 <div class="form-group">
-                    <label>🧤 Vị Trí</label>
+                    <label>Vị Trí</label>
                     <select id="position" required>
                         <option value="">Chọn vị trí</option>
                             <option value="ST">ST - Tiền Đạo</option>
@@ -61,24 +58,25 @@
                             <option value="RB">RB - Hậu Vệ Phải</option>
                             <option value="CB">CB - Trung Vệ</option>
                             <option value="GK">GK - Thủ Môn</option>
+                            <option value="CO">GK - Thủ Môn</option>
                     </select>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label>🌍 Quốc Tịch</label>
+                    <label>Quốc Tịch</label>
                     <input type="text" id="nationality" placeholder="Ví dụ: Việt Nam" required>
                 </div>
                 <div class="form-group">
-                    <label>🏟️ Câu Lạc Bộ</label>
-                    <input type="text" id="club" placeholder="Ví dụ: VFF" required>
+                    <label>Câu Lạc Bộ</label>
+                    <input type="text" id="club" placeholder="Ví dụ: Nam FC Online" required>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label>📅 Mùa Thẻ</label>
+                    <label>Mùa Thẻ</label>
                     <select id="season" required>
                         <option value="">Chọn mùa</option>
                         <option>Bronze</option>
@@ -87,10 +85,12 @@
                         <option>Legend</option>
                         <option>A Nation's Story (Quốc gia bạn đăng kí)</option>
                         <option>UEFA</option>
-                        <option>TOTY</option>
+                        <option>Team Of The Year</option>
                         <option>Future Stars</option>
                         <option>Capped Legends</option>
                         <option>UCL Dreamchasers</option>
+                        <option>Songkran Splash</option>
+                        <option>Team Of The Season</option>
                     </select>
                 </div>
             </div>
