@@ -54,7 +54,7 @@ const allPlayers = [
     { id: 1101, name: "Thanh Nhan", position: "CM", ovr: 117, nation: "vietnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vi.png", playerImg: "songkran-thanh-nhan.gif", pack: "songkran" },
 
     // TOTS
-    { id: 1201, name: "Anh Tuan", position: "ST", ovr: 12, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "tots-anh-tuan.gif", pack: "tots" },
+    { id: 1201, name: "Anh Tuan", position: "ST", ovr: 120, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "tots-anh-tuan.gif", pack: "tots" },
     { id: 1202, name: "Xuan Phuc", position: "GK", ovr: 119, nation: "gb-eng", club: "Barcelona", clubLogo: "barcelona.png", flag: "gb-eng.png", playerImg: "tots-xuan-phuc.gif", pack: "tots" },
     { id: 1203, name: "Thanh Nhan", position: "CM", ovr: 118, nation: "vietnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vi.png", playerImg: "tots-thanh-nhan.gif", pack: "tots" },
 
