@@ -18,6 +18,7 @@ const PACK_MUSIC_MAP = {
     capped_legends: "audio/capped_legends_open.mp3",
     ucl: "audio/ucl_open.mp3",
     future_stars: "audio/future_stars_open.mp3",
+    tots: "audio/tots_open.mp3",
 
     developers_test: "audio/knockout_royalty_open.mp3",
 };
@@ -30,6 +31,7 @@ const EPIC_ANIMATION_CONFIG = {
     and_pt: { audio: "audio/and_pt_begin.mp3", duration: 6720 },
     toty: { audio: "audio/toty_begin.mp3", duration: 8675 },
     capped_legends: { audio: "audio/capped_legends_begin.mp3", duration: 8500 },
+    tots: { audio: "audio/tots_begin.mp3", duration: 8000 },
 
     developers_test: {
         audio: "audio/knockout_royalty_begin.mp3",
@@ -49,6 +51,7 @@ const packImageMap = {
     knockout_royalty: "knockout_royalty.png",
     future_stars: "future_stars.png",
     titans: "titans.png",
+    tots: "tots.png",
 };
 
 const EPIC_PACKS = [
@@ -60,6 +63,7 @@ const EPIC_PACKS = [
     "ucl",
     "future_stars",
     "developers_test",
+    "tots",
 ];
 
 function isEpicPack(packType) {
@@ -100,13 +104,14 @@ function formatPackName(packType) {
         ucl: "UCL DREAMCHASERS",
         uefa: "UEFA CHAMPIONS",
         and_pt: "A NATION'S STORY",
-        toty: "TOTY",
+        toty: "TEAM OF THE YEAR",
         titans: "TROPHY TITANS",
         legend: "LEGENDARY",
         rare: "RARE",
         silver: "SILVER",
         bronze: "BRONZE",
         future_stars: "FUTURE STARS",
+        tots: "TEAM OF THE SEASON",
 
         developers_test: "GÓI THỬ NGHIỆM",
     };
@@ -284,6 +289,7 @@ function createPackAtmosphere(packType = "default") {
         //knockout_royalty: ['#F5E6D3', '#F5B041', '#D4AF37', '#4A0E4E', '#1A1A1A'],
         future_stars: ["#ffffff", "#aee2ff", "#00f2fe", "#4facfe", "#0052d4"],
         ucl: ["#ffffff", "#aee2ff", "#00f2fe", "#4facfe", "#0052d4"],
+        tots: ['#FFFFFF', '#E0E7FF', '#A78BFA', '#4F46E5', '#1E3A8A'],
 
         default: ["#ffffff", "#ffedbc", "#ffd700", "#ffaa33", "#ff8800"],
 

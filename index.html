@@ -2,9 +2,10 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <!-- QUAN TRỌNG: Viewport cho mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Nam FC Online</title>
     <style>
-        /* ---------- RESET & BASE ---------- */
         * {
             margin: 0;
             padding: 0;
@@ -12,7 +13,6 @@
         }
 
         body {
-            /* Sân cỏ siêu thực */
             background: 
                 repeating-linear-gradient(
                     45deg,
@@ -30,7 +30,7 @@
             justify-content: center;
             align-items: center;
             color: white;
-            padding: 20px;
+            padding: 15px; /* giảm padding trên mobile */
             position: relative;
             overflow-x: hidden;
             cursor: default;
@@ -43,8 +43,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: min(80vw, 600px);
-            height: min(80vw, 600px);
+            width: min(85vw, 500px);
+            height: min(85vw, 500px);
             border: 4px solid rgba(255, 255, 255, 0.08);
             border-radius: 50%;
             pointer-events: none;
@@ -78,16 +78,16 @@
             z-index: 1;
         }
 
-        /* ---------- TITLE SIÊU SPORT ---------- */
+        /* ---------- TITLE SIÊU SPORT (đã co giãn tốt) ---------- */
         h1 {
-            font-size: clamp(3rem, 10vw, 5.5rem);
+            font-size: clamp(2.8rem, 12vw, 5.5rem);
             font-weight: 900;
             font-style: italic;
             text-transform: uppercase;
             color: transparent;
             letter-spacing: 2px;
             line-height: 1.1;
-            margin-bottom: 60px;
+            margin-bottom: 30px; /* giảm trên mobile */
             position: relative;
             z-index: 10;
             
@@ -120,24 +120,24 @@
             position: absolute;
             left: 0;
             right: 0;
-            height: 6px;
+            height: 5px;
             background: linear-gradient(90deg, 
                 transparent 0%, 
                 #FFD700 20%, 
                 #FFA500 50%, 
                 #FFD700 80%, 
                 transparent 100%);
-            box-shadow: 0 2px 10px #FFD700, 0 4px 0 #8B6914;
+            box-shadow: 0 2px 8px #FFD700, 0 3px 0 #8B6914;
             transform: skewX(-25deg);
         }
 
         h1::before {
-            bottom: -15px;
+            bottom: -12px;
             animation: slideLine 2s ease-in-out infinite alternate;
         }
 
         h1::after {
-            bottom: -28px;
+            bottom: -24px;
             width: 70%;
             left: 15%;
             opacity: 0.7;
@@ -156,45 +156,47 @@
 
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(-1deg); }
-            50% { transform: translateY(-8px) rotate(1deg); }
+            50% { transform: translateY(-6px) rotate(1deg); }
         }
 
-        /* ---------- MENU BUTTONS ---------- */
+        /* ---------- MENU BUTTONS (TỐI ƯU MOBILE) ---------- */
         .menu {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             max-width: 900px;
             position: relative;
             z-index: 10;
             margin-top: 20px;
+            padding: 0 5px;
         }
 
         .menu a {
             display: inline-block;
             background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%);
             color: #0a2f1a;
-            padding: 16px 32px;
+            padding: 14px 24px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 900;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             box-shadow: 
-                0 10px 0 #8B6914,
-                0 8px 20px rgba(0,0,0,0.5),
+                0 8px 0 #8B6914,
+                0 6px 15px rgba(0,0,0,0.5),
                 inset 0 2px 0 rgba(255,255,255,0.6);
             transition: all 0.12s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             border: 1px solid #FFE066;
-            min-width: 210px;
+            min-width: 150px; /* giảm để vừa màn hình nhỏ */
             text-align: center;
             backdrop-filter: blur(5px);
             position: relative;
             overflow: hidden;
             cursor: pointer;
             user-select: none;
+            flex: 0 1 auto;
         }
 
         .menu a::before {
@@ -213,58 +215,57 @@
         }
 
         .menu a:hover {
-            transform: translateY(5px);
+            transform: translateY(4px);
             box-shadow: 
-                0 5px 0 #8B6914,
-                0 10px 20px rgba(0,0,0,0.5),
+                0 4px 0 #8B6914,
+                0 8px 15px rgba(0,0,0,0.5),
                 inset 0 1px 0 rgba(255,255,255,0.8);
             background: linear-gradient(180deg, #FFE44D 0%, #FFB830 100%);
         }
 
         .menu a:active {
-            transform: translateY(10px);
+            transform: translateY(8px);
             box-shadow: 
                 0 0 0 #8B6914,
-                0 5px 15px rgba(0,0,0,0.5),
+                0 4px 10px rgba(0,0,0,0.5),
                 inset 0 1px 5px rgba(0,0,0,0.2);
         }
 
-        /* Version box */
+        /* Version box - gọn gàng góc phải dưới */
         .version-box {
             position: fixed;
-            bottom: 20px;
-            right: 24px;
-            background: rgba(10, 30, 10, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 8px 18px;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(10, 30, 10, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 6px 14px;
             border-radius: 40px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             color: #FFD700;
             border: 1px solid rgba(255, 215, 0, 0.5);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             letter-spacing: 0.5px;
-            z-index: 999;
+            z-index: 900;
             font-family: 'SF Mono', 'Fira Code', monospace;
             text-transform: uppercase;
         }
 
-        /* ---------- TRÁI BÓNG BAY ---------- */
+        /* ---------- TRÁI BÓNG BAY (NHỎ GỌN HƠN) ---------- */
         .ball {
             position: fixed;
-            font-size: 3.5rem;
+            font-size: 3rem; /* nhỏ hơn một chút */
             line-height: 1;
-            pointer-events: none;  /* Cho phép click xuyên qua */
+            pointer-events: auto; /* vẫn click được */
             z-index: 1000;
-            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.4));
+            filter: drop-shadow(0 6px 10px rgba(0,0,0,0.5));
             will-change: left, top;
             transition: transform 0.1s;
             text-shadow: 0 0 10px #FFD700;
             user-select: none;
         }
 
-        /* Hiệu ứng vệt bóng (tùy chọn) */
         .ball::after {
             content: '';
             position: absolute;
@@ -284,7 +285,7 @@
             50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.2); }
         }
 
-        /* ---------- HIỆU ỨNG CLICK (MUỐI JS) ---------- */
+        /* ---------- HIỆU ỨNG CLICK ---------- */
         .click-ripple {
             position: fixed;
             width: 20px;
@@ -305,7 +306,7 @@
         /* Chữ GOAL bay lên */
         .goal-popup {
             position: fixed;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 900;
             color: gold;
             text-shadow: 3px 3px 0 #000, 0 0 20px white;
@@ -322,54 +323,149 @@
             100% { opacity: 0; transform: translate(-50%, -120px) scale(0.8); }
         }
 
-        /* Responsive */
-        @media (max-width: 600px) {
-            h1 { font-size: 2.5rem; margin-bottom: 40px; }
-            .menu a { padding: 12px 20px; font-size: 1rem; min-width: 160px; box-shadow: 0 8px 0 #8B6914, 0 6px 12px rgba(0,0,0,0.4); }
-            .version-box { padding: 6px 14px; font-size: 11px; bottom: 15px; right: 15px; }
-            .ball { font-size: 2.8rem; }
-        }
-        p {
-            position: absolute;
-            bottom: 40px;
-            left: 0;
-            right: 0;
+        /* Hướng dẫn - đặt dưới menu, không absolute để tránh đè */
+        .instruction {
             text-align: center;
-            font-size: 12px;
-            color: rgba(255, 170, 51, 1);
-            letter-spacing: 2px;
+            font-size: 13px;
+            color: rgba(255, 215, 0, 0.9);
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            margin: 0 auto;
-            pointer-events: none;
+            margin-top: 25px;
+            font-weight: 500;
             z-index: 105;
-            font-weight: 400;
+            position: relative;
             animation: fadePulse 3s infinite ease-in-out;
+            background: rgba(0,0,0,0.2);
+            padding: 6px 18px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            display: inline-block;
+            border: 1px solid rgba(255,215,0,0.2);
         }
+
+        @keyframes fadePulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        /* Copyright - góc trái dưới */
         .copyright {
             position: fixed;
-            bottom: 16px;
-            left: 16px;
-            color: rgba(255, 215, 0, 0.5);
-            font-size: 12px;
+            bottom: 15px;
+            left: 15px;
+            color: rgba(255, 215, 0, 0.6);
+            font-size: 11px;
             font-weight: 400;
             letter-spacing: 1px;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 4px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5px 14px;
             border-radius: 40px;
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 215, 0, 0.15);
-            z-index: 999;
-            font-family: 'Montserrat', sans-serif;
-            pointer-events: none;  /* để không cản click */
-            transition: opacity 0.3s;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            z-index: 900;
+            pointer-events: none;
         }
+
+        /* ---------- MEDIA QUERIES CHO MOBILE NHỎ ---------- */
         @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+                margin-bottom: 25px;
+            }
+
+            h1::before {
+                bottom: -10px;
+                height: 4px;
+            }
+
+            h1::after {
+                bottom: -20px;
+                height: 4px;
+            }
+
+            .menu {
+                gap: 12px;
+            }
+
+            .menu a {
+                padding: 12px 18px;
+                font-size: 1rem;
+                min-width: 130px;
+                box-shadow: 0 7px 0 #8B6914, 0 5px 10px rgba(0,0,0,0.4);
+            }
+
+            .ball {
+                font-size: 2.6rem;
+            }
+
+            .version-box {
+                padding: 5px 12px;
+                font-size: 11px;
+                bottom: 12px;
+                right: 12px;
+            }
+
             .copyright {
-                bottom: 10px;
-                left: 10px;
+                bottom: 12px;
+                left: 12px;
                 font-size: 10px;
-                padding: 3px 12px;
+                padding: 4px 12px;
+            }
+
+            .instruction {
+                font-size: 11px;
+                padding: 5px 14px;
+                margin-top: 20px;
+            }
+        }
+
+        /* Màn hình rất nhỏ (<= 380px) */
+        @media (max-width: 380px) {
+            .menu a {
+                min-width: 120px;
+                padding: 10px 14px;
+                font-size: 0.9rem;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .ball {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Tối ưu chiều cao nhỏ (landscape) */
+        @media (max-height: 500px) and (orientation: landscape) {
+            h1 {
+                margin-bottom: 15px;
+                font-size: 2.2rem;
+            }
+
+            .menu {
+                margin-top: 10px;
+                gap: 8px;
+            }
+
+            .instruction {
+                margin-top: 10px;
+            }
+
+            .ball {
+                font-size: 2rem;
+            }
+        }
+
+        /* Tắt hiệu ứng spotlight trên thiết bị cảm ứng (mobile) */
+        @media (pointer: coarse) {
+            body {
+                /* Không thay đổi background theo chuột nữa */
             }
         }
     </style>
@@ -384,10 +480,11 @@
         <a href="shop.html">🛒 MUA PACK</a>
         <a href="/calculator/">📊 TÍNH OVR</a>
         <a href="/logs/">📜 LỊCH SỬ</a>
-        <a href="upload.html">🪄THAM GIA</a>
+        <a href="upload.html">🪄 THAM GIA</a>
     </div>
 
-    <p>Ấn vào trái bóng hoặc phím space để chơi với nó</p>
+    <!-- Dùng class instruction thay vì thẻ p tuyệt đối -->
+    <div class="instruction">⚽ Ấn vào bóng hoặc SPACE để đá  ⚽</div>
 
     <div class="version-box" id="versionBox">Version: loading…</div>
 
@@ -425,39 +522,32 @@
 
             // ---------- BÓNG BAY VẬT LÝ ----------
             const ball = document.getElementById('flyingBall');
-            // Vị trí ban đầu: gần tiêu đề
             const h1 = document.querySelector('h1');
             const h1Rect = h1.getBoundingClientRect();
             
-            let x = h1Rect.left + h1Rect.width / 2 - 25; // căn giữa
+            let x = h1Rect.left + h1Rect.width / 2 - 25;
             let y = h1Rect.bottom - 30;
-            let vx = 3.5;  // vận tốc ngang
-            let vy = 0;    // vận tốc dọc
+            let vx = 3.5;
+            let vy = 0;
             const gravity = 0.5;
-            const bounce = 0.7;  // hệ số nảy
-            const friction = 0.99; // ma sát ngang
+            const bounce = 0.7;
+            const friction = 0.99;
             
-            // Giới hạn sân (để bóng không chạy mất)
             let minX = 20, maxX = window.innerWidth - 80;
-            let groundY = window.innerHeight - 80; // mặt đất
+            let groundY = window.innerHeight - 80;
             
             function updateBallPosition() {
                 ball.style.left = x + 'px';
                 ball.style.top = y + 'px';
-                // Xoay nhẹ theo hướng di chuyển
                 const rotate = Math.atan2(vy, vx) * 10;
                 ball.style.transform = `rotate(${rotate}deg)`;
             }
 
             function physicsLoop() {
-                // Trọng lực
                 vy += gravity;
-                
-                // Cập nhật vị trí
                 x += vx;
                 y += vy;
                 
-                // Va chạm biên ngang
                 if (x <= minX) {
                     x = minX;
                     vx = -vx * 0.9;
@@ -466,77 +556,49 @@
                     vx = -vx * 0.9;
                 }
                 
-                // Va chạm mặt đất
                 if (y >= groundY) {
                     y = groundY;
                     vy = -vy * bounce;
-                    // Ma sát khi chạm đất
                     vx *= 0.98;
-                    
-                    // Nếu vận tốc rất nhỏ thì dừng hẳn để tránh rung lắc
-                    if (Math.abs(vy) < 0.5 && y >= groundY - 1) {
-                        vy = 0;
-                    }
+                    if (Math.abs(vy) < 0.5 && y >= groundY - 1) vy = 0;
                     if (Math.abs(vx) < 0.1) vx = 0;
                 }
                 
-                // Ma sát không khí nhẹ
                 vx *= friction;
                 
-                // Nếu gần như đứng yên, có thể reset nhẹ để đỡ tốn CPU
                 if (Math.abs(vx) < 0.01 && Math.abs(vy) < 0.01 && y >= groundY - 2) {
                     vx = 0;
                     vy = 0;
                 }
                 
                 updateBallPosition();
-                
                 requestAnimationFrame(physicsLoop);
             }
 
-            // Cập nhật lại kích thước khi resize
             function updateBoundaries() {
                 maxX = window.innerWidth - 80;
                 groundY = window.innerHeight - 80;
-                // Không cho bóng ra ngoài
                 x = Math.min(maxX, Math.max(minX, x));
                 y = Math.min(groundY, y);
                 updateBallPosition();
             }
             
-            window.addEventListener('resize', () => {
-                updateBoundaries();
-                // Đặt lại vị trí h1 nếu cần, nhưng giữ nguyên bóng
-            });
+            window.addEventListener('resize', updateBoundaries);
 
-            // Bắt đầu animation
             updateBallPosition();
             requestAnimationFrame(physicsLoop);
 
-            // Thêm cú đá khi click vào bóng (cho vui)
             ball.addEventListener('click', (e) => {
                 e.stopPropagation();
-                // Đá bóng bay lên
                 vy = -12;
                 vx += (Math.random() - 0.5) * 8;
-                // Giới hạn vx
                 vx = Math.min(15, Math.max(-15, vx));
-                
-                // Hiệu ứng GOAL!
                 showGoalPopup(e.clientX, e.clientY);
                 createRipple(e.clientX, e.clientY);
             });
 
-            // Để click xuyên qua bình thường, nhưng chúng ta đã set pointer-events: none cho .ball
-            // Nhưng để đá bóng được thì cần tạm cho phép click. Giải pháp: tạo vùng bắt sự kiện riêng
-            // Cách đơn giản: thay pointer-events thành auto, nhưng sẽ chặn click menu. 
-            // Ta sẽ dùng một trick: chỉ bắt sự kiện trên bóng, và không cho lan ra.
-            ball.style.pointerEvents = 'auto';  // Cho phép click vào bóng
+            ball.style.pointerEvents = 'auto';
             
-            // Nhưng bóng không chặn menu vì nó nằm trên, ta sẽ xử lý: nếu click vào bóng thì đá, còn click menu vẫn hoạt động
-            // OK vì bóng nhỏ.
-            
-            // ---------- MUỐI JS: HIỆU ỨNG CLICK + GOAL RANDOM ----------
             function createRipple(x, y) {
                 const ripple = document.createElement('div');
                 ripple.className = 'click-ripple';
@@ -557,19 +619,11 @@
                 setTimeout(() => popup.remove(), 1200);
             }
 
-            // Click toàn trang tạo hiệu ứng sân cỏ (cảm giác đá bóng)
             document.body.addEventListener('click', (e) => {
-                // Không tạo nếu click vào link hoặc bóng (bóng đã có riêng)
                 if (e.target.closest('a') || e.target.closest('.ball')) return;
-                
                 createRipple(e.clientX, e.clientY);
+                if (Math.random() > 0.6) showGoalPopup(e.clientX, e.clientY);
                 
-                // Thỉnh thoảng xuất hiện chữ "GOAL" ngẫu nhiên
-                if (Math.random() > 0.6) {
-                    showGoalPopup(e.clientX, e.clientY);
-                }
-                
-                // Đôi khi làm bóng nảy nhẹ nếu click gần bóng
                 const ballRect = ball.getBoundingClientRect();
                 const ballCenterX = ballRect.left + ballRect.width/2;
                 const ballCenterY = ballRect.top + ballRect.height/2;
@@ -581,54 +635,49 @@
                 }
             });
 
-            // Thêm phím Space để đá bóng
             document.addEventListener('keydown', (e) => {
                 if (e.code === 'Space') {
                     e.preventDefault();
                     vy = -15;
                     vx += (Math.random() - 0.5) * 10;
                     vx = Math.min(18, Math.max(-18, vx));
-                    // Popup ở giữa màn hình
                     showGoalPopup(window.innerWidth/2, window.innerHeight/2);
                 }
-                // Phím G để hô GOAL
                 if (e.code === 'KeyG') {
                     showGoalPopup(window.innerWidth/2, window.innerHeight/2);
                 }
             });
 
-            // Hiệu ứng di chuột tạo ánh sáng theo (spotlight effect)
-            document.body.addEventListener('mousemove', (e) => {
-                // Tạo radial gradient di chuyển (CSS không làm được realtime dễ, nên dùng style background)
-                const x = (e.clientX / window.innerWidth) * 100;
-                const y = (e.clientY / window.innerHeight) * 100;
-                document.body.style.background = `
-                    repeating-linear-gradient(45deg, rgba(20, 80, 20, 0.3) 0px, rgba(20, 80, 20, 0.3) 2px, transparent 2px, transparent 8px),
-                    radial-gradient(circle at ${x}% ${y}%, #3da34a 0%, #1a5c25 40%, #0a3a12 100%)
-                `;
-            });
+            // ---------- SPOTLIGHT CHỈ CHẠY TRÊN DESKTOP (KHÔNG CẢM ỨNG) ----------
+            const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+            if (!isTouchDevice) {
+                document.body.addEventListener('mousemove', (e) => {
+                    const x = (e.clientX / window.innerWidth) * 100;
+                    const y = (e.clientY / window.innerHeight) * 100;
+                    document.body.style.background = `
+                        repeating-linear-gradient(45deg, rgba(20, 80, 20, 0.3) 0px, rgba(20, 80, 20, 0.3) 2px, transparent 2px, transparent 8px),
+                        radial-gradient(circle at ${x}% ${y}%, #3da34a 0%, #1a5c25 40%, #0a3a12 100%)
+                    `;
+                });
 
-            // Reset background khi chuột rời khỏi cửa sổ
-            document.body.addEventListener('mouseleave', () => {
-                document.body.style.background = `
-                    repeating-linear-gradient(45deg, rgba(20, 80, 20, 0.3) 0px, rgba(20, 80, 20, 0.3) 2px, transparent 2px, transparent 8px),
-                    radial-gradient(circle at 30% 40%, #2d8c3c 0%, #1a5c25 50%, #0a3a12 100%)
-                `;
-            });
+                document.body.addEventListener('mouseleave', () => {
+                    document.body.style.background = `
+                        repeating-linear-gradient(45deg, rgba(20, 80, 20, 0.3) 0px, rgba(20, 80, 20, 0.3) 2px, transparent 2px, transparent 8px),
+                        radial-gradient(circle at 30% 40%, #2d8c3c 0%, #1a5c25 50%, #0a3a12 100%)
+                    `;
+                });
+            }
 
-            // Thông báo chào mừng khi load xong (muối nhẹ)
+            // Chào sân
             window.addEventListener('load', () => {
                 setTimeout(() => {
                     showGoalPopup(window.innerWidth/2, window.innerHeight/3);
                 }, 500);
-                console.log('%cWARNING: This project is copyrighted; please read the license before using any content from the project.', 'font-size: 20px; color: red; background: #0a2f1a; padding: 5px; border-radius: 5px;');
-
-                console.log('%cNam FC Online © PHAM HOANG NAM', 'font-size: 20px; color: gold; background: #0a2f1a; padding: 5px; border-radius: 5px;');
-                
-                console.log('%c🥅 Sân cỏ đã sẵn sàng! Nhấn SPACE để đá bóng!', 'font-size: 14px; color: #fff;');
+                console.log('%cWARNING: This project is copyrighted; please read the license before using any content from the project.', 'font-size: 16px; color: red; background: #0a2f1a; padding: 4px; border-radius: 4px;');
+                console.log('%cNam FC Online © PHAM HOANG NAM', 'font-size: 16px; color: gold; background: #0a2f1a; padding: 4px; border-radius: 4px;');
+                console.log('%c🥅 Sân cỏ đã sẵn sàng! Nhấn SPACE để đá bóng!', 'font-size: 13px; color: #fff;');
             });
 
-            // Cập nhật boundaries sau khi load hoàn tất (đề phòng font ảnh hưởng)
             setTimeout(updateBoundaries, 100);
             window.addEventListener('resize', updateBoundaries);
         })();
