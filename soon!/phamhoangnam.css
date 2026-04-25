@@ -1,0 +1,121 @@
+body {
+	margin: 0;
+	display: flex;
+	height: 100vh;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background: #1e1e1e;
+	color: #cccccc;
+	overflow: hidden;
+}
+
+/* Thanh icon bên trái cùng */
+.activity-bar {
+	width: 50px;
+	background: #333333;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 10px;
+}
+
+.icon {
+	width: 30px;
+	height: 30px;
+	margin-bottom: 20px;
+	background: #555;
+	border-radius: 4px;
+	cursor: pointer;
+    text-align: center;
+}
+
+/* Thanh danh mục tệp (Sidebar) */
+.sidebar {
+	width: 250px;
+	background: #252526;
+	border-right: 1px solid #3c3c3c;
+	padding: 10px;
+	font-size: 13px;
+}
+
+.sidebar-title {
+	text-transform: uppercase;
+	font-weight: bold;
+	margin-bottom: 10px;
+	font-size: 11px;
+	color: #bbbbbb;
+}
+
+/* Khu vực hiển thị code chính */
+.editor-container {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.tabs {
+	height: 35px;
+	background: #2d2d2d;
+	display: flex;
+	align-items: center;
+	padding-left: 10px;
+}
+
+.tab {
+	background: #1e1e1e;
+	padding: 8px 20px;
+	border-top: 1px solid #007acc;
+	font-size: 13px;
+}
+
+.code-area {
+	flex: 1;
+	padding: 20px;
+	font-family: 'Consolas', monospace;
+	color: #9cdcfe;
+	line-height: 1.5;
+	overflow-y: auto;
+}
+
+.keyword {
+	color: #569cd6;
+}
+
+.string {
+	color: #ce9178;
+}
+
+.status-bar {
+	height: 22px;
+	background: #007acc;
+	color: white;
+	font-size: 12px;
+	display: flex;
+	align-items: center;
+	padding: 0 10px;
+}
+
+.file-html {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #cccccc;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.file-html::before {
+    content: '< >'; 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    font-size: 10px;
+    font-family: 'Consolas', monospace;
+    color: #e34f26;
+}
+
+.file-html:hover {
+    background-color: #2a2d2e;
+    color: #ffffff;
+}

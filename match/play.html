@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Nam FC - Đấu Trường Online</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/players.js"></script>
+    <style>
+        /* Style "ăn theo" pack.css - lấy tinh thần vàng đen, card lật */
+        body {
+            background: #0a0f1e;
+            color: white;
+            font-family: 'Segoe UI', Arial;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .btn {
+            padding: 15px 30px;
+            background: gold;
+            color: black;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        /* Container chính */
+        .battle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        
+        /* Card */
+        .card {
+            width: 220px;
+            background: linear-gradient(145deg, #2c3e50, #1a252f);
+            border: 3px solid #34495e;
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+            transition: all 0.3s;
+        }
+        .card img {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            padding: 10px;
+        }
+        .ovr-circle {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: #c0392b;
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            border-radius: 50%;
+            margin: 15px auto 5px;
+        }
+        .winner {
+            border-color: #f1c40f !important;
+            box-shadow: 0 0 30px gold, 0 0 15px orange;
+            animation: winGlow 0.5s infinite alternate;
+        }
+        @keyframes winGlow {
+            from { box-shadow: 0 0 30px gold, 0 0 15px orange; }
+            to { box-shadow: 0 0 50px gold, 0 0 25px orange; }
+        }
+        .loser {
+            opacity: 0.7;
+            border-color: #555;
+        }
+        .vs-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: gold;
+            text-shadow: 0 0 15px black;
+        }
+        #playerNames, #scoreBoard {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+        #roundResult {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 15px 0;
+            color: gold;
+            min-height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <h1>⚽ TRẬN ĐẤU ONLINE</h1>
+    <div id="playerNames"></div>
+    <div id="scoreBoard">Tỉ số: <span id="myScore">0</span> - <span id="oppScore">0</span></div>
+
+    <div class="battle-container">
+        <div class="card" id="myCard">
+            <img id="myCardImg" src="images/players/default.png" alt="Bạn">
+            <div id="myCardName">Bạn</div>
+            <div class="ovr-circle" id="myCardOvr">---</div>
+        </div>
+        
+        <div class="vs-text">VS</div>
+        
+        <div class="card" id="oppCard">
+            <img id="oppCardImg" src="images/players/default.png" alt="Đối thủ">
+            <div id="oppCardName">Đối thủ</div>
+            <div class="ovr-circle" id="oppCardOvr">---</div>
+        </div>
+    </div>
+
+    <div id="roundResult"></div>
+    <button class="btn" id="btnNextCard">MỞ THẺ TIẾP</button>
+    <div id="statusText" style="margin-top:20px;"></div>
+
+    <script type="module">
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+        const SUPA_URL = 'https://mirxuscvrddxbsenoklz.supabase.co';
+        const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcnh1c2N2cmRkeGJzZW5va2x6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NjcyNDEsImV4cCI6MjA5MjM0MzI0MX0.znSP9exUZOr8fxHw57EdGPWvSBzzYZx2e0qw4lZItQk';
+        const supabase = createClient(SUPA_URL, SUPA_KEY);
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const roomId = urlParams.get('roomId');
+        let currentUser = null;
+        let roomData = null;
+        let isMyTurn = false; // Chỉ Player 1 mới được bấm "Mở thẻ tiếp"
+
+        async function init() {
+            const { data: authData } = await supabase.auth.signInAnonymously();
+            currentUser = authData.user;
+            
+            const { data: room } = await supabase.from('match_rooms').select('*').eq('id', roomId).single();
+            roomData = room;
+            
+            document.getElementById('playerNames').innerText = 
+                `Bạn (${roomData.player1_id === currentUser.id ? 'Chủ nhà' : 'Khách'}) vs Đối thủ`;
+            
+            // Đánh dấu lượt của mình
+            isMyTurn = roomData.player1_id === currentUser.id;
+            document.getElementById('btnNextCard').style.display = isMyTurn ? 'block' : 'none';
+            document.getElementById('statusText').innerText = isMyTurn ? 'Bạn là người điều khiển trận đấu' : 'Đang chờ chủ nhà mở thẻ...';
+
+            if (roomData.status === 'battling' && !window._battleStarted) {
+                startBattle();
+            }
+
+            supabase.channel('room-' + roomId)
+                .on('postgres_changes', 
+                    { event: 'UPDATE', schema: 'public', table: 'match_rooms', filter: `id=eq.${roomId}` }, 
+                    (payload) => {
+                        roomData = payload.new;
+                        handleRoomUpdate();
+                    })
+                .subscribe();
+        }
+
+        function handleRoomUpdate() {
+            if (roomData.status === 'battling' && !window._battleStarted) {
+                startBattle();
+            }
+            if (roomData.battle_step > 0 && roomData.player1_data?.cards) {
+                updateBattleStep(roomData.battle_step - 1); // bước hiện tại (0-indexed)
+            }
+            if (roomData.status === 'finished') {
+                alert(`Trận đấu kết thúc! ${roomData.winner === currentUser.id ? 'Bạn thắng!' : 'Đối thủ thắng!'}`);
+                window.location.href = '/match/index.html';
+            }
+        }
+
+        async function startBattle() {
+            if (window._battleStarted) return;
+            window._battleStarted = true;
+
+            // Nếu là Player 1, tạo thẻ và lưu lên DB
+            if (roomData.player1_id === currentUser.id && !roomData.player2_data?.cards) {
+                const myData = roomData.player1_data;
+                const oppData = roomData.player2_data;
+                const count = myData.cardCount;
+                const myCards = Array.from({length: count}, () => getRandomPlayerByPack(myData.pack));
+                const oppCards = Array.from({length: count}, () => getRandomPlayerByPack(oppData.pack));
+                
+                await supabase.from('match_rooms').update({
+                    player1_data: { ...myData, cards: myCards },
+                    player2_data: { ...oppData, cards: oppCards },
+                    battle_step: 1
+                }).eq('id', roomId);
+            }
+            document.getElementById('btnNextCard').style.display = roomData.player1_id === currentUser.id ? 'block' : 'none';
+        }
+
+        // Xử lý khi bấm nút "Mở thẻ"
+        document.getElementById('btnNextCard').addEventListener('click', async () => {
+            if (!isMyTurn) return;
+            const step = roomData.battle_step || 0;
+            const totalCards = roomData.player1_data.cards.length;
+            if (step >= totalCards) return;
+            
+            const myCard = roomData.player1_data.cards[step];
+            const oppCard = roomData.player2_data.cards[step];
+            
+            // Hiển thị thẻ cho cả hai (client tự render từ data có sẵn, nhưng kết quả do Player1 tính và gửi lên)
+            let myWin = myCard.ovr > oppCard.ovr;
+            let oppWin = oppCard.ovr > myCard.ovr;
+            let myNewScore = roomData.player1_score || 0;
+            let oppNewScore = roomData.player2_score || 0;
+            
+            if (myWin) myNewScore++;
+            if (oppWin) oppNewScore++;
+            
+            const newStep = step + 1;
+            const newStatus = newStep >= totalCards ? 'finished' : 'battling';
+            
+            const updateObj = {
+                battle_step: newStep,
+                status: newStatus,
+                player1_score: myNewScore,
+                player2_score: oppNewScore,
+                last_winner: myWin ? currentUser.id : (oppWin ? roomData.player2_id : null)
+            };
+            
+            if (newStatus === 'finished') {
+                updateObj.winner = myNewScore > oppNewScore ? currentUser.id : (oppNewScore > myNewScore ? roomData.player2_id : null);
+            }
+            
+            await supabase.from('match_rooms').update(updateObj).eq('id', roomId);
+        });
+
+        function updateBattleStep(index) {
+            if (!roomData.player1_data?.cards) return;
+            const myCards = roomData.player1_id === currentUser.id ? roomData.player1_data.cards : roomData.player2_data.cards;
+            const oppCards = roomData.player1_id === currentUser.id ? roomData.player2_data.cards : roomData.player1_data.cards;
+            if (index >= myCards.length) return;
+
+            const myCard = myCards[index];
+            const oppCard = oppCards[index];
+            
+            document.getElementById('myCardImg').src = myCard.avatarUrl;
+            document.getElementById('myCardName').innerText = myCard.name;
+            document.getElementById('myCardOvr').innerText = myCard.ovr;
+            document.getElementById('oppCardImg').src = oppCard.avatarUrl;
+            document.getElementById('oppCardName').innerText = oppCard.name;
+            document.getElementById('oppCardOvr').innerText = oppCard.ovr;
+            
+            // Xóa hiệu ứng cũ
+            document.getElementById('myCard').classList.remove('winner', 'loser');
+            document.getElementById('oppCard').classList.remove('winner', 'loser');
+            
+            const lastWinner = roomData.last_winner;
+            if (lastWinner) {
+                document.getElementById('myCard').classList.add(lastWinner === currentUser.id ? 'winner' : 'loser');
+                document.getElementById('oppCard').classList.add(lastWinner === roomData.player2_id ? 'winner' : 'loser');
+            }
+            
+            document.getElementById('myScore').innerText = roomData.player1_score || 0;
+            document.getElementById('oppScore').innerText = roomData.player2_score || 0;
+            document.getElementById('roundResult').innerText = lastWinner 
+                ? (lastWinner === currentUser.id ? 'Bạn thắng lượt này!' : 'Đối thủ thắng lượt này!')
+                : 'Hòa!';
+        }
+
+        await init();
+    </script>
+</body>
+</html>

@@ -3,222 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đấu với Bot</title>
+    <title>Nam FC - Lobby</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(145deg, #1a472a, #0e2a1a);
-            margin: 0;
-            padding: 20px;
-            color: white;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(0,0,0,0.6);
-            border-radius: 48px;
-            padding: 30px;
-            backdrop-filter: blur(6px);
-        }
-        h1 {
-            text-align: center;
-            color: #ffd966;
-        }
-        .match-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 30px 0;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .team-card {
-            background: #2c3e2b;
-            border-radius: 32px;
-            padding: 20px;
-            text-align: center;
-            flex: 1;
-        }
-        .vs {
-            font-size: 2rem;
-            font-weight: bold;
-            background: #000000aa;
-            padding: 10px 20px;
-            border-radius: 60px;
-        }
-        .team-name {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .ovr {
-            font-size: 2rem;
-            color: #ffb347;
-        }
-        .players-list {
-            margin-top: 15px;
-            font-size: 0.8rem;
-            text-align: left;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        .player-item {
-            padding: 4px 0;
-            border-bottom: 1px solid #3e5e3a;
-        }
-        .result-area {
-            text-align: center;
-            margin: 30px 0;
-            background: #000000aa;
-            border-radius: 40px;
-            padding: 20px;
-        }
-        .score {
-            font-size: 3rem;
-            font-weight: bold;
-            margin: 15px 0;
-        }
-        button {
-            background: #ffaa33;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 60px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: block;
-            margin: 0 auto;
-        }
-        .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            color: #ffd966;
-            text-decoration: none;
-        }
-        .warning {
-            background: #aa3333aa;
-            padding: 15px;
-            border-radius: 28px;
-            text-align: center;
-        }
+        body { background: #0a1f0a; color: white; font-family: Arial; text-align: center; padding: 20px; }
+        .btn { padding: 15px 30px; background: gold; color: black; border: none; border-radius: 50px; font-weight: bold; margin: 10px; cursor: pointer; }
+        input { padding: 12px; border-radius: 20px; border: none; font-size: 1.2rem; text-align: center; }
+        .section { margin: 20px 0; }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>⚔️ TRẬN ĐẤU: ĐỘI CỦA BẠN 🆚 BOT ⚔️</h1>
-
-    <div id="matchContent">
-        <!-- Nội dung sẽ load bằng JS -->
+    <div id="loginPanel">
+        <h2>NHẬP TÊN CHIẾN BINH</h2>
+        <input type="text" id="usernameInput" placeholder="Tên của bạn" maxlength="15">
+        <br><button class="btn" id="btnLogin">VÀO ĐẤU TRƯỜNG</button>
+        <p id="loginError" style="color: orange;"></p>
     </div>
-    <a href="../index.html" class="back-link">← Về menu chính</a>
-</div>
 
-<script src="../js/players.js"></script>
-<script>
-    // Tạo bot ngẫu nhiên (11 cầu thủ)
-    function generateBotTeam() {
-        const botPlayers = [];
-        const positions = ["GK","LB","CB","CB","RB","LM","CM","CM","RM","ST","ST"];
-        for (let i = 0; i < 11; i++) {
-            const ovr = Math.floor(Math.random() * 50) + 55; // 55-104
-            botPlayers.push({
-                id: i + 1000,
-                name: `Bot_${i+1}`,
-                positionName: positions[i],
-                ovr: ovr,
-                avatarUrl: `https://ui-avatars.com/api/?name=BOT&background=555&color=fff&size=80`
-            });
-        }
-        return botPlayers;
-    }
+    <div id="modePanel" style="display: none;">
+        <h2>CHỌN CHẾ ĐỘ</h2>
+        <button class="btn" id="btnRandom">🔍 GHÉP NGẪU NHIÊN (1v1)</button>
+        <button class="btn" id="btnRoom">🏠 TẠO / VÀO PHÒNG</button>
+        <p id="userDisplay"></p>
+    </div>
 
-    function calculateAvgOvr(players) {
-        if (!players.length) return 0;
-        const sum = players.reduce((a, b) => a + b.ovr, 0);
-        return (sum / players.length).toFixed(1);
-    }
+    <div id="randomPanel" style="display: none;">
+        <p>Đang tìm đối thủ...</p>
+        <p id="queueStatus"></p>
+        <button class="btn" id="btnCancelQueue">HỦY</button>
+    </div>
 
-    // Mô phỏng trận đấu
-    function simulateMatch(myTeam, botTeam) {
-        const myAvg = parseFloat(calculateAvgOvr(myTeam));
-        const botAvg = parseFloat(calculateAvgOvr(botTeam));
-        let diff = myAvg - botAvg;
-        let myScore = Math.floor(Math.max(0, (diff / 15) + 1.2 + Math.random() * 1.8));
-        let botScore = Math.floor(Math.max(0, (-diff / 18) + 1.0 + Math.random() * 1.6));
-        myScore = Math.min(myScore, 7);
-        botScore = Math.min(botScore, 6);
-        if (myAvg > botAvg + 12 && myScore < 2) myScore = 2;
-        if (botAvg > myAvg + 12 && botScore < 2) botScore = 2;
-        return { myScore, botScore };
-    }
+    <div id="roomPanel" style="display: none;">
+        <button class="btn" id="btnCreateRoom">TẠO PHÒNG MỚI</button>
+        <br><br>
+        <input type="text" id="roomCodeInput" placeholder="Mã phòng">
+        <br><button class="btn" id="btnJoinRoom">VÀO PHÒNG</button>
+        <p id="roomStatus"></p>
+    </div>
 
-    function renderMatch() {
-        const container = document.getElementById("matchContent");
-        const allPlayers = getMyPlayers();
-        const savedSquad = localStorage.getItem("activeSquadIds");
-        let mySquad = [];
-        if (savedSquad) {
-            const squadIds = JSON.parse(savedSquad);
-            mySquad = squadIds.map(id => allPlayers.find(p => p.id == id)).filter(p => p);
-        }
-        if (mySquad.length !== 11) {
-            container.innerHTML = `
-                <div class="warning">
-                    ⚠️ Bạn chưa có đội hình 11 người! Vui lòng vào <strong>CLB</strong> để chọn và lưu đội hình.
-                </div>
-                <div style="text-align:center; margin-top:20px;">
-                    <a href="../club/index.html" style="color:#ffd966;">📋 Đến trang CLB</a>
-                </div>
-            `;
-            return;
+    <script type="module">
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+        const SUPA_URL = 'https://mirxuscvrddxbsenoklz.supabase.co';
+        const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcnh1c2N2cmRkeGJzZW5va2x6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NjcyNDEsImV4cCI6MjA5MjM0MzI0MX0.znSP9exUZOr8fxHw57EdGPWvSBzzYZx2e0qw4lZItQk';
+        const supabase = createClient(SUPA_URL, SUPA_KEY);
+        
+        let currentUser = null;
+        let myUsername = localStorage.getItem('myUsername');
+
+        async function init() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                currentUser = session.user;
+            } else {
+                const { data, error } = await supabase.auth.signInAnonymously();
+                if (error) { alert('Lỗi kết nối! Vui lòng thử lại sau.'); return; }
+                currentUser = data.user;
+            }
+
+            if (myUsername) showModePanel();
         }
 
-        const botTeam = generateBotTeam();
-        const myAvg = calculateAvgOvr(mySquad);
-        const botAvg = calculateAvgOvr(botTeam);
-
-        // Hiển thị thông tin trước trận
-        container.innerHTML = `
-            <div class="match-info">
-                <div class="team-card">
-                    <div class="team-name">🔥 ĐỘI CỦA BẠN</div>
-                    <div class="ovr">OVR ${myAvg}</div>
-                    <div class="players-list">
-                        ${mySquad.map(p => `<div class="player-item">${p.name} (${p.positionName}) - OVR ${p.ovr}</div>`).join('')}
-                    </div>
-                </div>
-                <div class="vs">VS</div>
-                <div class="team-card">
-                    <div class="team-name">🤖 BOT NGẪU NHIÊN</div>
-                    <div class="ovr">OVR ${botAvg}</div>
-                    <div class="players-list">
-                        ${botTeam.map(p => `<div class="player-item">${p.name} (${p.positionName}) - OVR ${p.ovr}</div>`).join('')}
-                    </div>
-                </div>
-            </div>
-            <div class="result-area" id="resultArea">
-                <div>🔮 Nhấn nút dưới để thi đấu 🔮</div>
-            </div>
-            <button id="fightBtn">⚔️ ĐÁ NGAY ⚔️</button>
-        `;
-
-        // Gắn sự kiện cho nút đấu
-        document.getElementById("fightBtn").addEventListener('click', () => {
-            const { myScore, botScore } = simulateMatch(mySquad, botTeam);
-            let resultText = "";
-            if (myScore > botScore) resultText = "🎉 CHIẾN THẮNG 🎉";
-            else if (myScore < botScore) resultText = "💀 THẤT BẠI 💀";
-            else resultText = "🤝 HÒA 🤝";
-            const resultDiv = document.getElementById("resultArea");
-            resultDiv.innerHTML = `
-                <div style="font-size:1.8rem;">${resultText}</div>
-                <div class="score">${myScore} - ${botScore}</div>
-                <div>OVR TB bạn: ${myAvg} | Bot: ${botAvg}</div>
-            `;
+        document.getElementById('btnLogin').addEventListener('click', async () => {
+            let name = document.getElementById('usernameInput').value.trim();
+            if (!name) return;
+            
+            const finalName = await getUniqueUsername(name);
+            myUsername = finalName;
+            localStorage.setItem('myUsername', finalName);
+            showModePanel();
         });
-    }
 
-    renderMatch();
-</script>
+        async function getUniqueUsername(baseName) {
+            let name = baseName;
+            let suffix = 0;
+            while (true) {
+                const { data } = await supabase.from('usernames').select('username').eq('username', name).single();
+                if (!data) break;
+                suffix++;
+                name = baseName + suffix;
+            }
+            await supabase.from('usernames').upsert({ username: name, user_id: currentUser.id });
+            return name;
+        }
+
+        function showModePanel() {
+            document.getElementById('loginPanel').style.display = 'none';
+            document.getElementById('modePanel').style.display = 'block';
+            document.getElementById('userDisplay').innerText = 'Xin chào: ' + myUsername;
+        }
+
+        document.getElementById('btnRandom').addEventListener('click', () => {
+            document.getElementById('modePanel').style.display = 'none';
+            document.getElementById('randomPanel').style.display = 'block';
+            startRandomQueue();
+        });
+
+        document.getElementById('btnRoom').addEventListener('click', () => {
+            document.getElementById('modePanel').style.display = 'none';
+            document.getElementById('roomPanel').style.display = 'block';
+        });
+
+        async function startRandomQueue() {
+            await supabase.from('matchmaking_queue').upsert({ user_id: currentUser.id, selected_pack: 'any' });
+            document.getElementById('queueStatus').innerText = 'Chờ người chơi khác...';
+
+            supabase.channel('random-room-' + currentUser.id)
+                .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'match_rooms', filter: `player1_id=eq.${currentUser.id}` }, (payload) => {
+                    window.location.href = `/match/play.html?roomId=${payload.new.id}`;
+                })
+                .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'match_rooms', filter: `player2_id=eq.${currentUser.id}` }, (payload) => {
+                    window.location.href = `/match/play.html?roomId=${payload.new.id}`;
+                })
+                .subscribe();
+        }
+
+        document.getElementById('btnCancelQueue').addEventListener('click', async () => {
+            await supabase.from('matchmaking_queue').delete().eq('user_id', currentUser.id);
+            document.getElementById('randomPanel').style.display = 'none';
+            document.getElementById('modePanel').style.display = 'block';
+        });
+
+        document.getElementById('btnCreateRoom').addEventListener('click', async () => {
+            const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+            const { data: room, error } = await supabase.from('match_rooms').insert({
+                player1_id: currentUser.id, room_code: code, max_players: 4,
+                room_type: 'room', status: 'waiting',
+                player_names: { [currentUser.id]: myUsername }
+            }).select().single();
+
+            if (error) return alert('Lỗi tạo phòng');
+            alert('Mã phòng: ' + code);
+            window.location.href = `/match/play.html?roomId=${room.id}`;
+        });
+
+        document.getElementById('btnJoinRoom').addEventListener('click', async () => {
+            const code = document.getElementById('roomCodeInput').value.trim().toUpperCase();
+            const { data: rooms } = await supabase.from('match_rooms').select('*').eq('room_code', code).eq('status', 'waiting').limit(1);
+            if (!rooms || rooms.length === 0) return alert('Phòng không tồn tại!');
+            const room = rooms[0];
+            
+            const newPlayers = { ...room.player_names, [currentUser.id]: myUsername };
+            const { error } = await supabase.from('match_rooms').update({ 
+                player2_id: currentUser.id, player_names: newPlayers 
+            }).eq('id', room.id);
+
+            if (error) return alert('Lỗi vào phòng');
+            window.location.href = `/match/play.html?roomId=${room.id}`;
+        });
+
+        await init();
+    </script>
 </body>
 </html>

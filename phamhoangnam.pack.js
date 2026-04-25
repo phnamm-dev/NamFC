@@ -33,7 +33,7 @@ const EPIC_ANIMATION_CONFIG = {
     toty: { audio: "audio/toty_begin.mp3", duration: 8675 },
     capped_legends: { audio: "audio/capped_legends_begin.mp3", duration: 8500 },
     songkran: { audio: "audio/songkran_begin.mp3", duration: 8000 },
-    tots: { audio: "audio/tots_begin.mp3", duration: 8900 },
+    tots: { audio: "audio/tots_begin.mp3", duration: 9200 },
 
     developers_test: {
         audio: "audio/knockout_royalty_begin.mp3",
@@ -263,7 +263,7 @@ function epicShakePack() {
 
 function createShootingStars() {
     const stage = document.getElementById("animation-stage");
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 150; i++) {
         const star = document.createElement("div");
         star.className = "shooting-star";
         star.style.left = Math.random() * 100 + "%";
@@ -393,7 +393,7 @@ function createPackAtmosphere(packType = "default") {
         requestAnimationFrame(update);
     }
 
-    for (let i = 0; i < 250; i++) {
+    for (let i = 0; i < 150; i++) {
         setTimeout(() => {
             spawnParticle(centerX, centerY, "burst");
         }, Math.random() * 100);
@@ -592,7 +592,11 @@ async function openMultiplePacksFast(quantity) {
         if (p) players.push(p);
     }
 
-    players.sort((a, b) => b.ovr - a.ovr);
+    players.sort((a, b) => {
+        if (b.ovr !== a.ovr) return b.ovr - a.ovr;
+        // return a.name.localeCompare(b.name); // A-Z
+        return a.id - b.id; // ID
+    });
     addMultiplePlayersToCollection(players);
     playWhoosh();
 
