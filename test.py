@@ -1,4 +1,4 @@
-import requests
+c:\Users\TTC\Downloads\attackv2.pyimport requests
 import time
 
 URL = "https://mirxuscvrddxbsenoklz.supabase.co/rest/v1/submissions"

@@ -125,7 +125,19 @@ module.exports = async function handler(req, res) {
     const season = getField('season');
     const turnstileToken = getField('turnstileToken');
     const imageFile = Array.isArray(files.image) ? files.image[0] : files.image;
+    
+    // === KIỂM TRA ĐỊNH DẠNG ẢNH HỢP LỆ ===
+    const ALLOWED_MIMES = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+    const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp'];
 
+    if (imageFile) {
+        const ext = imageFile.originalFilename.toLowerCase().slice(
+            imageFile.originalFilename.lastIndexOf('.')
+        );
+        if (!ALLOWED_MIMES.includes(imageFile.mimetype) || !ALLOWED_EXTENSIONS.includes(ext)) {
+            return res.status(400).json({ error: 'Chỉ chấp nhận file ảnh (jpg, png, webp).' });
+        }
+    }
     const ip = req.headers['x-forwarded-for'] || req.connection?.remoteAddress || '0.0.0.0';
 
     // 1. Turnstile
