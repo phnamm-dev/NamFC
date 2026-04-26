@@ -4,7 +4,7 @@
  *    ╹ ╹╹ ╹╹ ╹   ╹  ┗━╸   ┗━┛╹ ╹┗━╸╹╹ ╹┗━╸
  * Nam CSS Online CSS - PACK CSS (C) PHAM HOANG NAM 2026
  */
-
+@import url('https://googleapis.com');
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;700;900&display=swap');
 
 * {
@@ -106,7 +106,7 @@ body {
 	width: clamp(140px, 50vw, 350px);
 	height: auto;
 	aspect-ratio: 16 / 9;
-	border-radius: 12px;
+	border-radius: 5px;
 	object-fit: cover;
 	transform: perspective(1000px) rotateX(5deg);
 	box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
@@ -115,7 +115,7 @@ body {
 .pos-ovr {
 	font-size: clamp(2.5rem, 12vw, 80px);
 	font-weight: 900;
-	font-family: 'Anton', sans-serif;
+	font-family: 'Bebas Neue', sans-serif;
 	background: linear-gradient(135deg, #ffe6b3, #ffaa33);
 	-webkit-background-clip: text;
 	background-clip: text;
@@ -130,6 +130,7 @@ body {
 }
 
 .club-info {
+	font-family: 'Bebas Neue', sans-serif;
 	font-size: clamp(1.2rem, 6vw, 36px);
 	font-weight: 800;
 	background: linear-gradient(135deg, #fff, #ffd966);
