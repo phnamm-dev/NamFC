@@ -2,45 +2,75 @@ const { createClient } = require('@supabase/supabase-js');
 const formidable = require('formidable');
 const fs = require('fs');
 
-// Khởi tạo Supabase Admin (service_role) – chỉ tồn tại ở server
-const supabaseAdmin = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
+// === KIỂM TRA BIẾN MÔI TRƯỜNG SỚM ===
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
 
-// Xác minh Turnstile
+if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  console.error('Thiếu biến môi trường SUPABASE_URL hoặc SUPABASE_SERVICE_ROLE_KEY');
+  // Sẽ trả về lỗi khi gọi handler, tránh crash bí ẩn
+}
+
+let supabaseAdmin;
+try {
+  supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+    auth: { persistSession: false }
+  });
+  console.log('Supabase client đã được khởi tạo.');
+} catch (err) {
+  console.error('Lỗi khởi tạo Supabase client:', err);
+}
+
 async function verifyTurnstile(token, ip) {
-  const body = new URLSearchParams({
-    secret: process.env.TURNSTILE_SECRET_KEY,
-    response: token,
-    remoteip: ip
-  });
-  const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-    method: 'POST',
-    body
-  });
-  const data = await res.json();
-  return data.success;
-}
-
-// Kiểm tra rate limit (theo IP, 3 lần/giờ)
-async function isRateLimited(ip) {
-  const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
-  const { count, error } = await supabaseAdmin
-    .from('submission_logs')
-    .select('*', { count: 'exact', head: true })
-    .eq('ip_address', ip)
-    .gte('created_at', oneHourAgo);
-
-  if (error) {
-    console.error('Rate limit error:', error);
-    return true; // an toàn: chặn nếu lỗi
+  if (!TURNSTILE_SECRET_KEY) {
+    console.error('Thiếu TURNSTILE_SECRET_KEY');
+    return false;
   }
-  return count >= 3;
+  try {
+    const body = new URLSearchParams({
+      secret: TURNSTILE_SECRET_KEY,
+      response: token,
+      remoteip: ip
+    });
+    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      body
+    });
+    const data = await res.json();
+    return data.success;
+  } catch (err) {
+    console.error('Lỗi verify turnstile:', err);
+    return false;
+  }
 }
 
-// Upload ảnh lên Storage
+async function isRateLimited(ip) {
+  if (!supabaseAdmin) {
+    console.error('Supabase admin not initialized');
+    return true;
+  }
+  try {
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    const { count, error } = await supabaseAdmin
+      .from('submission_logs')
+      .select('*', { count: 'exact', head: true })
+      .eq('ip_address', ip)
+      .gte('created_at', oneHourAgo);
+
+    if (error) {
+      console.error('Rate limit check error:', error);
+      return true;
+    }
+    return count >= 3;
+  } catch (err) {
+    console.error('Rate limit error:', err);
+    return true;
+  }
+}
+
 async function uploadImage(filePath, originalName, mimeType) {
+  if (!supabaseAdmin) throw new Error('Supabase admin not ready');
   const fileBuffer = fs.readFileSync(filePath);
   const fileName = `${Date.now()}_${originalName.replace(/\s+/g, '_')}`;
 
@@ -58,14 +88,23 @@ async function uploadImage(filePath, originalName, mimeType) {
   return data.publicUrl;
 }
 
-// Hàm chính xử lý request
 module.exports = async function handler(req, res) {
+  // CORS header để tránh lỗi nếu frontend khác domain
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  // Kiểm tra lại supabaseAdmin trước khi xử lý
+  if (!supabaseAdmin) {
+    return res.status(500).json({ error: 'Máy chủ chưa sẵn sàng (Supabase client).' });
+  }
+
   try {
-    // Parse form data (multipart)
     const form = new formidable.IncomingForm();
     const { fields, files } = await new Promise((resolve, reject) => {
       form.parse(req, (err, fields, files) => {
@@ -74,7 +113,6 @@ module.exports = async function handler(req, res) {
       });
     });
 
-    // Lấy giá trị từ form (formidable v3 trả về mảng hoặc string)
     const getField = (field) => {
       const val = fields[field];
       return Array.isArray(val) ? val[0] : val;
@@ -86,20 +124,18 @@ module.exports = async function handler(req, res) {
     const club = getField('club');
     const season = getField('season');
     const turnstileToken = getField('turnstileToken');
-
-    // Lấy file ảnh (formidable v3 có thể trả về mảng)
     const imageFile = Array.isArray(files.image) ? files.image[0] : files.image;
 
-    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || '0.0.0.0';
+    const ip = req.headers['x-forwarded-for'] || req.connection?.remoteAddress || '0.0.0.0';
 
-    // 1. Xác thực Turnstile
+    // 1. Turnstile
     if (!turnstileToken || !(await verifyTurnstile(turnstileToken, ip))) {
       return res.status(400).json({ error: 'Xác thực captcha không hợp lệ.' });
     }
 
     // 2. Rate limit
     if (await isRateLimited(ip)) {
-      return res.status(429).json({ error: 'Bạn đã gửi quá nhiều lần. Vui lòng đợi 1 giờ.' });
+      return res.status(429).json({ error: 'Bạn đã gửi quá nhiều. Vui lòng đợi 1 giờ.' });
     }
 
     // 3. Upload ảnh
@@ -112,7 +148,7 @@ module.exports = async function handler(req, res) {
       );
     }
 
-    // 4. Insert vào bảng submissions
+    // 4. Insert DB
     const { error: insertError } = await supabaseAdmin
       .from('submissions')
       .insert({
@@ -135,7 +171,7 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ success: true, message: 'Gửi thành công!' });
 
   } catch (error) {
-    console.error('API error:', error);
-    return res.status(500).json({ error: 'Lỗi máy chủ nội bộ.' });
+    console.error('Handler error:', error);
+    return res.status(500).json({ error: 'Lỗi máy chủ nội bộ.', details: error.message });
   }
 };
