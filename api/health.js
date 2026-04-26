@@ -1,3 +1,4 @@
+// health check v2
 module.exports = async function handler(req, res) {
   const status = {
     supabaseUrl: process.env.SUPABASE_URL ? '✅ Đã có' : '❌ Thiếu',
@@ -5,8 +6,6 @@ module.exports = async function handler(req, res) {
     turnstileSecret: process.env.TURNSTILE_SECRET_KEY ? '✅ Đã có' : '❌ Thiếu'
   };
   
-  // Buộc ghi log (sẽ hiện trong dashboard)
   console.log('Health check:', status);
-  
   res.status(200).json(status);
 };
