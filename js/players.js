@@ -63,7 +63,7 @@ const allPlayers = [
     { id: 1206, name: "Hong long", position: "GK", ovr: 119, nation: "argentina", club: "Manchester City", clubLogo: "man-city.png", flag: "ar.png", playerImg: "tots-hong-long.gif", pack: "tots" },
     { id: 1207, name: "Xuan Phuc", position: "GK", ovr: 118, nation: "gb-eng", club: "Barcelona", clubLogo: "barcelona.png", flag: "gb-eng.png", playerImg: "tots-xuan-phuc.gif", pack: "tots" },
     { id: 1208, name: "Thanh Nhan", position: "CM", ovr: 118, nation: "vietnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vi.png", playerImg: "tots-thanh-nhan.gif", pack: "tots" },
-    { id: 1209, name: "Hong Hai", position: "CAM", ovr: 117, nation: "gb-eng", club: "Juventus", clubLogo: "juventus.png", flag: "gb-eng.png", playerImg: "tots-hong-hai.gif", pack: "tots" },
+    { id: 1209, name: "Hong Hai", position: "CB", ovr: 117, nation: "gb-eng", club: "Juventus", clubLogo: "juventus.png", flag: "gb-eng.png", playerImg: "tots-hong-hai.gif", pack: "tots" },
 
     // DEVELOPERS TEST
     { id: -1, name: "Nam FC Online", position: "DEV", ovr: 115, nation: "vietnam", club: "Nam FC Online", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "dev-115.gif", pack: "null" },
