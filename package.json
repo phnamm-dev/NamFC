@@ -2,7 +2,7 @@
   "name": "nam-fc-online",
   "version": "1.0.0",
   "dependencies": {
-    "formidable": "^3.5.1",
+    "formidable": "^2.1.2",
     "@supabase/supabase-js": "^2.39.0"
   }
 }
