@@ -14,13 +14,14 @@ const SOURCES = [
   'css',
   'logs',
   'match',
-  'soon!',        // dấu ! được xử lý an toàn trong Node.js
-  // file tĩnh
+  'soon!',
   '404.html',
   'index.html',
   'pack.html',
   'shop.html',
-  'upload.html'
+  'upload.html',
+  'phamhoangnam.pack.css',
+  'phamhoangnam.pack.js'
 ];
 
 const DIST = path.join(__dirname, 'dist');
