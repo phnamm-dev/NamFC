@@ -1,8 +1,10 @@
 {
-  "name": "nam-fc-online",
+  "name": "my-static-site",
   "version": "1.0.0",
-  "dependencies": {
-    "formidable": "^2.1.2",
-    "@supabase/supabase-js": "^2.39.0"
+  "scripts": {
+    "build": "rm -rf dist && mkdir dist && cp -r images audio calculator club js css logs match soon! 404.html index.html pack.html shop.html upload.html dist/ && minify dist -r --output dist"
+  },
+  "devDependencies": {
+    "minify": "^11.0.0"
   }
 }
