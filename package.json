@@ -2,9 +2,10 @@
   "name": "my-static-site",
   "version": "1.0.0",
   "scripts": {
-    "build": "rm -rf dist && mkdir dist && cp -r images audio calculator club js css logs match soon! 404.html index.html pack.html shop.html upload.html dist/ && minify dist -r --output dist"
+    "build": "rm -rf dist && mkdir dist && cp -r images audio calculator club js css logs match soon! 404.html index.html pack.html shop.html upload.html dist/ && npx html-minifier-terser --input-dir dist --output-dir dist --collapse-whitespace --remove-comments --minify-js true --minify-css true --file-ext html"
   },
   "devDependencies": {
+    "html-minifier-terser": "^7.2.0",
     "minify": "^11.0.0"
   }
 }
