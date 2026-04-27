@@ -14,11 +14,12 @@ const SOURCES = [
   'css',
   'logs',
   'match',
-  'soon!',
+  // files
   '404.html',
   'index.html',
   'pack.html',
   'shop.html',
+  'credits.html',
   'upload.html',
   'phamhoangnam.pack.css',
   'phamhoangnam.pack.js'

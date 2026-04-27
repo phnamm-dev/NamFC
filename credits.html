@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Credits — Nam FC Online</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background:
+                repeating-linear-gradient(45deg,
+                    rgba(20, 80, 20, 0.3) 0px,
+                    rgba(20, 80, 20, 0.3) 2px,
+                    transparent 2px,
+                    transparent 8px),
+                radial-gradient(circle at 30% 40%, #2d8c3c 0%, #1a5c25 50%, #0a3a12 100%);
+
+            font-family: 'Segoe UI', 'Exo 2', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            padding: 15px 15px 100px 15px;
+            position: relative;
+            overflow-x: hidden;
+            cursor: default;
+        }
+
+        /* ── Đường kẻ sân bóng ── */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(85vw, 500px);
+            height: min(85vw, 500px);
+            border: 4px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Chấm cỏ 3D ── */
+        .grass-dots {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(100, 255, 100, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 70%, rgba(255, 255, 100, 0.03) 0%, transparent 30%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ── TITLE SIÊU SPORT ── */
+        h1 {
+            font-size: clamp(2.2rem, 8vw, 4.5rem);
+            font-weight: 900;
+            font-style: italic;
+            text-transform: uppercase;
+            color: transparent;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            margin-top: 10px;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 10;
+            text-align: center;
+
+            background: linear-gradient(135deg,
+                    #FFD700 0%, #FFF8DC 25%, #FFD700 50%,
+                    #FFA500 75%, #FFD700 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            animation: shine 3s linear infinite, float 4s ease-in-out infinite;
+
+            filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.8)) drop-shadow(0 4px 4px #B8860B) drop-shadow(0 8px 8px #00000060) drop-shadow(0 0 20px #FFD70040);
+            -webkit-text-stroke: 1px rgba(184, 134, 11, 0.5);
+        }
+
+        h1::before,
+        h1::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg,
+                    transparent 0%, #FFD700 20%, #FFA500 50%,
+                    #FFD700 80%, transparent 100%);
+            box-shadow: 0 2px 8px #FFD700, 0 3px 0 #8B6914;
+            transform: skewX(-25deg);
+        }
+
+        h1::before {
+            bottom: -10px;
+            animation: slideLine 2s ease-in-out infinite alternate;
+        }
+
+        h1::after {
+            bottom: -20px;
+            width: 70%;
+            left: 15%;
+            opacity: 0.7;
+            animation: slideLine 2s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes shine {
+            0% {
+                background-position: 0% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        @keyframes slideLine {
+            0% {
+                transform: skewX(-25deg) scaleX(0.8);
+                opacity: 0.5;
+            }
+            100% {
+                transform: skewX(-25deg) scaleX(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0px) rotate(-1deg);
+            }
+            50% {
+                transform: translateY(-6px) rotate(1deg);
+            }
+        }
+
+        /* ── MENU BUTTONS ── */
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            max-width: 900px;
+            position: relative;
+            z-index: 10;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            padding: 0 5px;
+        }
+
+        .menu a {
+            display: inline-block;
+            background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%);
+            color: #0a2f1a;
+            padding: 12px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow:
+                0 7px 0 #8B6914,
+                0 6px 15px rgba(0, 0, 0, 0.5),
+                inset 0 2px 0 rgba(255, 255, 255, 0.6);
+            transition: all 0.12s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid #FFE066;
+            min-width: 130px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            user-select: none;
+            flex: 0 1 auto;
+        }
+
+        .menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .menu a:hover::before {
+            left: 100%;
+        }
+
+        .menu a:hover {
+            transform: translateY(4px);
+            box-shadow:
+                0 4px 0 #8B6914,
+                0 8px 15px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            background: linear-gradient(180deg, #FFE44D 0%, #FFB830 100%);
+        }
+
+        .menu a:active {
+            transform: translateY(8px);
+            box-shadow:
+                0 0 0 #8B6914,
+                0 4px 10px rgba(0, 0, 0, 0.5),
+                inset 0 1px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu a.active-link {
+            background: linear-gradient(180deg, #FFF8DC 0%, #FFD700 100%);
+            box-shadow:
+                0 4px 0 #8B6914,
+                0 6px 18px rgba(255, 215, 0, 0.7),
+                inset 0 2px 0 rgba(255, 255, 255, 0.9);
+            color: #000;
+            border-color: #fff;
+            pointer-events: none;
+        }
+
+        /* ── CREDITS CONTAINER ── */
+        .credits-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 850px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        /* ── CREDIT CARD ── */
+        .credit-card {
+            background: rgba(10, 30, 15, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 215, 0, 0.35);
+            border-radius: 20px;
+            padding: 20px 22px;
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 0 15px rgba(255, 215, 0, 0.1);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .credit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 0%, rgba(255, 215, 0, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .credit-card:hover {
+            border-color: rgba(255, 215, 0, 0.7);
+            box-shadow:
+                0 10px 35px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                0 0 25px rgba(255, 215, 0, 0.25);
+        }
+
+        .credit-card h2 {
+            position: relative;
+            z-index: 1;
+            font-size: 1.4rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #FFD700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            padding-bottom: 8px;
+        }
+
+        .credit-card h2 .icon {
+            font-size: 1.6rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+        }
+
+        .credit-card h3 {
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #FFE066;
+            margin-top: 14px;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .credit-card p {
+            position: relative;
+            z-index: 1;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 4px;
+        }
+
+        .credit-card p strong {
+            color: #FFD700;
+        }
+
+        .credit-card .player-list {
+            position: relative;
+            z-index: 1;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .credit-card .player-list li {
+            padding: 6px 12px;
+            margin: 3px 0;
+            border-radius: 30px;
+            background: rgba(255, 215, 0, 0.06);
+            border-left: 3px solid rgba(255, 215, 0, 0.4);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.85);
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .credit-card .player-list li:hover {
+            background: rgba(255, 215, 0, 0.14);
+            border-left-color: #FFD700;
+        }
+
+        .credit-card .player-list li strong {
+            display: inline-block;
+            color: #FFD700;
+            min-width: 130px;
+        }
+
+        .credit-card hr {
+            position: relative;
+            z-index: 1;
+            border: none;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            margin: 14px 0;
+        }
+
+        /* ── THANK YOU SPECIAL ── */
+        .thank-you-card {
+            text-align: center;
+            background: rgba(10, 30, 15, 0.85);
+            border: 2px solid rgba(255, 215, 0, 0.6);
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .thank-you-card p {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #FFE066;
+            letter-spacing: 0.5px;
+        }
+
+        /* ── OWNERSHIP BADGE ── */
+        .ownership-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #0a2f1a;
+            font-weight: 900;
+            font-size: 0.85rem;
+            padding: 8px 18px;
+            border-radius: 30px;
+            letter-spacing: 0.5px;
+            margin-top: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        /* ── VERSION BOX ── */
+        .version-box {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(10, 30, 10, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #FFD700;
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.5px;
+            z-index: 900;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            text-transform: uppercase;
+        }
+
+        /* ── COPYRIGHT ── */
+        .copyright {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            color: rgba(255, 215, 0, 0.6);
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5px 14px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            z-index: 900;
+            pointer-events: none;
+        }
+
+        /* ── TRÁI BÓNG BAY ── */
+        .ball {
+            position: fixed;
+            font-size: 2.6rem;
+            line-height: 1;
+            pointer-events: auto;
+            z-index: 1000;
+            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.5));
+            will-change: left, top;
+            transition: transform 0.1s;
+            text-shadow: 0 0 10px #FFD700;
+            user-select: none;
+        }
+
+        .ball::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            animation: pulseGlow 1.5s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: 0.7;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+
+        /* ── RIPPLE ── */
+        .click-ripple {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #FFD700 0%, #FFA500 80%);
+            pointer-events: none;
+            z-index: 2000;
+            animation: rippleEffect 0.6s ease-out forwards;
+            box-shadow: 0 0 20px gold;
+        }
+
+        @keyframes rippleEffect {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(8);
+                opacity: 0;
+            }
+        }
+
+        /* ── GOAL POPUP ── */
+        .goal-popup {
+            position: fixed;
+            font-size: 2rem;
+            font-weight: 900;
+            color: gold;
+            text-shadow: 3px 3px 0 #000, 0 0 20px white;
+            pointer-events: none;
+            z-index: 1500;
+            animation: goalFly 1.2s ease-out forwards;
+            white-space: nowrap;
+        }
+
+        @keyframes goalFly {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 0) scale(0.5);
+            }
+            20% {
+                opacity: 1;
+                transform: translate(-50%, -30px) scale(1.2);
+            }
+            80% {
+                opacity: 1;
+                transform: translate(-50%, -80px) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -120px) scale(0.8);
+            }
+        }
+
+        /* ── INSTRUCTION ── */
+        .instruction {
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255, 215, 0, 0.85);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-top: 5px;
+            font-weight: 500;
+            z-index: 105;
+            position: relative;
+            animation: fadePulse 3s infinite ease-in-out;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 5px 16px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            display: inline-block;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        @keyframes fadePulse {
+            0%,
+            100% {
+                opacity: 0.75;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* ── MEDIA QUERIES ── */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px 10px 90px 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 14px;
+            }
+
+            h1::before {
+                bottom: -8px;
+                height: 3px;
+            }
+
+            h1::after {
+                bottom: -16px;
+                height: 3px;
+            }
+
+            .menu {
+                gap: 8px;
+                margin-top: 20px;
+                margin-bottom: 18px;
+            }
+
+            .menu a {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+                min-width: 110px;
+                box-shadow: 0 6px 0 #8B6914, 0 5px 10px rgba(0, 0, 0, 0.4);
+            }
+
+            .credit-card {
+                padding: 15px 14px;
+                border-radius: 16px;
+            }
+
+            .credit-card h2 {
+                font-size: 1.2rem;
+            }
+
+            .credit-card h3 {
+                font-size: 1rem;
+            }
+
+            .credit-card p {
+                font-size: 0.85rem;
+                line-height: 1.5;
+            }
+
+            .credit-card .player-list li {
+                font-size: 0.8rem;
+                padding: 4px 10px;
+            }
+
+            .credit-card .player-list li strong {
+                min-width: 100px;
+            }
+
+            .ball {
+                font-size: 2.2rem;
+            }
+
+            .version-box {
+                padding: 5px 12px;
+                font-size: 11px;
+                bottom: 10px;
+                right: 10px;
+            }
+
+            .copyright {
+                bottom: 10px;
+                left: 10px;
+                font-size: 10px;
+                padding: 4px 12px;
+            }
+
+            .instruction {
+                font-size: 10px;
+                padding: 4px 12px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .menu a {
+                min-width: 100px;
+                padding: 9px 12px;
+                font-size: 0.8rem;
+            }
+
+            h1 {
+                font-size: 1.7rem;
+            }
+
+            .ball {
+                font-size: 1.9rem;
+            }
+        }
+
+        @media (max-height: 500px) and (orientation: landscape) {
+            h1 {
+                margin-bottom: 10px;
+                font-size: 1.8rem;
+            }
+
+            .menu {
+                margin-top: 8px;
+                margin-bottom: 10px;
+                gap: 6px;
+            }
+
+            .instruction {
+                margin-top: 2px;
+            }
+
+            .ball {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grass-dots"></div>
+
+    <h1>CREDITS</h1>
+
+    <div class="menu">
+        <a href="index.html">🏠 TRANG CHỦ</a>
+        <a href="shop.html">🛒 MUA PACK</a>
+        <a href="/calculator/">📊 TÍNH OVR</a>
+        <a href="/logs/">📜 LỊCH SỬ</a>
+        <a href="upload.html">🪄 THAM GIA</a>
+        <a href="/credits/" class="active-link">✏️ CREDITS</a>
+    </div>
+
+    <div class="credits-container">
+
+        <!-- LỜI CẢM ƠN -->
+        <div class="credit-card thank-you-card">
+            <p>Nam FC Online xin chân thành cảm ơn vì các sản phẩm đã được sử dụng trong dự án!</p>
+            <span class="ownership-badge">© PHẠM HOÀNG NAM — CHỦ SỞ HỮU</span>
+            <p style="margin-top:10px;font-size:0.9rem;color:rgba(255,255,255,0.8);">
+                Tất cả hình ảnh, âm thanh, giao diện, tính năng, mã nguồn, v.v đều thuộc quyền sở hữu của <strong>Nam FC Online, Phạm Hoàng Nam</strong>
+            </p>
+        </div>
+
+        <!-- HÌNH ẢNH CẦU THỦ -->
+        <div class="credit-card">
+            <h2><span class="icon">📸</span> Hình ảnh cầu thủ</h2>
+            <ul class="player-list">
+                <li><strong>CB GIA BAO</strong> — Nguyễn Hoàng Gia Bảo, THCS Lê Quang Cường, TP Hồ Chí Minh</li>
+                <li><strong>GK HONG LONG</strong> — Lê Hồng Long, THCS Lê Quang Cường, TP Hồ Chí Minh</li>
+                <li><strong>CB HONG HAI</strong> — Lê Hồng Hải, THCS Lê Quang Cường, TP Hồ Chí Minh</li>
+                <li><strong>ST GIA PHUC</strong> — Nguyễn Gia Phúc, THCS Lê Quang Cường, TP Hồ Chí Minh</li>
+                <li><strong>CDM CONG KHOI</strong> — Nguyễn Công Khôi, THCS Lê Quang Cường, TP Hồ Chí Minh</li>
+                <li><strong>ST ANH TUAN</strong> — Phạm Hoàng Anh Tuấn, THCS Lê Quang Cường, TP Hồ Chí Minh</li>
+                <li><strong>ST BAO KHANG</strong> — Phí Bảo Khang, THCS Phước Hưng, TP Hồ Chí Minh</li>
+                <li><strong>GK VAN THANG</strong> — Lê Văn Thằng, THCS Lê Quang Cường, TP Hồ Chí Minh</li>
+                <li><strong>CDM PIPILABU</strong> — 皮皮拉布 (Pí pí lā bù), Douyin</li>
+                <li><strong>GK MASHA</strong> — Маша (Masha), tỉnh Tver Oblast / Tyumen Oblast, Siberia, Nga</li>
+                <li><strong>CAM THE BEAR</strong> — Медведь (Medved), tỉnh Tver Oblast / Tyumen Oblast, Siberia, Nga</li>
+                <li><strong>CM PEPPA BEACH</strong> — Peppa, Peppa Pig</li>
+                <li><strong>ST C.RONALDO</strong> — Cristiano Ronaldo, Santo António, Funchal, Madeira, Bồ Đào Nha</li>
+                <li><strong>GK XUAN PHUC</strong> — Nguyễn Xuân Phúc, THCS Lê Quang Cường, TP Hồ Chí Minh</li>
+                <li><strong>ST NHU Y</strong> — Như Ý, tỉnh Đồng Nai</li>
+                <li><strong>ST TRUNG KIEN</strong> — Phạm Trung Kiên, THPT Bà Rịa, TP Hồ Chí Minh</li>
+                <li><strong>ST MINH CHAU</strong> — Lê Minh Châu, THCS Lê Quang Cường, TP Hồ Chí Minh</li>
+                <li><strong>CM THANH NHAN</strong> — Lê Thanh Nhân, THCS Lê Quang Cường, TP Hồ Chí Minh</li>
+                <li><strong>ST TRUC LAM</strong> — Nguyễn Thanh Trúc Lâm, THCS Lê Quang Cường, TP Hồ Chí Minh</li>
+            </ul>
+            <p style="margin-top:10px;"><strong>Một số thẻ cầu thủ được tạo lại bởi AI</strong></p>
+        </div>
+
+        <!-- THẺ CẦU THỦ -->
+        <div class="credit-card">
+            <h2><span class="icon">🃏</span> Thẻ cầu thủ</h2>
+            <p>Tất cả thẻ cầu thủ được tạo bởi công cụ của <strong>FC Mobile</strong> và <strong>FutGG</strong></p>
+        </div>
+
+        <!-- GIAO DIỆN / TÍNH NĂNG -->
+        <div class="credit-card">
+            <h2><span class="icon">💻</span> Giao diện / Tính năng</h2>
+            <p>
+                Hỗ trợ đắc lực bởi <strong>DeepSeek AI</strong>, sửa lỗi bảo mật bởi <strong>Gemini AI, ChatGPT</strong>,
+                lên ý tưởng và kế hoạch bởi <strong>Grok AI</strong>
+            </p>
+        </div>
+
+        <!-- ÂM THANH -->
+        <div class="credit-card">
+            <h2><span class="icon">🎵</span> Âm Thanh</h2>
+            <ul class="player-list">
+                <li><strong>LEGENDS</strong> — Legends Never Die · Riot Games, Against the Current</li>
+                <li><strong>UCL</strong> — Montagem - Conga Conga (Remix) · DJ Ramon SP</li>
+                <li><strong>A NATION'S STORY</strong> — Bài hát AI, tham khảo nhiều nguồn</li>
+                <li><strong>FUTURE STARS</strong> — 八方來財 · SKAI ISYOURGOD</li>
+                <li><strong>TOTY</strong> — RITMO BRUTALISMO (Super Slowed) · Xllie!</li>
+                <li><strong>CAPPED LEGENDS</strong> — AŞKIM ÇOK PARDON · COOOK PARDON</li>
+                <li><strong>UCL DREAMCHASERS</strong> — CHẠNH LÒNG THƯƠNG CÔ 2 (Remix) · Huy Vạc, AI Ed Sheeran, tinh chỉnh bởi Phạm Hoàng Nam</li>
+                <li><strong>SONGKRAN SPLASH</strong> — DIA DELÍCIA · Nakama / MC Staff / ΣP</li>
+                <li><strong>TOTS</strong> — Chẳng Hợp Nhau Đâu (Domino Remix) · Lê Bảo Bình, AI SpongeBob, tinh chỉnh bởi Phạm Hoàng Nam</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- Hướng dẫn -->
+    <div class="instruction">⚽ Ấn vào bóng hoặc SPACE để đá  ⚽</div>
+
+    <!-- Version Box -->
+    <div class="version-box" id="versionBox">Version: loading…</div>
+
+    <!-- Trái bóng bay -->
+    <div class="ball" id="flyingBall">⚽</div>
+
+    <!-- Copyright -->
+    <div class="copyright">&copy; Pham Hoang Nam</div>
+
+    <script>
+        (function() {
+            "use strict";
+
+            // ── VERSION LOADER ──
+            const versionEl = document.getElementById('versionBox');
+            async function loadVersion() {
+                try {
+                    const res = await fetch('/js/version.json');
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    const data = await res.json();
+                    versionEl.textContent = `Version: ${data.version}`;
+                } catch (e) {
+                    console.warn('⚠️ Version failed:', e);
+                    versionEl.textContent = 'Version: ⚠️';
+                    setTimeout(() => {
+                        if (versionEl.textContent === 'Version: ⚠️') versionEl.textContent =
+                            'Version: dev';
+                    }, 2000);
+                }
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadVersion);
+            } else {
+                loadVersion();
+            }
+
+            // ── BÓNG BAY VẬT LÝ ──
+            const ball = document.getElementById('flyingBall');
+            const h1 = document.querySelector('h1');
+            const h1Rect = h1.getBoundingClientRect();
+
+            let x = h1Rect.left + h1Rect.width / 2 - 25;
+            let y = h1Rect.bottom - 30;
+            let vx = 3.5;
+            let vy = 0;
+            const gravity = 0.5;
+            const bounce = 0.7;
+            const friction = 0.99;
+
+            let minX = 20,
+                maxX = window.innerWidth - 80;
+            let groundY = window.innerHeight - 80;
+
+            function updateBallPosition() {
+                ball.style.left = x + 'px';
+                ball.style.top = y + 'px';
+                const rotate = Math.atan2(vy, vx) * 10;
+                ball.style.transform = `rotate(${rotate}deg)`;
+            }
+
+            function physicsLoop() {
+                vy += gravity;
+                x += vx;
+                y += vy;
+
+                if (x <= minX) {
+                    x = minX;
+                    vx = -vx * 0.9;
+                } else if (x >= maxX) {
+                    x = maxX;
+                    vx = -vx * 0.9;
+                }
+
+                if (y >= groundY) {
+                    y = groundY;
+                    vy = -vy * bounce;
+                    vx *= 0.98;
+                    if (Math.abs(vy) < 0.5 && y >= groundY - 1) vy = 0;
+                    if (Math.abs(vx) < 0.1) vx = 0;
+                }
+
+                vx *= friction;
+
+                if (Math.abs(vx) < 0.01 && Math.abs(vy) < 0.01 && y >= groundY - 2) {
+                    vx = 0;
+                    vy = 0;
+                }
+
+                updateBallPosition();
+                requestAnimationFrame(physicsLoop);
+            }
+
+            function updateBoundaries() {
+                maxX = window.innerWidth - 80;
+                groundY = window.innerHeight - 80;
+                x = Math.min(maxX, Math.max(minX, x));
+                y = Math.min(groundY, y);
+                updateBallPosition();
+            }
+
+            window.addEventListener('resize', updateBoundaries);
+
+            updateBallPosition();
+            requestAnimationFrame(physicsLoop);
+
+            ball.addEventListener('click', (e) => {
+                e.stopPropagation();
+                vy = -12;
+                vx += (Math.random() - 0.5) * 8;
+                vx = Math.min(15, Math.max(-15, vx));
+                showGoalPopup(e.clientX, e.clientY);
+                createRipple(e.clientX, e.clientY);
+            });
+
+            ball.style.pointerEvents = 'auto';
+
+            function createRipple(x, y) {
+                const ripple = document.createElement('div');
+                ripple.className = 'click-ripple';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                document.body.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            }
+
+            function showGoalPopup(x, y) {
+                const popup = document.createElement('div');
+                popup.className = 'goal-popup';
+                popup.textContent = 'GOAL!!!';
+                popup.style.left = x + 'px';
+                popup.style.top = (y - 30) + 'px';
+                popup.style.transform = 'translate(-50%, -50%)';
+                document.body.appendChild(popup);
+                setTimeout(() => popup.remove(), 1200);
+            }
+
+            document.body.addEventListener('click', (e) => {
+                if (e.target.closest('a') || e.target.closest('.ball')) return;
+                createRipple(e.clientX, e.clientY);
+                if (Math.random() > 0.6) showGoalPopup(e.clientX, e.clientY);
+
+                const ballRect = ball.getBoundingClientRect();
+                const ballCenterX = ballRect.left + ballRect.width / 2;
+                const ballCenterY = ballRect.top + ballRect.height / 2;
+                const dist = Math.hypot(e.clientX - ballCenterX, e.clientY - ballCenterY);
+                if (dist < 150) {
+                    vy = -8;
+                    vx += (e.clientX - ballCenterX) * 0.1;
+                    vx = Math.min(12, Math.max(-12, vx));
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space') {
+                    e.preventDefault();
+                    vy = -15;
+                    vx += (Math.random() - 0.5) * 10;
+                    vx = Math.min(18, Math.max(-18, vx));
+                    showGoalPopup(window.innerWidth / 2, window.innerHeight / 2);
+                }
+                if (e.code === 'KeyG') {
+                    showGoalPopup(window.innerWidth / 2, window.innerHeight / 2);
+                }
+            });
+
+            // ── SPOTLIGHT CHỈ TRÊN DESKTOP ──
+            const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+            if (!isTouchDevice) {
+                document.body.addEventListener('mousemove', (e) => {
+                    const mx = (e.clientX / window.innerWidth) * 100;
+                    const my = (e.clientY / window.innerHeight) * 100;
+                    document.body.style.background = `
+                        repeating-linear-gradient(45deg, rgba(20,80,20,0.3) 0px, rgba(20,80,20,0.3) 2px, transparent 2px, transparent 8px),
+                        radial-gradient(circle at ${mx}% ${my}%, #3da34a 0%, #1a5c25 40%, #0a3a12 100%)
+                    `;
+                });
+
+                document.body.addEventListener('mouseleave', () => {
+                    document.body.style.background = `
+                        repeating-linear-gradient(45deg, rgba(20,80,20,0.3) 0px, rgba(20,80,20,0.3) 2px, transparent 2px, transparent 8px),
+                        radial-gradient(circle at 30% 40%, #2d8c3c 0%, #1a5c25 50%, #0a3a12 100%)
+                    `;
+                });
+            }
+
+            // Chào sân
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    showGoalPopup(window.innerWidth / 2, window.innerHeight / 3);
+                }, 500);
+                console.log(
+                    '%cWARNING: This project is copyrighted; please read the license before using any content from the project.',
+                    'font-size: 16px; color: red; background: #0a2f1a; padding: 4px; border-radius: 4px;');
+                console.log('%cNam FC Online © PHAM HOANG NAM',
+                    'font-size: 16px; color: gold; background: #0a2f1a; padding: 4px; border-radius: 4px;');
+                console.log('%c🥅 Sân cỏ đã sẵn sàng! Nhấn SPACE để đá bóng!', 'font-size: 13px; color: #fff;');
+            });
+
+            setTimeout(updateBoundaries, 100);
+            window.addEventListener('resize', updateBoundaries);
+        })();
+    </script>
+</body>
+</html>

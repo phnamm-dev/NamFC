@@ -43,6 +43,7 @@ const allPlayers = [
 
     // UCL DREAMCHASERS
     { id: 901, name: "Nhu Y", position: "ST", ovr: 117, nation: "vietnam", club: "Arsenal", clubLogo: "arsenal.png", flag: "vi.png", playerImg: "ucl-nhu-y.gif", pack: "ucl" },
+    { id: 902, name: "Trung Kien", position: "ST", ovr: 116, nation: "vietnam", club: "Manchester United", clubLogo: "man-utd.png", flag: "vi.png", playerImg: "ucl-trung-kien.gif", pack: "ucl" },
 
     // A NATION'S STORY
     
