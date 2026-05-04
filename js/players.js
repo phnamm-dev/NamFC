@@ -7,7 +7,7 @@ const allPlayers = [
     // Bronze
     { id: 101, name: "Gia Bao", position: "CB", ovr: 56, nation: "india", club: "THCS Lê Quang Cường", clubLogo: "thcs-lqc.png", flag: "in.png", playerImg: "bronze-gia-bao.png", pack: "bronze" },
     { id: 102, name: "Hong Long", position: "GK", ovr: 54, nation: "argentina", club: "Manchester City", clubLogo: "man-city.png", flag: "ar.png", playerImg: "bronze-hong-long.png", pack: "bronze" },
-    { id: 103, name: "Hong Hai", position: "CB", ovr: 53, nation: "vietnam", club: "Juventus", clubLogo: "juventus.png", flag: "vi.png", playerImg: "bronze-hong-hai.png", pack: "bronze" },
+    { id: 103, name: "Hong Hai", position: "CB", ovr: 53, nation: "vnetnam", club: "Juventus", clubLogo: "juventus.png", flag: "vn.png", playerImg: "bronze-hong-hai.png", pack: "bronze" },
     { id: 104, name: "Gia Phuc", position: "ST", ovr: 52, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "bronze-gia-phuc.png", pack: "bronze" },
     { id: 105, name: "Cong Khoi", position: "ST", ovr: 48, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "bronze-cong-khoi.png", pack: "bronze" },
     { id: 106, name: "Anh Tuan", position: "ST", ovr: 45, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "bronze-anh-tuan.png", pack: "bronze" },
@@ -32,8 +32,8 @@ const allPlayers = [
     // TOTY
     { id: 601, name: "Hong Long", position: "GK", ovr: 117, nation: "argentina", club: "Manchester City", clubLogo: "man-city.png", flag: "ar.png", playerImg: "toty-hong-long.gif", pack: "toty" },
     { id: 602, name: "Anh Tuan", position: "ST", ovr: 117, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "toty-anh-tuan.gif", pack: "toty" },
-    { id: 603, name: "Van Thang", position: "ST", ovr: 116, nation: "vietnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vi.png", playerImg: "toty-van-thang.gif", pack: "toty" },
-    { id: 604, name: "Hong Hai", position: "CB", ovr: 115, nation: "vietnam", club: "Juventus", clubLogo: "juventus.png", flag: "vi.png", playerImg: "toty-hong-hai.gif", pack: "toty" },
+    { id: 603, name: "Van Thang", position: "ST", ovr: 116, nation: "vnetnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vn.png", playerImg: "toty-van-thang.gif", pack: "toty" },
+    { id: 604, name: "Hong Hai", position: "CB", ovr: 115, nation: "vnetnam", club: "Juventus", clubLogo: "juventus.png", flag: "vn.png", playerImg: "toty-hong-hai.gif", pack: "toty" },
 
     // CAPPED LEGENDS
     { id: 701, name: "Cong Khoi", position: "CDM", ovr: 117, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "capped-legends-cong-khoi.gif", pack: "capped_legends" },
@@ -42,32 +42,34 @@ const allPlayers = [
     { id: 801, name: "Xuan Phuc", position: "GK", ovr: 117, nation: "gb-eng", club: "Barcelona", clubLogo: "barcelona.png", flag: "gb-eng.png", playerImg: "future-stars-xuan-phuc.gif", pack: "future_stars" },
 
     // UCL DREAMCHASERS
-    { id: 901, name: "Nhu Y", position: "ST", ovr: 117, nation: "vietnam", club: "Arsenal", clubLogo: "arsenal.png", flag: "vi.png", playerImg: "ucl-nhu-y.gif", pack: "ucl" },
-    { id: 902, name: "Trung Kien", position: "ST", ovr: 116, nation: "vietnam", club: "Manchester United", clubLogo: "man-utd.png", flag: "vi.png", playerImg: "ucl-trung-kien.gif", pack: "ucl" },
+    { id: 901, name: "Nhu Y", position: "ST", ovr: 117, nation: "vnetnam", club: "Arsenal", clubLogo: "arsenal.png", flag: "vn.png", playerImg: "ucl-nhu-y.gif", pack: "ucl" },
+    { id: 902, name: "Trung Kien", position: "ST", ovr: 116, nation: "vnetnam", club: "Manchester United", clubLogo: "man-utd.png", flag: "vn.png", playerImg: "ucl-trung-kien.gif", pack: "ucl" },
 
-    // A NATION'S STORY
-    
-    // PORTUGAL
+    // A NATION'S STORY PT
     { id: 1001, name: "Ronaldo", position: "ST", ovr: 117, nation: "portugal", club: "Al Nassr", clubLogo: "al-nassr.png", flag: "pt.png", playerImg: "and-pt-ronaldo.gif", pack: "and_pt" },
     { id: 1002, name: "Cong Khoi", position: "CDM", ovr: 116, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "and-pt-cong-khoi.gif", pack: "and_pt" },
 
     // SONGKRAN
-    { id: 1101, name: "Minh Chau", position: "ST", ovr: 117, nation: "vietnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vi.png", playerImg: "songkran-minh-chau.gif", pack: "songkran" },
-    { id: 1102, name: "Thanh Nhan", position: "CM", ovr: 116, nation: "vietnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vi.png", playerImg: "songkran-thanh-nhan.gif", pack: "songkran" },
+    { id: 1101, name: "Minh Chau", position: "ST", ovr: 117, nation: "vnetnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vn.png", playerImg: "songkran-minh-chau.gif", pack: "songkran" },
+    { id: 1102, name: "Thanh Nhan", position: "CM", ovr: 117, nation: "vnetnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vn.png", playerImg: "songkran-thanh-nhan.gif", pack: "songkran" },
 
     // TOTS
     { id: 1201, name: "Anh Tuan", position: "ST", ovr: 120, nation: "belgium", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "be.png", playerImg: "tots-anh-tuan.gif", pack: "tots" },
-    { id: 1202, name: "Van Thang", position: "GK", ovr: 120, nation: "vietnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vi.png", playerImg: "tots-van-thang.gif", pack: "tots" },
+    { id: 1202, name: "Van Thang", position: "GK", ovr: 120, nation: "vnetnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vn.png", playerImg: "tots-van-thang.gif", pack: "tots" },
     { id: 1203, name: "Cong Khoi", position: "CDM", ovr: 119, nation: "portugal", club: "Manchester United", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "tots-cong-khoi.gif", pack: "tots" },
     { id: 1204, name: "Truc Lam", position: "ST", ovr: 119, nation: "argentina", club: "Inter Miami", clubLogo: "inter-miami.png", flag: "ar.png", playerImg: "tots-truc-lam.gif", pack: "tots" },
-    { id: 1205, name: "Minh Chau", position: "ST", ovr: 119, nation: "vietnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vi.png", playerImg: "tots-minh-chau.gif", pack: "tots" },
+    { id: 1205, name: "Minh Chau", position: "ST", ovr: 119, nation: "vnetnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vn.png", playerImg: "tots-minh-chau.gif", pack: "tots" },
     { id: 1206, name: "Hong long", position: "GK", ovr: 119, nation: "argentina", club: "Manchester City", clubLogo: "man-city.png", flag: "ar.png", playerImg: "tots-hong-long.gif", pack: "tots" },
     { id: 1207, name: "Xuan Phuc", position: "GK", ovr: 118, nation: "gb-eng", club: "Barcelona", clubLogo: "barcelona.png", flag: "gb-eng.png", playerImg: "tots-xuan-phuc.gif", pack: "tots" },
-    { id: 1208, name: "Thanh Nhan", position: "CM", ovr: 118, nation: "vietnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vi.png", playerImg: "tots-thanh-nhan.gif", pack: "tots" },
-    { id: 1209, name: "Hong Hai", position: "CB", ovr: 117, nation: "gb-eng", club: "Juventus", clubLogo: "juventus.png", flag: "gb-eng.png", playerImg: "tots-hong-hai.gif", pack: "tots" },
+    { id: 1208, name: "Thanh Nhan", position: "CM", ovr: 118, nation: "vnetnam", club: "Real Madrid", clubLogo: "real-madrid.png", flag: "vn.png", playerImg: "tots-thanh-nhan.gif", pack: "tots" },
+    { id: 1209, name: "Hong Hai", position: "CB", ovr: 117, nation: "vnetnam", club: "Juventus", clubLogo: "juventus.png", flag: "vn.png", playerImg: "tots-hong-hai.gif", pack: "tots" },
+
+    // A NATION'S STORY PT
+    { id: 1301, name: "Lamine Yamal", position: "RW", ovr: 117, nation: "spain", club: "Barcelona", clubLogo: "barcelona.png", flag: "es.png", playerImg: "and-es-lamine-yamal.gif", pack: "and_es" },
+
 
     // DEVELOPERS TEST
-    { id: -1, name: "Nam FC Online", position: "DEV", ovr: 115, nation: "vietnam", club: "Nam FC Online", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "dev-115.gif", pack: "null" },
+    { id: -1, name: "Nam FC Online", position: "DEV", ovr: 115, nation: "vnetnam", club: "Nam FC Online", clubLogo: "man-utd.png", flag: "pt.png", playerImg: "dev-115.gif", pack: "null" },
 
 ];
 

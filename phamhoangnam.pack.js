@@ -33,7 +33,7 @@ const EPIC_ANIMATION_CONFIG = {
     toty: { audio: "audio/toty_begin.mp3", duration: 8675 },
     capped_legends: { audio: "audio/capped_legends_begin.mp3", duration: 8500 },
     songkran: { audio: "audio/songkran_begin.mp3", duration: 8000 },
-    tots: { audio: "audio/tots_begin.mp3", duration: 9700 },
+    tots: { audio: "audio/tots_begin.mp3", duration: 8952 },
 
     developers_test: {
         audio: "audio/knockout_royalty_begin.mp3",
@@ -107,7 +107,8 @@ function formatPackName(packType) {
     const nameMap = {
         ucl: "UCL DREAMCHASERS",
         uefa: "UEFA CHAMPIONS",
-        and_pt: "A NATION'S STORY",
+        and_pt: "A NATION'S STORY PORTUGAL",
+        and_es: "A NATION'S STORY SPAIN",
         toty: "TEAM OF THE YEAR",
         titans: "TROPHY TITANS",
         legend: "LEGENDARY",

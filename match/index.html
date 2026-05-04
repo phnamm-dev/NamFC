@@ -44,9 +44,21 @@
     <script type="module">
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-        const SUPA_URL = 'https://mirxuscvrddxbsenoklz.supabase.co';
-        const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcnh1c2N2cmRkeGJzZW5va2x6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NjcyNDEsImV4cCI6MjA5MjM0MzI0MX0.znSP9exUZOr8fxHw57EdGPWvSBzzYZx2e0qw4lZItQk';
-        const supabase = createClient(SUPA_URL, SUPA_KEY);
+        // TỰ ĐỘNG DÙNG URL HIỆN TẠI LÀM SUPABASE URL (đi qua proxy của server)
+        const supabase = createClient(
+            window.location.origin,  // http://localhost:5500
+            'anonymous',              // Key giả, server sẽ thay bằng Service Key
+            {
+                auth: {
+                    autoRefreshToken: false,
+                    persistSession: true,
+                    detectSessionInUrl: false
+                },
+                global: {
+                    headers: { 'x-application-name': 'namfc' }
+                }
+            }
+        );
         
         let currentUser = null;
         let myUsername = localStorage.getItem('myUsername');
@@ -125,31 +137,35 @@
         });
 
         document.getElementById('btnCreateRoom').addEventListener('click', async () => {
-            const code = Math.random().toString(36).substring(2, 8).toUpperCase();
-            const { data: room, error } = await supabase.from('match_rooms').insert({
-                player1_id: currentUser.id, room_code: code, max_players: 4,
-                room_type: 'room', status: 'waiting',
-                player_names: { [currentUser.id]: myUsername }
-            }).select().single();
-
-            if (error) return alert('Lỗi tạo phòng');
-            alert('Mã phòng: ' + code);
-            window.location.href = `/match/play.html?roomId=${room.id}`;
+            const username = localStorage.getItem('myUsername');
+            const response = await fetch('/api/rooms', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                alert('Mã phòng: ' + data.room_code);
+                window.location.href = `/match/play.html?roomId=${data.id}`;
+            } else {
+                alert('Lỗi: ' + data.error);
+            }
         });
-
+        
         document.getElementById('btnJoinRoom').addEventListener('click', async () => {
             const code = document.getElementById('roomCodeInput').value.trim().toUpperCase();
-            const { data: rooms } = await supabase.from('match_rooms').select('*').eq('room_code', code).eq('status', 'waiting').limit(1);
-            if (!rooms || rooms.length === 0) return alert('Phòng không tồn tại!');
-            const room = rooms[0];
-            
-            const newPlayers = { ...room.player_names, [currentUser.id]: myUsername };
-            const { error } = await supabase.from('match_rooms').update({ 
-                player2_id: currentUser.id, player_names: newPlayers 
-            }).eq('id', room.id);
-
-            if (error) return alert('Lỗi vào phòng');
-            window.location.href = `/match/play.html?roomId=${room.id}`;
+            const username = localStorage.getItem('myUsername');
+            const response = await fetch('/api/rooms/join', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code, username })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                window.location.href = `/match/play.html?roomId=${data.roomId}`;
+            } else {
+                alert('Lỗi: ' + data.error);
+            }
         });
 
         await init();

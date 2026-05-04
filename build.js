@@ -22,7 +22,8 @@ const SOURCES = [
   'credits.html',
   'upload.html',
   'phamhoangnam.pack.css',
-  'phamhoangnam.pack.js'
+  'phamhoangnam.pack.js',
+  'phamhoangnam.apple-warn.js',
 ];
 
 const DIST = path.join(__dirname, 'dist');

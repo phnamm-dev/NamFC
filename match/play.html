@@ -126,9 +126,21 @@
     <script type="module">
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-        const SUPA_URL = 'https://mirxuscvrddxbsenoklz.supabase.co';
-        const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcnh1c2N2cmRkeGJzZW5va2x6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3NjcyNDEsImV4cCI6MjA5MjM0MzI0MX0.znSP9exUZOr8fxHw57EdGPWvSBzzYZx2e0qw4lZItQk';
-        const supabase = createClient(SUPA_URL, SUPA_KEY);
+        // TỰ ĐỘNG DÙNG URL HIỆN TẠI LÀM SUPABASE URL (đi qua proxy của server)
+        const supabase = createClient(
+            window.location.origin,  // http://localhost:5500
+            'anonymous',              // Key giả, server sẽ thay bằng Service Key
+            {
+                auth: {
+                    autoRefreshToken: false,
+                    persistSession: true,
+                    detectSessionInUrl: false
+                },
+                global: {
+                    headers: { 'x-application-name': 'namfc' }
+                }
+            }
+        );
         
         const urlParams = new URLSearchParams(window.location.search);
         const roomId = urlParams.get('roomId');
@@ -137,11 +149,17 @@
         let isMyTurn = false; // Chỉ Player 1 mới được bấm "Mở thẻ tiếp"
 
         async function init() {
-            const { data: authData } = await supabase.auth.signInAnonymously();
-            currentUser = authData.user;
+            const meResponse = await fetch('/api/me');
+            const meData = await meResponse.json();
+            currentUser = meData.userId;
             
+            const urlParams = new URLSearchParams(window.location.search);
+            const roomId = urlParams.get('roomId');
+            
+            // Lấy thông tin phòng (tạm thời dùng REST API, sau này nên dùng WebSocket hoặc SSE để realtime)
             const { data: room } = await supabase.from('match_rooms').select('*').eq('id', roomId).single();
             roomData = room;
+            updateRoomUI();
             
             document.getElementById('playerNames').innerText = 
                 `Bạn (${roomData.player1_id === currentUser.id ? 'Chủ nhà' : 'Khách'}) vs Đối thủ`;
