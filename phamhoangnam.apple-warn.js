@@ -222,7 +222,7 @@
             <p class="namfc-safari-message">
                 Chúng tôi <strong>không khuyên dùng</strong> các trình duyệt của Apple như <strong>Safari</strong>.
                 Trình duyệt này chống Bypass về <strong>âm thanh rất nghiêm ngặt</strong>, hiện tại Nam FC Online chưa hoàn toàn hỗ trợ Safari.
-                <br>Vui lòng chuyển sang <strong>Chrome, Edge, Firefox</strong> hoặc trình duyệt khác để có trải nghiệm tốt nhất.
+                <br>Vui lòng chuyển sang <strong>Chrome, Edge, Firefox</strong> hoặc trình duyệt khác, tốt nhất là trình duyệt Android để có trải nghiệm tốt nhất.
             </p>
             <div class="namfc-safari-buttons">
                 <button class="namfc-safari-btn understand" id="namfcSafariUnderstand">Đã hiểu</button>
