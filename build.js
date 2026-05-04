@@ -5,6 +5,7 @@ const { minify: minifyHTML } = require('html-minifier-terser');
 const CleanCSS = require('clean-css');
 const { minify: minifyJS } = require('terser');
 
+// Danh sách thư mục và file cần copy vào dist
 const SOURCES = [
   'images',
   'audio',
@@ -27,9 +28,35 @@ const SOURCES = [
 
 const DIST = path.join(__dirname, 'dist');
 
-// Copy helpers (giữ nguyên)
-function copyDir(src, dest) { /* ... */ }
-function copyFile(src, dest) { /* ... */ }
+// === Hàm copy thư mục (đệ quy) ===
+function copyDir(src, dest) {
+  if (!fs.existsSync(src)) {
+    console.warn(`⚠️  Thư mục nguồn "${src}" không tồn tại, bỏ qua.`);
+    return;
+  }
+  fs.mkdirSync(dest, { recursive: true });
+  const entries = fs.readdirSync(src, { withFileTypes: true });
+  for (let entry of entries) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+    if (entry.isDirectory()) {
+      copyDir(srcPath, destPath);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+}
+
+// === Hàm copy file đơn ===
+function copyFile(src, dest) {
+  if (!fs.existsSync(src)) {
+    console.warn(`⚠️  File nguồn "${src}" không tồn tại, bỏ qua.`);
+    return;
+  }
+  const destDir = path.dirname(dest);
+  fs.mkdirSync(destDir, { recursive: true });
+  fs.copyFileSync(src, dest);
+}
 
 // === Minhify từng loại file ===
 async function minifyHTMLFiles(dir) {
@@ -130,7 +157,9 @@ async function minifyJSFiles(dir) {
   console.log('⚙️  Minify JS...');
   await minifyJSFiles(DIST);
 
-  console.log('✅ Build thành công!');
+  // Kiểm tra lại số file trong dist
+  const distContents = fs.readdirSync(DIST);
+  console.log(`✅ Build thành công! (${distContents.length} file/thư mục trong dist)`);
 })().catch(err => {
   console.error('💥 Build thất bại:', err);
   process.exit(1);
